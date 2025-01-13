@@ -21,6 +21,13 @@
                        {!! session('success') !!}
                    </div>
                    @endif
+
+                   @if ($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            {{ $errors->first('error') }}
+                        </div>
+                    @endif
+
                 <form action="{{route('demandeStandEmp')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-row">
