@@ -41,6 +41,17 @@
                             <label for="inputEmail4">Nom de la categorie</label>
                             <input type="text" class="form-control" id="inputEmail5" name="nom_categorie">
                         </div>
+
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="inputAddress2">Date du debut</label>
+                            <input type="date" class="form-control" id="emailEmploye" aria-describedby="emailHelp" name="date_debut" required>
+                        </div>
+
+                        <div class="form-group col-md-6 mb-3">
+                            <label for="inputAddress2">Date de fin</label>
+                            <input type="date" class="form-control" id="emailEmploye" aria-describedby="emailHelp" name="date_fin" required>
+                        </div>
+
                     </div>
                     <div class="form-group mb-3">
                         <label for="inputAddress">Description</label>

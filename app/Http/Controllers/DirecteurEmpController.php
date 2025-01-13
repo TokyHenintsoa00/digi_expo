@@ -91,10 +91,14 @@ class DirecteurEmpController extends Controller
 
     public function demandeStandEmp(Request $request)
     {
+        $getReceptionModel = new ReceptionModel();
+
         $nom_stand = $request->nom_stand;
         $id_categorie = $request->id_categorie;
         $nom_categorie = $request->nom_categorie;
         $description_stand = $request->description_stand;
+        $date_debut = $request->date_debut;
+        $date_fin = $request->date_fin;
 
         $img_stand = $request->file('img_stand');
         $img_stand_name = $img_stand->getClientOriginalName();
@@ -110,9 +114,11 @@ class DirecteurEmpController extends Controller
         $date_naissance = $getEmpId[0]->date_naissance;
         $email = $getEmpId[0]->email;
 
+        $getSalon = $getReceptionModel->getAllSalon();
+
         $stand = new StandModel();
         $stand->insertPermissionStand($nom_stand,$id_categorie,$nom_categorie,$description_stand,
-        $nom_emp,$prenom_emp,$date_naissance,$email,$img_stand_name);
+        $nom_emp,$prenom_emp,$date_naissance,$email,$img_stand_name,$date_debut,$date_fin);
 
         return redirect()->route('viewDemandeNouvelleStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
     }
