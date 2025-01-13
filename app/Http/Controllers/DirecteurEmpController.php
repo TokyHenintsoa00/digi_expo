@@ -760,8 +760,14 @@ class DirecteurEmpController extends Controller
     }
 
 
-    public function viewInformationExposition()
+    public function viewInformationExposition(Request $request)
     {
-        return view('directeurEmp.informationExposition');
+        $id_stand = $request->id_stand;
+        $getStandModel = new StandModel();
+        $getStandById = $getStandModel->viewModifierByEmp($id_stand);
+        //$nom = $getStandById[0]->nom_stand;
+
+
+        return view('directeurEmp.informationExposition',compact('getStandById'));
     }
 }
