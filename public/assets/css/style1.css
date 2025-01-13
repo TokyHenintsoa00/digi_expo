@@ -1,0 +1,23 @@
+.btn-primary {
+    background-color: #001365; /* Couleur violette par défaut */
+    border-color: #001365; /* Bordure violette */
+    color: white;
+}
+
+/* Style du bouton au survol */
+.btn-primary:hover {
+    background-color: #ece7e7; /* Gris au survol */
+    border-color: #001365; /* Contour violet au survol */
+    color: #001365; /* Texte violet au survol */
+}
+
+.transition-effect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backface-visibility: hidden;  /* Empêche le flou lors des transitions */
+  transform: translateZ(0);     /* Active le rendu sur le GPU pour des transitions plus fluides */
+}
+
+.transition-effect:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}
