@@ -42,12 +42,12 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                           conference avec les clients
+                            video conference avec les clients
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Panifier une videoConference avec les clients</h5>
                             <p class="card-text">Assurez-vous que toutes les conférences ont les liens appropriés pour une accessibilité optimale.</p>
-                            <a href="{{ route('viewModificationVideoConference') }}" class="btn btn-primary">Voir l'historique et gérer</a>
+                            <a href="{{route('viewConferenceClient')}}" class="btn btn-primary">Voir l'historique et gérer</a>
                         </div>
                     </div>
                 </div>

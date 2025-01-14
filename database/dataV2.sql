@@ -257,6 +257,17 @@ CREATE TABLE search(
     search text
 );
 
+
+CREATE TABLE video_conference_client
+(
+
+    id_video_conference_client serial primary key,
+    id_stand integer references stand(id_stand),
+    date_debut_conference_client timestamp(0),
+    liens_video text
+);
+
+
 -- SELECT distinct(id_stand),id_directeur,nom_stand,description_Stand,
 -- img_stand,id_etat,nom_directeur,prenom_directeur,date_de_creation_stand
 -- FROM  v_membre_Stand where id_etat = 3 and id_directeur = 1

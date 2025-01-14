@@ -95,6 +95,7 @@ Route::prefix('directeur')->group(function(){
     Route::get('/viewPlanificationTemoignage',[DirecteurEmpController::class,'viewPlanificationTemoignage'])->name('viewPlanificationTemoignage');
     Route::post('/insertTemoignage',[DirecteurEmpController::class,'insertTemoignage'])->name('insertTemoignage');
     Route::get('/viewInformationExposition',[DirecteurEmpController::class,'viewInformationExposition'])->name('viewInformationExposition');
+    Route::get('/viewConferenceClient',[DirecteurEmpController::class,'viewConferenceClient'])->name('viewConferenceClient');
 
 });
 // -----------------Authentification--------------------------------------------------------------------------------

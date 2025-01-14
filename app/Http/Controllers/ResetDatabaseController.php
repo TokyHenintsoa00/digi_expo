@@ -14,7 +14,7 @@ class ResetDatabaseController extends Controller
 
         foreach ($tables as $table) {
             if ($table->tablename === 'admin' || $table->tablename === 'etat' || $table->tablename === 'categorie' ||
-            $table->tablename === 'type_stand' || $table->tablename === 'mois') {
+            $table->tablename === 'type_stand' || $table->tablename === 'mois' || $table->tablename === 'type_video' || $table->tablename === 'type_conference') {
                 continue;
             }
 

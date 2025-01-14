@@ -781,4 +781,9 @@ class DirecteurEmpController extends Controller
 
         return view('directeurEmp.informationExposition',compact('getStandById'));
     }
+
+    public function viewConferenceClient()
+    {
+        return view('directeurEmp.ConferenceClient');
+    }
 }
