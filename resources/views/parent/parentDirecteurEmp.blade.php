@@ -174,7 +174,7 @@ html, body {
             <ul id="sidebarnav">
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Home</span>
+                    <span class="hide-menu">Responsable</span>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{route('viewDirecteurEmpPage')}}" aria-expanded="false">
