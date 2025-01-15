@@ -492,9 +492,11 @@ class DirecteurEmpController extends Controller
     public function viewJustificationDemissionEditeur(Request $request)
     {
         $id_demission_employer = $request->id_demission_employer;
+
         $getEmpModel = new EmpModel();
-        $justifiaction = $getEmpModel->getJustificationDemission($id_demission_employer);
-        return view('directeurEmp.justificationDemissionEditeur',compact('justifiaction'));
+        $justification = $getEmpModel->getJustificationDemission($id_demission_employer);
+
+        return view('directeurEmp.justificationDemissionEditeur',compact('justification'));
     }
 
 

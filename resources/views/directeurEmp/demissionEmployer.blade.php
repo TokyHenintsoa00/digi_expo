@@ -28,7 +28,7 @@
                             {{-- <input type="hidden" name="id_emp" value="{{$list_demissionEmp->id_emp}}" id="id_emp"> --}}
                             <td>
                                 <form action="{{route('viewJustificationDemissionEditeur')}}" method="get">
-                                    <input type="hidden" name="id_demission_employer " value="{{$list_demissionEmp->id_demission_employer}}">
+                                    <input type="hidden" name="id_demission_employer" value="{{$list_demissionEmp->id_demission_employer}}">
                                     <input type="submit" value="Voir la justification" class="btn btn-primary">
                                 </form>
                             </td>
