@@ -489,6 +489,8 @@ class DirecteurEmpController extends Controller
     }
 
     //test de git hub
+
+    //test 2
     public function viewJustificationDemissionEditeur(Request $request)
     {
         $id_demission_employer = $request->id_demission_employer;
