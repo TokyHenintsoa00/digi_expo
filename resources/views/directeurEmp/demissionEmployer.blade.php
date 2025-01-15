@@ -29,8 +29,8 @@
                     <td>{{$list_demissionEmp->justification_demission}}</td>
                     <td>
                         @if ($list_demissionEmp->id_etat == 1)
-                            {{-- <input type="hidden" name="id_emp" value="{{$list_demissionEmp->id_emp}}" id="id_emp"> --}}
-                            <button class="btn btn-danger m-1 demission-btn" data-id_emp="{{ $list_demissionEmp->id_emp }}">
+                            <input type="hidden" name="id_emp" value="{{$list_demissionEmp->id_emp}}" id="id_emp">
+                            <button class="btn btn-danger m-1 demission-btn">
                                 Valider la démission
                             </button>
                         @else
@@ -97,8 +97,7 @@
         let id_emp;
         $('.demission-btn').on('click',function(e){
             e.preventDefault();
-            // id_emp = $('#id_emp').val();
-            id_emp = $(this).data('id_emp');
+             id_emp = $('#id_emp').val();
             console.log(id_emp);
             $('#confirmModal').modal('show');
         });
