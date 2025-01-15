@@ -488,7 +488,7 @@ class DirecteurEmpController extends Controller
         //return redirect()->route('viewChoixDeStandBrochure')->with('success', 'Brochure publier');
     }
 
-
+    //test de git hub
     public function viewJustificationDemissionEditeur(Request $request)
     {
         $id_demission_employer = $request->id_demission_employer;
