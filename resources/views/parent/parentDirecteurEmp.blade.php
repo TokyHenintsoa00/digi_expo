@@ -331,7 +331,7 @@ html, body {
       <!--  Header End -->
       <div class="container-fluid">
         <!--  Row 1 -->
-        <div class="row">
+        <div class="row">x`
             @yield('directeurEmpPageSection')
             @yield('standDirecteurSection')
             @yield('modificationStandEmpSection')
@@ -365,6 +365,7 @@ html, body {
             @yield('planificationTemoignageSection')
             @yield('informationExpositionSection')
             @yield('ConferenceClientSection')
+            @yield('justificationDemissionEditeurSection')
 
         </div>
     </div>

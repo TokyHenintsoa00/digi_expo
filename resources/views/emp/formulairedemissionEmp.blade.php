@@ -97,7 +97,10 @@
                 success: function(response) {
                     $('#confirmModal').modal('hide');
                     $('#successModal').modal('show');
-                    setTimeout(() => location.reload(), 2000);
+                    setTimeout(() => {
+                        // Redirection vers une route spécifique après succès
+                        window.location.href = "{{ route('viewPermissionDemissionEmp') }}";
+                    }, 2000);
                 },
                 error: function(xhr) {
                     $('#confirmModal').modal('hide');
