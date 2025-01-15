@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="card shadow mb-4">
             <div class="card-header">
-                <strong class="card-title">Formulaire de recrutement de nouvelle employer de stand</strong>
+                <strong class="card-title">Formulaire de recrutement de nouvelle éditeur de stand</strong>
             </div>
             <div class="card-body">
                   <!-- Afficher le message de succès -->

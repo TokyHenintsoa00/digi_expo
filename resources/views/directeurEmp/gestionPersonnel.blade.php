@@ -28,11 +28,11 @@
 
                 <div class="card">
                     <div class="card-header">
-                        Licensiment d'editeur
+                        Licenciement  d'editeur
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Gérez vos licensiment</h5>
-                        <p class="card-text">Vérifiez que toutes les informations sont correctes avant de finaliser chaque licensiment.</p>
+                        <h5 class="card-title">Gérez vos licenciement</h5>
+                        <p class="card-text">Vérifiez que toutes les informations sont correctes avant de finaliser chaque licenciement.</p>
                         <a href="{{route('viewLicensimentEmployer')}}" class="btn btn-primary">Confirmer licensiment</a>
                     </div>
                     </div>
@@ -43,7 +43,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        Licensiment d'editeur
+                        Demission d'editeur
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Gérez vos Demission de votre editeur</h5>
