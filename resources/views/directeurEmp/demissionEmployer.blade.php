@@ -134,64 +134,6 @@
         });
         });
 </script>
-{{-- <!--  SweetAlert -->
-<script src="{{asset('assets/js/sweatalert.js')}}"></script>
 
-<script>
-    $(document).ready(function() {
-        $('.demission-btn').on('click', function(e) {
-            e.preventDefault();
-
-            let id_emp = $(this).data('id_emp');
-
-            if (id_emp != null) {
-                Swal.fire({
-                    title: "Êtes-vous sûr?",
-                    text: "Voulez-vous vraiment valider cette démission?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Oui, valider la démission',
-                    cancelButtonText: 'Annuler'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        let formData = new FormData();
-                        formData.append('id_emp', id_emp);
-                        formData.append('_token', '{{ csrf_token() }}');
-
-                        $.ajax({
-                            url: "{{route('demissionEmployer')}}",
-                            method: 'POST',
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            success: function(response) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: "Succès",
-                                    text: "La démission a été validée. Vous recevrez un mail après confirmation.",
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'OK'
-                                }).then(() => {
-                                    window.location.href = "{{route('viewDemissionEmployer')}}";
-                                });
-                            },
-                            error: function(xhr) {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: "Erreur",
-                                    text: "Une erreur est survenue. Veuillez réessayer.",
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'OK'
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    });
-</script> --}}
 
 @endsection

@@ -390,7 +390,11 @@ class EmpModel extends Model
         return $result;
     }
 
-    
+    public function getJustificationDemission($id_demission_employer)
+    {
+        $justification = DB::select("SELECT * FROM v_permission_demission_employer WHERE id_demission_employer = ?",[$id_demission_employer]);
+        return $justification;
+    }
 
     //les nombre des employer par stand
     public function countEmpStandByDirecteur($id_directeur)
