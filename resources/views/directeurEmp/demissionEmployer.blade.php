@@ -16,8 +16,6 @@
                 <th>Nom de l'éditeur</th>
                 <th>Prénom de l'éditeur</th>
                 <th>Mail</th>
-                <th>Justification de démission</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -26,17 +24,25 @@
                     <td>{{$list_demissionEmp->nom_emp}}</td>
                     <td>{{$list_demissionEmp->prenom_emp}}</td>
                     <td>{{$list_demissionEmp->email}}</td>
-                    <td>{{$list_demissionEmp->justification_demission}}</td>
-                    <td>
                         @if ($list_demissionEmp->id_etat == 1)
-                            <input type="hidden" name="id_emp" value="{{$list_demissionEmp->id_emp}}" id="id_emp">
-                            <button class="btn btn-danger m-1 demission-btn">
-                                Valider la démission
-                            </button>
+                            {{-- <input type="hidden" name="id_emp" value="{{$list_demissionEmp->id_emp}}" id="id_emp"> --}}
+                            <td>
+                                <form action="{{route('viewJustificationDemissionEditeur')}}" method="get">
+                                    <input type="hidden" name="id_demission_employer " value="{{$list_demissionEmp->id_demission_employer}}">
+                                    <input type="submit" value="Voir la justification" class="btn btn-primary">
+                                </form>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger m-1 demission-btn" data-id_emp="{{ $list_demissionEmp->id_emp }}">
+                                    Valider la démission
+                                </button>
+                            </td>
                         @else
-                            <span class="text-danger fw-semibold">Démissionné</span>
+                            <td>
+                                <span class="text-danger fw-semibold">Démissionné</span>
+                            </td>
+
                         @endif
-                    </td>
                 </tr>
             @endforeach
         </tbody>
@@ -94,11 +100,12 @@
 <script src="{{asset('assets/js/bundle.js')}}"></script>
 <script>
      $(document).ready(function(){
-        let id_emp;
+        let idEmp;
         $('.demission-btn').on('click',function(e){
             e.preventDefault();
-             id_emp = $('#id_emp').val();
-            console.log(id_emp);
+            idEmp = $(this).data('id_emp'); // Récupération de l'ID via un attribut data-id
+            //  id_emp = $('#id_emp').val();
+            console.log(idEmp);
             $('#confirmModal').modal('show');
         });
 
@@ -107,7 +114,7 @@
                 url: "{{route('demissionEmployer')}}",
                 method: 'POST',
                 data: {
-                    id_emp: id_emp,
+                    id_emp: idEmp,
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
