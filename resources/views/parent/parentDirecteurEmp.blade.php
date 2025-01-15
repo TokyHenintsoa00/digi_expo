@@ -331,7 +331,7 @@ html, body {
       <!--  Header End -->
       <div class="container-fluid">
         <!--  Row 1 -->
-        <div class="row">x`
+        <div class="row">
             @yield('directeurEmpPageSection')
             @yield('standDirecteurSection')
             @yield('modificationStandEmpSection')

@@ -504,22 +504,23 @@ class DirecteurEmpController extends Controller
     public function demissionEmployer(Request $request)
     {
         $id_emp = $request->id_emp;
-        $getEmpModel = new EmpModel();
-        $demission = $getEmpModel->validationPermissionDemission($id_emp);
-        $mouvement_personnel = $getEmpModel->insertMouvementPersonneDemissionEmployer($id_emp);
-        //information de l'employer
-        $getEmpById = $getEmpModel->getEmpById($id_emp);
+        dd($id_emp);
+        // $getEmpModel = new EmpModel();
+        // $demission = $getEmpModel->validationPermissionDemission($id_emp);
+        // $mouvement_personnel = $getEmpModel->insertMouvementPersonneDemissionEmployer($id_emp);
+        // //information de l'employer
+        // $getEmpById = $getEmpModel->getEmpById($id_emp);
 
-        $nom_emp = $getEmpById[0]->nom_emp;
-        $prenom_emp = $getEmpById[0]->prenom_emp;
-        $email_emp = $getEmpById[0]->email;
-        Mail::send('emails.sentMailAcceptDemissionEmp',[
-            'nom_emp' =>$nom_emp,
-            'prenom_emp' =>$prenom_emp,
-        ],function($message) use($email_emp,$nom_emp,$prenom_emp){
-            $message->to($email_emp)
-                    ->subject('Validation de demande de demission');
-        });
+        // $nom_emp = $getEmpById[0]->nom_emp;
+        // $prenom_emp = $getEmpById[0]->prenom_emp;
+        // $email_emp = $getEmpById[0]->email;
+        // Mail::send('emails.sentMailAcceptDemissionEmp',[
+        //     'nom_emp' =>$nom_emp,
+        //     'prenom_emp' =>$prenom_emp,
+        // ],function($message) use($email_emp,$nom_emp,$prenom_emp){
+        //     $message->to($email_emp)
+        //             ->subject('Validation de demande de demission');
+        // });
     }
 
     public function viewListEmpAndNombreEmpParStand()
