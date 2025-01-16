@@ -396,10 +396,7 @@ class EmpModel extends Model
         return $justification;
     }
 
-    public function hello()
-    {
-        echo "he";
-    }
+
 
     //what
     //les nombre des employer par stand
