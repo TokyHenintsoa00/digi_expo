@@ -396,7 +396,12 @@ class EmpModel extends Model
         return $justification;
     }
 
+    private function hello()
+    {
+        echo "hello";
+    }
 
+    //what
     //les nombre des employer par stand
     public function countEmpStandByDirecteur($id_directeur)
     {
