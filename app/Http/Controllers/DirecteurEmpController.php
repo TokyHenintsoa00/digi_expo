@@ -576,13 +576,13 @@ class DirecteurEmpController extends Controller
 
         if ($id_type_conference == 1) {
             if ($liens_video ==null) {
-                # code...
+                //pour le podcast
                 $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$podcast,$id_type_conference,$date_heure_conference);
                 return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
 
 
             } else {
-                # code...
+                //pour le streaming
                 $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$podcast,$id_type_conference,$date_heure_conference,$liens_video);
                 return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
 
