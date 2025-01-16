@@ -59,11 +59,13 @@ VALUES
 -----------------------------------------------------
 insert into type_video(nom_type)VALUES
 ('Podcast'),
-('Streaming');
+('Streaming'),
+('visioConference');
 
 INSERT INTO type_conference(nom_type_conference)VALUES
 ('Atelier'),
-('Salle de conference');
+('Salle de conference'),
+('galerie');
 
 
 --stand

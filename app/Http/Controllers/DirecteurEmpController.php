@@ -546,16 +546,40 @@ class DirecteurEmpController extends Controller
 
     public function viewVideoConference()
     {
-
         return view('directeurEmp.VideoConference');
+    }
+
+    public function planificationGallerie(Request $request)
+    {
+        $titre_video = $request->titre_video;
+        $date_heure_galerie = $request->date_heure_galerie;
+        $liens_video = $request->liens_video;
+        $type_video = 1;
+        $type_conference = 3;
+        $id_directeur = Session::get('id_emp');
+
+        $getVideoModel = new VideoModel();
+
+        if($liens_video == null)
+        {
+            $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$type_video,$type_conference,$date_heure_galerie);
+            return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
+
+        }
+        else{
+
+            $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$type_video,$type_conference,$date_heure_galerie,$liens_video);
+            return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
+
+        }
     }
 
 
     public function viewPlanificationVideoConference()
     {
         $getVideoModel = new VideoModel();
-        $type_conference = $getVideoModel->getAllTypeConference();
-        $type_video = $getVideoModel->getAllTypeVideo();
+        $type_conference = $getVideoModel->typeConferenceWithAlterlierAndSalleConf();
+        $type_video = $getVideoModel->typeVideoWithAtelierandSalleConf();
         return view('directeurEmp.PlanificationVideoConference',compact('type_conference','type_video'));
     }
 
@@ -567,42 +591,26 @@ class DirecteurEmpController extends Controller
         $liens_video = $request->liens_video;
         $id_directeur = Session::get('id_emp');
         $getVideoModel = new VideoModel();
+        $id_type_video = $request->id_type_video;
 
-        $podcast = 1;
-        $streaming = 2;
 
         //type conference atelier => podcast
         //type conference salle de conference =>streaming
 
-        if ($id_type_conference == 1) {
             if ($liens_video ==null) {
                 //pour le podcast
-                $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$podcast,$id_type_conference,$date_heure_conference);
+                $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_conference);
                 return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
 
 
             } else {
                 //pour le streaming
-                $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$podcast,$id_type_conference,$date_heure_conference,$liens_video);
+                $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video);
                 return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
 
             }
-        }
-        else{
-
-            if ($liens_video ==null) {
-                # code...
-                $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$streaming,$id_type_conference,$date_heure_conference);
-                return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
 
 
-            } else {
-                # code...
-                $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$streaming,$id_type_conference,$date_heure_conference,$liens_video);
-                return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
-
-            }
-        }
     }
 
 
@@ -652,6 +660,14 @@ class DirecteurEmpController extends Controller
 
         //dd($titre_video,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video,$id_salle_conference);
     }
+
+
+    //ampiasana am ilay planification gallerie
+    public function viewGalerie()
+    {
+        return view('directeurEmp.PlanificationGalerie');
+    }
+
 
     public function viewAddLinkVideo(Request $request)
     {

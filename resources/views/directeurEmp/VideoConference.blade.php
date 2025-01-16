@@ -16,15 +16,29 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                           Planification
+                           Planification d'atelier ou salle de conference
                         </div>
                         <div class="card-body">
-                          <h5 class="card-title">Planifiez vos conférences vidéo pour qu'elles soient accessibles aux clients</h5>
+                          <h5 class="card-title">Planifiez vos salle de conference ou altelier pour qu'elles soient accessibles aux clients</h5>
                           <p class="card-text">Remplissez toutes les informations nécessaires avant la validation finale pour garantir leur exactitude.</p>
                           <a href="{{route('viewPlanificationVideoConference')}}" class="btn btn-primary">Planifier</a>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                           Planification pour une gallerie
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title">Planifiez votre galerie pour qu'elles soient accessibles aux clients</h5>
+                          <p class="card-text">Remplissez toutes les informations nécessaires avant la validation finale pour garantir leur exactitude.</p>
+                          <a href="{{route('viewGalerie')}}" class="btn btn-primary">Planifier</a>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="col-md-6">
                     <div class="card">
@@ -47,7 +61,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Panifier une videoConference avec les clients</h5>
                             <p class="card-text">Assurez-vous que toutes les conférences ont les liens appropriés pour une accessibilité optimale.</p>
-                            <a href="{{route('viewConferenceClient')}}" class="btn btn-primary">Voir l'historique et gérer</a>
+                            <a href="{{route('viewConferenceClient')}}" class="btn btn-primary">Planifier</a>
                         </div>
                     </div>
                 </div>

@@ -97,7 +97,8 @@ Route::prefix('directeur')->group(function(){
     Route::get('/viewInformationExposition',[DirecteurEmpController::class,'viewInformationExposition'])->name('viewInformationExposition');
     Route::get('/viewConferenceClient',[DirecteurEmpController::class,'viewConferenceClient'])->name('viewConferenceClient');
     Route::get('/viewJustificationDemissionEditeur',[DirecteurEmpController::class,'viewJustificationDemissionEditeur'])->name('viewJustificationDemissionEditeur');
-
+    Route::get('/viewGalerie',[DirecteurEmpController::class,'viewGalerie'])->name('viewGalerie');
+    Route::post('/planificationGallerie',[DirecteurEmpController::class,'planificationGallerie'])->name('planificationGallerie');
 });
 // -----------------Authentification--------------------------------------------------------------------------------
 

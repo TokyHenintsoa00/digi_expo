@@ -66,6 +66,9 @@ class ChatController extends Controller
             ]
         ];
 
+
+        //mi set collection rehefa eto 
+
         // Sauvegarder les données dans MongoDB
         $insertResult = $message->insert($data);
 

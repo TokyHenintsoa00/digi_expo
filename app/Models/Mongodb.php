@@ -25,6 +25,7 @@ class Mongodb
         $client = new Client(env('MONGO_DB_URI'));
         $database = $client->selectDatabase(env('MONGO_DB_DATABASE'));
         $this->collection = $database->selectCollection('message');
+        
     }
 
     public function insert(array $data)

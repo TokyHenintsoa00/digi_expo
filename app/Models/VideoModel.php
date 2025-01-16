@@ -48,6 +48,18 @@ class VideoModel extends Model
         return $result;
     }
 
+    public function typeConferenceWithAlterlierAndSalleConf()
+    {
+        $result = DB::select("SELECT * FROM type_conference WHERE id_type_conference IN(1,2)");
+        return $result;
+    }
+
+    // public function typeConferenceWithGalerie()
+    // {
+    //     $result = DB::select("SELECT * FROM type_conference WHERE id_type_conference = 3");
+    //     return $result;
+    // }
+
 
     public function getAllTypeVideo()
     {
@@ -55,6 +67,20 @@ class VideoModel extends Model
 
         return $result;
     }
+
+    public function typeVideoWithAtelierandSalleConf()
+    {
+        $result = DB::select("SELECT * FROM type_video WHERE id_type_video in(2,3)");
+
+        return $result;
+    }
+
+    // public function typeVideoWithGalerie()
+    // {
+    //     $result = DB::select("SELECT * FROM type_video WHERE id_type_video = 1");
+
+    //     return $result;
+    // }
 
     public function modificationVideoConferenceWithLink($titre_video,$id_type_video,$id_type_conference,$date_heure_salle_conference,$liens_Video,$id_salle_conference)
     {
