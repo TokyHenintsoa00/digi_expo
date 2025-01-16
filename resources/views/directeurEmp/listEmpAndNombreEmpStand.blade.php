@@ -2,7 +2,7 @@
 @section('listEmpNombreEmpStandSection')
 
 
-<h2>Liste des employer par stand</h2>
+<h2>Liste des editeur par stand</h2>
 
 
 <div class="col-12">
@@ -39,15 +39,15 @@
 
                     @if ($list_getAllEmpDirecteur->id_etat_emp == 2)
                     <td>
-                        <span class="text-success fw-semibold">Employer encore actif</span>
+                        <span class="text-success fw-semibold">editeur encore actif</span>
                     </td>
                     @elseif ($list_getAllEmpDirecteur->id_etat_emp == 8)
                         <td>
-                            <span class="text-danger fw-semibold">Employer licensier</span>
+                            <span class="text-danger fw-semibold">editeur licensier</span>
                         </td>
                     @elseif ($list_getAllEmpDirecteur->id_etat_emp == 9)
                         <td>
-                            <span class="text-warning fw-semibold">Employer demissionner</span>
+                            <span class="text-warning fw-semibold">editeur demissionner</span>
                         </td>
                     @endif
 
@@ -57,7 +57,7 @@
     </table>
 </div>
 
-<h2>Nombre d'employer par stand</h2>
+<h2>Nombre d'editeur par stand</h2>
 
 <div class="col-5">
 
@@ -76,7 +76,7 @@
         <thead>
             <tr>
                 <th>Stand</th>
-                <th>Nombre d'employer</th>
+                <th>Nombre d'editeur</th>
 
 
             </tr>
