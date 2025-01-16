@@ -24,11 +24,6 @@ CREATE TABLE salon
 );
 
 
---tokyh
-
-create table popo(
-    id serial primary key
-);
 
 CREATE TABLE etat
 (
