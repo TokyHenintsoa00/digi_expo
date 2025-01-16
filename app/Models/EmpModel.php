@@ -401,6 +401,7 @@ class EmpModel extends Model
         echo "he";
     }
 
+    //what
     //les nombre des employer par stand
     public function countEmpStandByDirecteur($id_directeur)
     {
