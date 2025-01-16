@@ -564,23 +564,46 @@ class DirecteurEmpController extends Controller
     public function planificationVideoConference(Request $request)
     {
         $titre_video = $request->titre_video;
-        $id_type_video = $request->id_type_video;
         $id_type_conference = $request->id_type_conference;
         $date_heure_conference = $request->date_heure_conference;
         $liens_video = $request->liens_video;
         $id_directeur = Session::get('id_emp');
         $getVideoModel = new VideoModel();
-        if ($liens_video ==null) {
-            # code...
-            $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_conference);
-            return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
+
+        $podcast = 1;
+        $streaming = 2;
+
+        //type conference atelier => podcast
+        //type conference salle de conference =>streaming
+
+        if ($id_type_conference == 1) {
+            if ($liens_video ==null) {
+                # code...
+                $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$podcast,$id_type_conference,$date_heure_conference);
+                return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
 
 
-        } else {
-            # code...
-            $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video);
-            return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
+            } else {
+                # code...
+                $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$podcast,$id_type_conference,$date_heure_conference,$liens_video);
+                return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
 
+            }
+        }
+        else{
+
+            if ($liens_video ==null) {
+                # code...
+                $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$streaming,$id_type_conference,$date_heure_conference);
+                return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
+
+
+            } else {
+                # code...
+                $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$streaming,$id_type_conference,$date_heure_conference,$liens_video);
+                return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
+
+            }
         }
     }
 
