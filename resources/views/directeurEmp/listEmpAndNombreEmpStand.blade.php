@@ -47,7 +47,7 @@
                         </td>
                     @elseif ($list_getAllEmpDirecteur->id_etat_emp == 9)
                         <td>
-                            <span class="text-warning fw-semibold">editeur demissionner</span>
+                            <span class="text-warning fw-semibold">editeur démmissionner</span>
                         </td>
                     @endif
 

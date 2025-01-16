@@ -143,12 +143,7 @@
 @section('choixContenuePourBrochureSection')
 
 <style>
-    /* .container {
-        font-family: 'Arial', sans-serif;
-        color: #333;
-        padding: 20px;
-        background-color: #f9f9f9;
-    } */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
     .stand-title {
         font-size: 28px;
@@ -158,6 +153,7 @@
         text-align: center;
         border-bottom: 2px solid #e3e3e3;
         padding-bottom: 10px;
+        font-family: 'Poppins', sans-serif;
     }
 
     .stand-info {
@@ -166,6 +162,7 @@
         border-radius: 8px;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 30px;
+        font-family: 'Poppins', sans-serif;
     }
 
     .stand-name {
@@ -173,6 +170,7 @@
         color: #000000;
         font-weight: bold;
         margin-top: 0;
+        font-family: 'Poppins', sans-serif;
     }
 
     .stand-description {
@@ -180,6 +178,7 @@
         line-height: 1.6;
         margin: 15px 0;
         color: #555;
+        font-family: 'Poppins', sans-serif;
     }
 
     .stand-images {
@@ -210,13 +209,14 @@
     }
 
     body, h2, h3, label, p, input, button {
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
 
     .stand-date, .stand-type {
         font-size: 15px;
         color: #777;
         margin-top: 10px;
+        font-family: 'Poppins', sans-serif;
     }
 
     .stand-date strong, .stand-type strong {
@@ -224,17 +224,16 @@
     }
 
     .font-custom {
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
 
-    /* Style for aligning buttons horizontally */
     .button-container {
         display: flex;
-        gap: 15px; /* Adjust the gap between buttons */
+        gap: 15px;
     }
 
     .button-container form {
-        margin: 0; /* To remove any extra margins */
+        margin: 0;
     }
 </style>
 
