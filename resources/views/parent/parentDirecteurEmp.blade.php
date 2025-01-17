@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/style1.css')}}">
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"> --}}
     <link rel="stylesheet" href="{{asset('assets/css/mainSiteStyle.css')}}">
-
+    <link rel="stylesheet" href="{{asset('assets/css/styleGaleriePhoto.css')}}">
 
     <style>
  /* Style du panneau de notifications */
