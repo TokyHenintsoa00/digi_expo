@@ -1,8 +1,6 @@
 @extends('parent.parentDirecteurEmp')
 @section('choixContenuePourBrochureSection')
 
-
-
 <div class="container mt-4">
     <h2 class="stand-title">Gerer votre contenue</h2>
     @if ($errors->any())

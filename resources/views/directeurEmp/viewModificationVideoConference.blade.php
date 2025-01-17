@@ -1,7 +1,7 @@
 @extends('parent.parentDirecteurEmp')
 @section('modificationVideoConferenceSection')
 
-<h2>Liste des employer par stand</h2>
+<h2>Modification de liens de vidéo</h2>
 
 <div class="col-13">
 
@@ -23,7 +23,7 @@
                 <th>Titre de video Conference</th>
                 <th>Type</th>
                 <th>Type de conference</th>
-                <th>Date de membre</th>
+                <th>Date de commencement</th>
                 <th>Liens</th>
                 <th>Actions</th>
             </tr>
@@ -45,11 +45,12 @@
                     <td>
                         @if (\Carbon\Carbon::parse($videoConferences->date_heure_salle_conference)->isFuture())
                             <div class="d-flex gap-2">
-                                <form action="{{ route('viewFormulaireModificationVideoConference') }}" method="get">
-                                    <input type="hidden" name="id_salle_conference" value="{{ $videoConferences->id_salle_conference }}">
-                                    <input type="submit" class="btn btn-primary" value="Modifier">
-                                </form>
-                                @if ($videoConferences->liens_video == null)
+                                @if ($videoConferences->liens_video != null)
+                                    <form action="{{ route('viewFormulaireModificationVideoConference') }}" method="get">
+                                        <input type="hidden" name="id_salle_conference" value="{{ $videoConferences->id_salle_conference }}">
+                                        <input type="submit" class="btn btn-primary" value="Modifier">
+                                    </form>
+                                @else
                                     <form action="{{ route('viewAddLinkVideo') }}" method="get">
                                         <input type="hidden" name="id_salle_conference" value="{{ $videoConferences->id_salle_conference }}">
                                         <input type="submit" class="btn btn-primary" value="Ajouter un lien">

@@ -1,7 +1,7 @@
 @extends('parent.parentDirecteurEmp')
 @section('gestionContenueSection')
 
-<h1>Validations</h1>
+<h1>Gestion de contenue d'exposition</h1>
 <div class="container-fluid">
     <div class="container-fluid">
       <div class="card">

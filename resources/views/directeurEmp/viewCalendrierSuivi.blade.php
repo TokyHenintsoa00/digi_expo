@@ -44,9 +44,11 @@
                 title:item.nom_brochure_stand,
                 start:item.date_ajout_brochure,
                 allDay: true,
+                //pour eveiter le deplacement
                 editable: false,
                 backgroundColor:'#291f16',
                 borderColor: '#291f16',
+                clickable: false
 
             };
         });
@@ -76,12 +78,13 @@
         let events3 = photoEvent.map(function(item) {
             return{
 
-                title:item.nom_type_stand,
+                title:item.nom_type_stand +": "+item.nom_info_type_stand,
                 start:item.date_creation,
                 allDay: true,
                 editable: false,
                 backgroundColor:'#291f16',
                 borderColor: '#291f16',
+                clickable: false
             };
         });
         //get stand
@@ -118,10 +121,11 @@
 
         var events = membreStandData.map(function(item) {
             return {
-                title: item.nom_membre || 'Recrutement',
+                title: 'Recrutement: ' + item.prenom_emp,
                 start: item.date_membre,
                 allDay: true,
-                editable: false
+                editable: false,
+                
             };
         });
 

@@ -12,7 +12,7 @@
     <div class="col-md-12">
         <div class="card shadow mb-4">
             <div class="card-header">
-                <h5 class="card-title fw-semibold mb-4">Planification galerie </h5>
+                <h5 class="card-title fw-semibold mb-4">Planification de galerie </h5>
             </div>
             <div class="card-body">
                   <!-- Afficher le message de succès -->
