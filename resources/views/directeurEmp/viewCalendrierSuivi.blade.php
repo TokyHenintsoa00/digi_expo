@@ -31,6 +31,7 @@
                 editable: false,
                 backgroundColor:'#ff0033',
                 borderColor: '#ff0033',
+                clickable: false
 
             };
         });
@@ -125,7 +126,7 @@
                 start: item.date_membre,
                 allDay: true,
                 editable: false,
-                
+
             };
         });
 
@@ -133,6 +134,13 @@
             ...events5, ...events6, ...events7
         ];
         console.log(allEvents);
+
+
+          // Ajoutez une propriété personnalisée pour indiquer si un événement est cliquable
+            allEvents = allEvents.map(event => ({
+                ...event,
+                isClickable: event.clickable !== false // Par défaut, cliquable sauf si clickable est false
+            }));
 
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -149,6 +157,7 @@
             dayMaxEvents: true,
             events: allEvents,
 
+            // titre au moment de la passage de la souris
             eventMouseEnter: function(info) {
                 var tooltip = document.createElement('div');
                 tooltip.id = 'eventTooltip';
@@ -173,6 +182,7 @@
                 });
             },
 
+            //new event dans le calendrier
             select: function(arg) {
                 var now = new Date();
                 var startDateTime = new Date(arg.start);
@@ -298,6 +308,11 @@
 
             //supprimer evenement
             eventClick: function(arg) {
+
+                if (!arg.event.extendedProps.isClickable) {
+                   return null;
+                }
+
                 if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
                     arg.event.remove();
 
@@ -321,7 +336,7 @@
 
 
 
-            //changement evenement
+            //changement evenement =>deplacement de evenement
             eventDrop: function(info) {
             // Récupérer la durée initiale
             var oldStart = info.oldEvent.start;
@@ -355,10 +370,6 @@
                 info.revert();
             });
         }
-
-
-
-
         });
 
         calendar.render();
