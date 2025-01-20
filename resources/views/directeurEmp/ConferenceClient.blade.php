@@ -27,11 +27,11 @@
                     <div class="form-row">
                             <div class="form-group col-md-6 mb-3">
                                 <label for="inputEmail4">Titre de la video</label>
-                                <input type="text" class="form-control" id="inputEmail5" name="titre_video">
+                                <input type="text" class="form-control" id="inputEmail5" name="titre_reunion">
                         </div>
                         <div class="form-group col-md-6 mb-3">
                             <label for="inputEmail4">Date de votre galerie</label>
-                            <input type="datetime-local" class="form-control" id="inputEmail5" name="date_heure_galerie">
+                            <input type="datetime-local" class="form-control" id="inputEmail5" name="date_heure_reunion">
                         </div>
                         <div class="form-group col-md-6 mb-3">
                             <label for="inputAddress2">Liens de la video</label>
