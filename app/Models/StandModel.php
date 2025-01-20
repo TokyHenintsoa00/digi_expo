@@ -247,6 +247,11 @@ class StandModel extends Model
         return $result;
     }
 
+    public function getViewMembreStandV1ByIidStandV1($id_stand)
+    {
+        $result = DB::select("SELECT * FROM v_membre_stand_v1 WHERE id_stand = ? and id_etat_personne IN(7,2)",[$id_stand]);
+        return $result;
+    }
 
     //valider et publier un stand
     //---UPDATE ETAT------
@@ -401,8 +406,11 @@ class StandModel extends Model
         // v_membre_stand_v1
         return DB::table('v_membre_stand_v1')
             ->whereIn('id_stand',$id_stand)
+            ->whereIn('id_etat_personne', [7, 2])
             ->get();
     }
+
+
 
     public function viewInfoTypeStandByIdStandCalendar(array $stand_ids)
     {

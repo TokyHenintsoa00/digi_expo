@@ -162,4 +162,11 @@ class VideoModel extends Model
         }
     }
 
+    public function getAllReunionPersonne()
+    {
+        $result = DB::select("SELECT video_conference_client.*,nom_Stand from video_conference_client
+                                join stand on video_conference_client.id_stand = stand.id_Stand; ");
+        return $result;
+    }
+
 }

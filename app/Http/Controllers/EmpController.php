@@ -335,7 +335,7 @@ class EmpController extends Controller
         $id_emp = Session::get('id_emp');
         $getStandEmp = $getStandModel->getAllStandSuccessByEmp($id_emp);
         $id_stand = $getStandEmp[0]->id_stand;
-        $membre_stand = $getStandModel->getViewMembreStandV1ByIidStand($id_stand);
+        $membre_stand = $getStandModel->getViewMembreStandV1ByIidStandV1($id_stand);
         return view('emp.viewMessageEmp',compact('membre_stand'));
     }
 
