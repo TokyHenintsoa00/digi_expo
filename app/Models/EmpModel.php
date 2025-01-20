@@ -290,6 +290,8 @@ class EmpModel extends Model
         return $result;
     }
 
+    
+
     //list de toute les employer non licensier
     public function getAllEmployer()
     {

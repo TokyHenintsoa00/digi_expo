@@ -623,8 +623,21 @@ class AdminController extends Controller
         $contenue_photo = $getStandModel->viewInfoTypeStand();
         $contenue_video = $getStandModel->getAllVideoContenue();
         $video_conference = $getVideoModel->viewVideoConference();
+
+        $getAllDirecteur = $getEmpModel->getAllDirecteur();
+
+        $id_directeur = collect($getAllDirecteur)->pluck('id_directeur')->toArray();
+
+        $stand_directeur = $getStandModel->getAllStandEmpByIdEmpV1($id_directeur);
+        $stand_ids = collect($stand_directeur)->pluck('id_stand')->toArray();
+        
+        $contenue_info = $getStandModel->getAllInfoTypeStandCalendar($stand_ids);
+        $id_info_type_stand = collect($contenue_info)->pluck('id_info_type_stand')->toArray();
+        $contenue_brochure = $getStandModel->getBrochureCalendar($id_info_type_stand);
+
+
         return view('admin.viewCalendrierSuiviAdmin',compact('events','globalStand','allEmp',
-        'getMouvementPersonnel','contenue_photo','contenue_video','video_conference'));
+        'getMouvementPersonnel','contenue_photo','contenue_video','video_conference','contenue_brochure'));
     }
 
 

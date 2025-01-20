@@ -10,10 +10,11 @@
 
         let events7 = videConference.map(function(item) {
             return{
-                title: 'Video conference',
+                title: 'Video conference : '+item.titre_video,
                 start:item.date_heure_salle_conference,
                 allDay: true,
                 editable: false,
+                clickable: false
 
 
             };
@@ -42,7 +43,7 @@
 
         let events5 = brochureEvent.map(function (item) {
             return{
-                title:item.nom_brochure_stand,
+                title:"Brochure :"+item.nom_brochure_stand,
                 start:item.date_ajout_brochure,
                 allDay: true,
                 //pour eveiter le deplacement
@@ -60,12 +61,13 @@
 
         let events4 = videoEvent.map(function (item) {
             return{
-                title:item.titre_video,
+                title:"Galerie video: "+item.titre_video,
                 start:item.date_creation_video,
                 allDay: true,
                 editable: false,
                 backgroundColor:'#291f16',
                 borderColor: '#291f16',
+                clickable: false
 
             };
         });
@@ -79,7 +81,7 @@
         let events3 = photoEvent.map(function(item) {
             return{
 
-                title:item.nom_type_stand +": "+item.nom_info_type_stand,
+                title:"Galerie photo : "+item.nom_type_stand +" "+item.nom_info_type_stand,
                 start:item.date_creation,
                 allDay: true,
                 editable: false,
@@ -88,18 +90,21 @@
                 clickable: false
             };
         });
+
         //get stand
         let standEvent = @json($stand_directeur);
         console.log(standEvent);
 
         let events2 = standEvent.map(function(item){
             return{
-                title:item.nom_stand,
+                title:"Exposition: " +item.nom_stand,
                 start:item.date_de_creation_stand,
                 allDay: true,
                 editable: false,
                 backgroundColor:'#67bc44',
                 borderColor: '#67bc44',
+                clickable: false
+
             };
         });
 
@@ -108,12 +113,13 @@
         var events1 = eventData.map(function(item) {
             return {
                 id: item.id,
-                title: item.title || 'TEST',
+                title: item.title,
                 start: item.start,
                 end: item.end,
                 backgroundColor: item.color,
                 borderColor: item.color,
                 textColor: item.white
+
             };
         });
 

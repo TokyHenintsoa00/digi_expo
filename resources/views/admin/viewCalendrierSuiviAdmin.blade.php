@@ -6,16 +6,32 @@
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
 
+        let brochure = @json($contenue_brochure);
+
+        let events8 = brochure.map(function(item){
+            return{
+                title:"Brochure :"+item.nom_brochure_stand,
+                start:item.date_ajout_brochure,
+                allDay: true,
+                //pour eveiter le deplacement
+                editable: false,
+                backgroundColor:'#291f16',
+                borderColor: '#291f16',
+                clickable: false
+            }
+        });
 
         let video_conference = @json($video_conference);
         console.log(video_conference);
 
         let events7 = video_conference.map(function(item){
             return{
-                title:'Video conference',
+                title: 'Video conference : '+item.titre_video,
                 start:item.date_heure_salle_conference,
                 allDay: true,
                 editable: false,
+                clickable: false
+
             };
 
         });
@@ -26,20 +42,26 @@
         let video_contenue = @json($contenue_video);
         let events6 = video_contenue.map(function(item){
             return{
-                title:'Contenue video',
+                title:"Galerie video: "+item.titre_video,
                 start:item.date_creation_video,
                 allDay: true,
                 editable: false,
+                clickable: false,
+                backgroundColor:'#291f16',
+                borderColor: '#291f16',
             };
         });
 
         let  photo = @json($contenue_photo);
         let events5 = photo.map(function(item){
             return{
-                title:'Contenue photo',
+                title:"Galerie photo : "+item.nom_type_stand +" "+item.nom_info_type_stand,
                 start : item.date_creation,
                 allDay: true,
                 editable: false,
+                clickable: false,
+                backgroundColor:'#291f16',
+                borderColor: '#291f16',
             };
         });
 
@@ -53,6 +75,7 @@
                 editable: false,
                 backgroundColor: '#ff0000',
                 borderColor: '#ff0000',
+                clickable: false
 
             };
         });
@@ -61,13 +84,14 @@
         let emp = @json($allEmp);
         let events3 = emp.map(function(item) {
             return{
-                title:item.nom_emp ||'Employer',
+                title: 'Recrutement: ' + item.prenom_emp,
                 allDay: true,
                 editable: false,
                 start:item.date_membre,
                 backgroundColor: item.color,
                 borderColor: item.color,
-                textColor: item.white
+                textColor: item.white,
+                clickable: false
             };
         });
 
@@ -75,12 +99,13 @@
         let stand = @json($globalStand);
         let events2 = stand.map(function(item){
             return{
-                title:item.nom_stand,
+                title:"Exposition: " +item.nom_stand,
                 start:item.date_de_creation_stand,
                 allDay: true,
                 editable: false,
-                backgroundColor:'#291f16',
-                borderColor: '#291f16',
+                backgroundColor:'#67bc44',
+                borderColor: '#67bc44',
+                clickable: false
             };
         });
 
@@ -90,7 +115,7 @@
         let events1 = getAllEvents.map(function (item) {
             return{
                 id: item.id,
-                title: item.title || 'TEST',
+                title: item.title,
                 start: item.start,
                 end: item.end,
                 backgroundColor: item.color,
@@ -100,9 +125,16 @@
         });
 
         var allEvents = [
-            ...events1, ...events2, ...events3, ...events4, ...events5, ...events6, ...events7
+            ...events1, ...events2, ...events3, ...events4, ...events5, ...events6, ...events7, ...events8
         ];
         // console.log(allEvents);
+
+        // Ajoutez une propriété personnalisée pour indiquer si un événement est cliquable
+        allEvents = allEvents.map(event => ({
+                ...event,
+                isClickable: event.clickable !== false // Par défaut, cliquable sauf si clickable est false
+        }));
+
 
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -268,6 +300,10 @@
 
             //supprimer evenement
             eventClick: function(arg) {
+                if (!arg.event.extendedProps.isClickable) {
+                   return null;
+                }
+
                 if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
                     arg.event.remove();
 

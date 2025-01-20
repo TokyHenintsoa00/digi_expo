@@ -185,6 +185,26 @@ class StandModel extends Model
     }
 
 
+    public function getAllStandEmpByIdEmpV1(array $id_directeur)
+    {
+        return DB::table('v_membre_stand')
+        ->select(
+            DB::raw('DISTINCT(id_stand) AS id_stand'),
+            'date_de_creation_stand',
+            'nom_stand',
+            'id_directeur',
+            'description_stand',
+            'img_stand',
+            'id_etat',
+            'nom_directeur',
+            'prenom_directeur'
+        )
+        ->whereIn('id_etat', [3, 4]) // Clause IN pour `id_etat`
+        ->where('id_directeur', $id_directeur) // Condition pour `id_directeur`
+        ->get();
+    }
+
+
 
     //function qui select les stand am resaka publier publier any am cote employer[ID EMPLOYER]
     public function getAllStandEmpById($id_emp)
