@@ -99,6 +99,8 @@ Route::prefix('directeur')->group(function(){
     Route::get('/viewJustificationDemissionEditeur',[DirecteurEmpController::class,'viewJustificationDemissionEditeur'])->name('viewJustificationDemissionEditeur');
     Route::get('/viewGalerie',[DirecteurEmpController::class,'viewGalerie'])->name('viewGalerie');
     Route::post('/planificationGallerie',[DirecteurEmpController::class,'planificationGallerie'])->name('planificationGallerie');
+    Route::post('/ajoutDeReunion',[DirecteurEmpController::class,'ajoutDeReunion'])->name('ajoutDeReunion');
+
 });
 // -----------------Authentification--------------------------------------------------------------------------------
 

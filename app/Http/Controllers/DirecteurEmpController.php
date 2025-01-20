@@ -812,7 +812,7 @@ class DirecteurEmpController extends Controller
         $date_temoignage = $request->date_temoignage;
         $liens_video = $request->liens_video;
 
-        $getTemoignage = new Temoignage;
+        $getTemoignage = new Temoignage();
         $insertTemoignage = $getTemoignage->insertTemoignage($id_stand,$id_directeur,$date_temoignage,$liens_video,$titre);
 
         return redirect()->route('viewPlanificationTemoignage')->with('success', 'Temoignage planifier');
@@ -833,6 +833,25 @@ class DirecteurEmpController extends Controller
 
     public function viewConferenceClient()
     {
-        return view('directeurEmp.ConferenceClient');
+        $id_directeur = Session::get('id_emp');
+
+        $getStandModel = new StandModel();
+        //get la fonction de stand du directeur
+        $standDirecteur = $getStandModel->getAllStandEmpByIdEmp($id_directeur);
+
+        return view('directeurEmp.ConferenceClient',compact('standDirecteur'));
+    }
+
+    public function ajoutDeReunion(Request $request)
+    {
+        $date_heure = $request->date_heure_reunion;
+        $liens = $request->liens_video;
+        $id_stand = $request->id_stand;
+
+        $getVideoModel = new VideoModel();
+        $reunionPersonne = $getVideoModel->reunionPersonne($id_stand,$date_heure,$liens);
+
+        return redirect()->route('viewConferenceClient')->with('success', 'AudioConference planifier');
+
     }
 }

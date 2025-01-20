@@ -148,4 +148,18 @@ class VideoModel extends Model
         return $result;
     }
 
+
+    public function reunionPersonne($id_stand,$date_debut_conference_client,$liens_video)
+    {
+        DB::beginTransaction();
+        try {
+            DB::insert("INSERT INTO video_conference_client(id_stand,date_debut_conference_client,liens_video)VALUES(?,?,?)",[$id_stand,$date_debut_conference_client,$liens_video]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+        }
+    }
+
 }
