@@ -367,7 +367,9 @@ html, body {
             @yield('ConferenceClientSection')
             @yield('justificationDemissionEditeurSection')
             @yield('PlanificationGalerieSection')
-
+            @yield('listTemoignageSection')
+            @yield('ModificationTemoignageSection')
+            @yield('AjoutLiensTemoignageSection')
         </div>
     </div>
   </div>

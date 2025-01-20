@@ -35,7 +35,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Consultez l'historique, listez les temoignage, et ajoutez des liens si nécessaire</h5>
                             <p class="card-text">Assurez-vous que toutes les temoignage ont les liens appropriés pour une accessibilité optimale.</p>
-                            <a href="" class="btn btn-primary">Voir l'historique et gérer</a>
+                            <a href="{{route('viewListTemoignage')}}" class="btn btn-primary">Voir l'historique et gérer</a>
                         </div>
                     </div>
                 </div>

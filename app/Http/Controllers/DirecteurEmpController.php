@@ -854,4 +854,62 @@ class DirecteurEmpController extends Controller
         return redirect()->route('viewConferenceClient')->with('success', 'AudioConference planifier');
 
     }
+
+    public function viewListTemoignage()
+    {
+        $getTemoignageModel = new Temoignage();
+        $temoignage = $getTemoignageModel->getAllTemoignage();
+        return view('directeurEmp.ListTemoignage',compact('temoignage'));
+    }
+
+    public function viewModificationemoignage(Request $request)
+    {
+        $id_temoignage = $request->id_temoignage;
+        $id_directeur = Session::get('id_emp');
+        $getStandModel = new StandModel();
+        $getStandDirecteur = $getStandModel->getAllStandSuccessByDirecteur($id_directeur);
+        return view('directeurEmp.ModificationTemoigange',compact('getStandDirecteur','id_temoignage'));
+    }
+
+
+    public function modificationTemoignage(Request $request)
+    {
+        $titre = $request->titre;
+        $id_stand = $request->id_stand;
+        $date_temoignage = $request->date_temoignage;
+        $liens_video = $request->liens_video;
+        $id_temoignage = $request->id_temoignage;
+
+        $getTemoignageModel = new Temoignage();
+
+        if ($liens_video == null)
+        {
+            $getModificationWithLink = $getTemoignageModel->modificationTemoignageWithoutLink($id_stand,$date_temoignage,$titre,$id_temoignage);
+            return redirect()->route('viewTemoignage')->with('success', 'Gestion de temoignage modifié');
+
+        } else {
+            $getModificationWithLink = $getTemoignageModel->modificationTemoignageWithLink($id_stand,$date_temoignage,$liens_video,$titre,$id_temoignage);
+            return redirect()->route('viewTemoignage')->with('success', 'Gestion de temoignage modifié');
+        }
+    }
+
+
+    public function viewAjoutLiensTemoignage(Request $request)
+    {
+        $id_temoignage = $request->id_temoignage;
+        return view('directeurEmp.AjoutLiensTemoignage',compact('id_temoignage'));
+    }
+
+
+    public function ajoutLiensTemoignage(Request $request)
+    {
+        $liens_video = $request->liens_video;
+        $id_temoignage = $request->id_temoignage;
+
+        $temoignage = new Temoignage();
+        $addLink = $temoignage->addLinkTemoignage($liens_video,$id_temoignage);
+        return redirect()->route('viewTemoignage')->with('success', 'Gestion de temoignage modifié');
+
+    }
+
 }

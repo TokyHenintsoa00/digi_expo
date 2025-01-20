@@ -100,6 +100,11 @@ Route::prefix('directeur')->group(function(){
     Route::get('/viewGalerie',[DirecteurEmpController::class,'viewGalerie'])->name('viewGalerie');
     Route::post('/planificationGallerie',[DirecteurEmpController::class,'planificationGallerie'])->name('planificationGallerie');
     Route::post('/ajoutDeReunion',[DirecteurEmpController::class,'ajoutDeReunion'])->name('ajoutDeReunion');
+    Route::get('/viewListTemoignage',[DirecteurEmpController::class,'viewListTemoignage'])->name('viewListTemoignage');
+    Route::get('/viewModificationemoignage',[DirecteurEmpController::class,'viewModificationemoignage'])->name('viewModificationemoignage');
+    Route::post('/modificationTemoignage',[DirecteurEmpController::class,'modificationTemoignage'])->name('modificationTemoignage');
+    Route::get('/viewAjoutLiensTemoignage',[DirecteurEmpController::class,'viewAjoutLiensTemoignage'])->name('viewAjoutLiensTemoignage');
+    Route::post('/ajoutLiensTemoignage',[DirecteurEmpController::class,'ajoutLiensTemoignage'])->name('ajoutLiensTemoignage');
 
 });
 // -----------------Authentification--------------------------------------------------------------------------------

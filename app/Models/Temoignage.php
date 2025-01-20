@@ -39,4 +39,48 @@ class Temoignage extends Model
         return $result;
     }
 
+
+    public function modificationTemoignageWithLink($id_stand,$date_temoignage,$liens_video,$titre,$id_temoignage)
+    {
+        DB::beginTransaction();
+        try
+        {
+            DB::update("UPDATE temoignage set id_stand = ?, date_temoignage = ?, liens_video = ?, titre = ? WHERE id_temoignage=?",[$id_stand,$date_temoignage,$liens_video,$titre,$id_temoignage]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+        }
+    }
+
+
+    public function modificationTemoignageWithoutLink($id_stand,$date_temoignage,$titre,$id_temoignage)
+    {
+        DB::beginTransaction();
+        try
+        {
+            DB::update("UPDATE temoignage set id_stand = ?, date_temoignage = ?, titre = ? WHERE id_temoignage=?",[$id_stand,$date_temoignage,$titre,$id_temoignage]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+        }
+    }
+
+    public function addLinkTemoignage($link_video,$id_temoignage)
+    {
+        DB::beginTransaction();
+        try
+        {
+            DB::update("UPDATE temoignage set liens_video = ? where id_temoignage = ?",[$link_video,$id_temoignage]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+        }
+    }
+
 }
