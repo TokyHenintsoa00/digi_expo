@@ -4,6 +4,8 @@
     #map {
         height: 400px;
         margin-bottom: 20px;
+        position: relative; /* Nécessaire pour que z-index fonctionne */
+  z-index: 1; /* Plus petit z-index = derrière */
     }
 
     .organisateur-info {
@@ -57,7 +59,7 @@
     </script>
 </section>
 <center>
-    <h1>Liste des expositions</h1>
+    <h1>Liste des stand d'expositions</h1>
 
 </center>
 

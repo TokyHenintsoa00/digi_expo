@@ -208,7 +208,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{route('viewPermissionDemissionEmp')}}" aria-expanded="false">
                       <span>
-                        <i class="bi bi-door-open"></i> </span>
+                        <i class="ti ti-door-exit"></i> </span>
                       <span class="hide-menu">Demande de démission</span>
                     </a>
                 </li>
