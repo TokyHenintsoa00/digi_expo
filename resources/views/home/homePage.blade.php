@@ -5,7 +5,7 @@
         height: 400px;
         margin-bottom: 20px;
         position: relative; /* Nécessaire pour que z-index fonctionne */
-  z-index: 1; /* Plus petit z-index = derrière */
+        z-index: 1; /* Plus petit z-index = derrière */
     }
 
     .organisateur-info {

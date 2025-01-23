@@ -26,8 +26,9 @@
     border-left: 1px solid #ddd;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    z-index: 1001; /* Doit être au-dessus de l'overlay */
+    z-index: 1002; /* Doit être au-dessus de l'overlay */
     transition: right 0.4s ease; /* Transition pour le slide */
+
   }
 
   /* Apparition du panneau */
@@ -139,6 +140,88 @@ html, body {
       color: white;
     }
 
+/* Barre de navigation horizontale */
+/* Barre de navigation horizontale */
+aside.top-navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff; /* Couleur de fond */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    overflow-x: auto; /* Ajoute un défilement horizontal si l'écran est trop petit */
+    white-space: nowrap; /* Empêche les éléments de passer à la ligne */
+}
+
+/* Logo */
+.brand-logo {
+    margin-right: 20px;
+    flex-shrink: 0; /* Empêche le logo de rétrécir */
+}
+
+/* Liste des liens */
+.navbar-menu {
+    flex-grow: 1;
+}
+
+.navbar-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px; /* Espacement entre les éléments */
+}
+
+.navbar-item {
+    text-align: center;
+    flex-shrink: 0; /* Empêche les liens de se rétrécir */
+}
+
+/* Lien de navigation */
+.navbar-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap; /* Empêche les titres de se couper */
+}
+
+.navbar-link i {
+    font-size: 20px;
+}
+
+.navbar-link:hover {
+    color: #007bff; /* Couleur au survol */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-link span {
+        font-size: 12px; /* Réduit la taille du texte pour les petits écrans */
+    }
+
+    .navbar-list {
+        gap: 15px; /* Réduit l'espacement entre les liens */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-link i {
+        font-size: 18px; /* Réduit légèrement l'icône */
+    }
+
+    .navbar-link span {
+        font-size: 10px; /* Texte encore plus petit sur mobile */
+    }
+}
+
 
     </style>
 </head>
@@ -157,107 +240,73 @@ html, body {
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar">
-      <!-- Sidebar scroll-->
-      <div>
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="/" class="text-nowrap logo-img">
-            <img src="../assets/images/logos/logo.svg" width="190" alt="" style="margin-top: 20px;" />
-
-          </a>
-          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-            <i class="ti ti-x fs-8"></i>
-          </div>
+    <aside class="top-navbar">
+        <div class="brand-logo d-flex align-items-center">
+            <a href="/" class="text-nowrap logo-img">
+                <img src="../assets/images/logos/logo.svg" width="190" alt="Logo" style="margin-top: 10px;" />
+            </a>
         </div>
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-            <ul id="sidebarnav">
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Responsable</span>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('viewDirecteurEmpPage')}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-table"></i> <!-- Icône mise à jour pour "Stand" -->
-                        </span>
-                        <span class="hide-menu">Publication de stand</span>
+        <nav class="navbar-menu d-flex justify-content-around">
+            <ul class="navbar-list d-flex">
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewDirecteurEmpPage')}}">
+                        <i class="ti ti-table"></i>
+                        <span>Publication de stand</span>
                     </a>
                 </li>
-
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('viewGestionPersonnel')}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-user-check"></i> <!-- Icône mise à jour pour "Recrutement employer" -->
-                        </span>
-                        <span class="hide-menu">Gestion personnel</span>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewGestionPersonnel')}}">
+                        <i class="ti ti-user-check"></i>
+                        <span>Gestion personnel</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('viewGestionBrochure')}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-file-text"></i> <!-- Icône mise à jour pour "Brouchure" -->
-                        </span>
-                        <span class="hide-menu">Gestion de brouchure</span>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewGestionBrochure')}}">
+                        <i class="ti ti-file-text"></i>
+                        <span>Gestion de brochure</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('viewGestionContenue')}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-file-info"></i> <!-- Icône mise à jour pour "Brouchure et poster" -->
-                        </span>
-                        <span class="hide-menu">Gestion de contenue</span>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewGestionContenue')}}">
+                        <i class="ti ti-file-info"></i>
+                        <span>Gestion de contenu</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('viewDemandeNouvelleStand')}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-hand-stop"></i> <!-- Icône mise à jour pour "Brouchure et poster" -->
-                        </span>
-                        <span class="hide-menu">Demande pour une<br>nouvelle stand</span>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewDemandeNouvelleStand')}}">
+                        <i class="ti ti-hand-stop"></i>
+                        <span>Demande de stand</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{'viewVideoConference'}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-video"></i>
-                        </span>
-                        <span class="hide-menu">Video conference</span>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{'viewVideoConference'}}">
+                        <i class="ti ti-video"></i>
+                        <span>Vidéo conférence</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{'viewTemoignage'}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-microphone-2"></i>
-                        </span>
-                        <span class="hide-menu">temoignage</span>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{'viewTemoignage'}}">
+                        <i class="ti ti-microphone-2"></i>
+                        <span>Témoignage</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('viewCalendrierSuivi')}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-calendar"></i>
-                        </span>
-                        <span class="hide-menu">Calendrier de suivi</span>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewCalendrierSuivi')}}">
+                        <i class="ti ti-calendar"></i>
+                        <span>Calendrier</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('viewMessageDirecteur')}}" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-help"></i>  </span>
-                        <span class="hide-menu">Disscussion avec <br>les employer</span>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewMessageDirecteur')}}">
+                        <i class="ti ti-help"></i>
+                        <span>Discussion</span>
                     </a>
                 </li>
             </ul>
         </nav>
-        <!-- End Sidebar navigation -->
-      </div>
-      <!-- End Sidebar scroll-->
     </aside>
+
+
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">
@@ -267,12 +316,14 @@ html, body {
         <nav class="navbar navbar-expand-lg navbar-light">
             <ul class="navbar-nav">
               <li class="nav-item d-block d-xl-none">
-                <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                {{-- <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
                   <i class="ti ti-menu-2"></i>
-                </a>
+                </a> --}}
               </li>
-<!-- Overlay sombre (initialement caché) -->
+                <!-- Overlay sombre (initialement caché) -->
                 <div id="overlay" class="hidden"></div>
+                
+
                 <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
                     <i class="ti ti-bell-ringing"></i>

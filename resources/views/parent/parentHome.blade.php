@@ -10,19 +10,49 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style1.css">
     <style>
+       footer {
+        width: 100%;
+        margin: 0;
+        padding: 20px 0;
+        background-color: #001f54;
+        color: white;
+        }
+
         footer ul li a:hover {
         text-decoration: underline;
         }
+
         footer form input {
         border: 1px solid #ddd;
         border-radius: 3px;
         }
+
         footer form button:hover {
         background-color: #e0b20d;
         }
+
         footer h5 {
         color: white;
         }
+
+        footer .container-fluid {
+        max-width: 100%;
+        padding: 0 15px;
+        }
+
+        /* Media queries pour s'assurer du bon rendu sur différents écrans */
+        @media (min-width: 1200px) {
+        footer {
+            padding: 30px 0;
+        }
+        }
+
+        @media (max-width: 768px) {
+        footer {
+            text-align: center;
+        }
+        }
+
 
         html, body {
         height: 100%; /* Assurez-vous que le body et html prennent toute la hauteur */
@@ -188,13 +218,15 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
-  <footer style="background-color: #001f54; color: white; padding: 20px 0;">
-    <div class="container">
-    <div class="text-center" style="font-size: 14px;">
-      <p>Copyright ©2024 Université d'Antananarivo. Tous droits réservés.</p>
-      <p>Développé par <a href="#" style="color: #ffca28;">Direction de la Communication, Marketing, et Relations Publiques</a></p>
+  <footer style="background-color: #001f54; color: white; padding: 20px 0; width: 100%; margin: 0;">
+    <div class="container" style="max-width: 100%; padding: 0 15px;">
+      <div class="text-center" style="font-size: 14px;">
+        <p>Copyright ©2024 Université d'Antananarivo. Tous droits réservés.</p>
+        <p>Développé par <a href="#" style="color: #ffca28;">Direction de la Communication, Marketing, et Relations Publiques</a></p>
+      </div>
     </div>
-  </div>
+  </footer>
+
 </footer>
 
 </body>
