@@ -384,8 +384,13 @@
 
 <style>
     #calendar {
-        max-width: 1100px;
-        margin: 0 auto;
+        max-width: 1100px; /* Largeur maximale pour éviter de trop remplir l'écran */
+        margin: 20px auto; /* Centre horizontalement et ajoute un peu d'espace vertical */
+        padding: 10px; /* Ajoute un léger padding interne */
+        background-color: #f9f9f9; /* Ajoute un fond léger pour le démarquer */
+        border: 1px solid #ddd; /* Bordure subtile */
+        border-radius: 8px; /* Coins arrondis pour un rendu plus propre */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effet d'ombre pour plus de lisibilité */
     }
 
     #calendar a {
@@ -395,6 +400,16 @@
 
     #calendar a:hover {
         color: black !important;
+    }
+
+    #eventTooltip {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        z-index: 1000;
     }
 </style>
 

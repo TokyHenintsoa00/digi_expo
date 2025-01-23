@@ -20,16 +20,14 @@
     right: -320px; /* Caché hors écran */
     width: 300px;
     height: 100%;
-    /* max-height: 80vh; Hauteur maximale pour permettre le défilement */
     overflow-y: auto; /* Activer le défilement vertical */
     background-color: white;
     border-left: 1px solid #ddd;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    z-index: 1002; /* Doit être au-dessus de l'overlay */
+    z-index: 1100; /* Plus élevé pour être devant le aside */
     transition: right 0.4s ease; /* Transition pour le slide */
-
-  }
+}
 
   /* Apparition du panneau */
   .notifications-panel.show {
@@ -80,7 +78,7 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000; /* Doit être sous le panneau de notifications */
     display: none; /* Caché initialement */
-  }
+}
 
   #overlay.show {
     display: block; /* Affiche l'overlay */
@@ -152,7 +150,7 @@ aside.top-navbar {
     padding: 10px 20px;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 100;
     overflow-x: auto; /* Ajoute un défilement horizontal si l'écran est trop petit */
     white-space: nowrap; /* Empêche les éléments de passer à la ligne */
 }
@@ -239,15 +237,42 @@ aside.top-navbar {
   <!--  Body Wrapper -->
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+      <div class="notifications-panel" id="notificationsPanel">
+        <h5>Notifications</h5>
+          <div class="notifications-content">
+            @forelse($notifications as $notification)
+              <div class="notif-item {{ $notification->is_read ? 'read' : 'unread' }}">
+                <i class="ti ti-bell"></i>
+                <span>
+                  <a href="{{ route('notifications.markAsRead', ['id' => $notification->id]) }}"
+                    class="notification-link"
+                    data-id="{{ $notification->id }}">
+                    {{ $notification->message }}
+                  </a>
+                </span>
+                <small>{{ $notification->created_at->diffForHumans() }}</small>
+              </div>
+            @empty
+              <p>Aucune notification</p>
+            @endforelse
+          </div>
+        <button id="clearAll" class="btn btn-primary">Sortir</button>
+      </div>
+
     <!-- Sidebar Start -->
     <aside class="top-navbar">
         <div class="brand-logo d-flex align-items-center">
             <a href="/" class="text-nowrap logo-img">
                 <img src="../assets/images/logos/logo.svg" width="190" alt="Logo" style="margin-top: 10px;" />
             </a>
+
         </div>
         <nav class="navbar-menu d-flex justify-content-around">
+
             <ul class="navbar-list d-flex">
+
+
+
                 <li class="navbar-item">
                     <a class="navbar-link" href="{{route('viewDirecteurEmpPage')}}">
                         <i class="ti ti-table"></i>
@@ -306,7 +331,6 @@ aside.top-navbar {
         </nav>
     </aside>
 
-
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">
@@ -315,15 +339,9 @@ aside.top-navbar {
 
         <nav class="navbar navbar-expand-lg navbar-light">
             <ul class="navbar-nav">
-              <li class="nav-item d-block d-xl-none">
-                {{-- <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                  <i class="ti ti-menu-2"></i>
-                </a> --}}
-              </li>
                 <!-- Overlay sombre (initialement caché) -->
                 <div id="overlay" class="hidden"></div>
                 
-
                 <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
                     <i class="ti ti-bell-ringing"></i>
@@ -332,57 +350,35 @@ aside.top-navbar {
                     @endif
                     </a>
                 </li>
-
-                <div class="notifications-panel" id="notificationsPanel">
-                    <h5>Notifications</h5>
-                    <div class="notifications-content">
-                      @forelse($notifications as $notification)
-                        <div class="notif-item {{ $notification->is_read ? 'read' : 'unread' }}">
-                          <i class="ti ti-bell"></i>
-                          <span>
-                            <a href="{{ route('notifications.markAsRead', ['id' => $notification->id]) }}"
-                               class="notification-link"
-                               data-id="{{ $notification->id }}">
-                              {{ $notification->message }}
-                            </a>
-                          </span>
-                          <small>{{ $notification->created_at->diffForHumans() }}</small>
-                        </div>
-                      @empty
-                        <p>Aucune notification</p>
-                      @endforelse
-                    </div>
-                    <button id="clearAll" class="btn btn-primary">Sortir</button>
-                  </div>
             </ul>
 
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-                <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                  <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                      <div class="message-body">
-                        <form action="{{ route('getSignOutEmp') }}" method="POST" class="mx-3 mt-2">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-primary d-block">Se déconnecter</button>
-                        </form>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+                    <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                          <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                          <div class="message-body">
+                            <form action="{{ route('getSignOutEmp') }}" method="POST" class="mx-3 mt-2">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-primary d-block">Se déconnecter</button>
+                            </form>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                </div>
 
           </nav>
 
       </header>
 
       <!--  Header End -->
-      <div class="container-fluid">
-        <!--  Row 1 -->
+      <div class="container-fluid mx-auto px-3" style="max-width: 95%;">        <!--  Row 1 -->
         <div class="row">
+
             @yield('directeurEmpPageSection')
             @yield('standDirecteurSection')
             @yield('modificationStandEmpSection')
@@ -421,6 +417,7 @@ aside.top-navbar {
             @yield('listTemoignageSection')
             @yield('ModificationTemoignageSection')
             @yield('AjoutLiensTemoignageSection')
+
         </div>
     </div>
   </div>
