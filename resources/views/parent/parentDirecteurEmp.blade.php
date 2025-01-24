@@ -196,7 +196,7 @@ aside.top-navbar {
 }
 
 .navbar-link:hover {
-    color: #007bff; /* Couleur au survol */
+    color: #EFB719; /* Couleur au survol */
 }
 
 /* Responsive Design */
@@ -341,7 +341,7 @@ aside.top-navbar {
             <ul class="navbar-nav">
                 <!-- Overlay sombre (initialement caché) -->
                 <div id="overlay" class="hidden"></div>
-                
+
                 <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
                     <i class="ti ti-bell-ringing"></i>

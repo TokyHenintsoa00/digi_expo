@@ -69,6 +69,7 @@
                             </div>
                             <td>
                                 <form action="{{route('viewInformationExposition')}}" method="get">
+                                    <input type="hidden" name="id_stand" value="{{$list_stand_membre->id_stand}}">
 
                                     <input type="submit" value="Voir les information" class="btn btn-outline-dark m-1">
                                 </form>
