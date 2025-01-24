@@ -57,14 +57,10 @@
                             <label for="dateFin">Date de fin</label>
                             <input type="date" name="date_fin" id="dateFin" class="form-control" required>
                         </div>
-                    </div>
+
+                        <input type="hidden" name="id_info_type_stand" value="">
 
 
-
-
-                    <input type="hidden" name="id_info_type_stand" value="">
-
-                    <div class="container mt-5">
                             @csrf
                             <div class="form-group col-md-6 mb-3">
                                 <label for="name" class="form-label">Nom du lieu</label>
@@ -75,11 +71,18 @@
                             <input type="hidden" id="latitude" name="latitude">
                             <input type="hidden" id="longitude" name="longitude">
                             <button type="submit" class="btn btn-primary">Ajouter</button>
+
                     </div>
 
 
+
+
+
+
+
+
                 </form>
-                <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+                <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
                 {{-- <script src="{{asset('../assets/js/leaflet.js')}}"></script> --}}
             </div> <!-- /. card-body -->
         </div> <!-- /. card -->
@@ -151,13 +154,6 @@
         maxZoom: 19,
     }).addTo(map);
 
-    // Ajouter les marqueurs pour les lieux existants
-    const locations = @json($locations); // Passer les lieux existants à la vue
-
-    locations.forEach(location => {
-        const marker = L.marker([location.latitude, location.longitude]).addTo(map);
-        marker.bindPopup(`<b>${location.name}</b>`);
-    });
 
 
 

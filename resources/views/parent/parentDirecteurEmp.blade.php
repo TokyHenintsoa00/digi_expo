@@ -221,6 +221,7 @@ aside.top-navbar {
 }
 
 
+
     </style>
 </head>
 <body>
@@ -237,6 +238,7 @@ aside.top-navbar {
   <!--  Body Wrapper -->
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+    {{-- NOTIFICATION PANNEL --}}
       <div class="notifications-panel" id="notificationsPanel">
         <h5>Notifications</h5>
           <div class="notifications-content">
@@ -261,75 +263,75 @@ aside.top-navbar {
 
     <!-- Sidebar Start -->
     <aside class="top-navbar">
-        <div class="brand-logo d-flex align-items-center">
-            <a href="/" class="text-nowrap logo-img">
-                <img src="../assets/images/logos/logo.svg" width="190" alt="Logo" style="margin-top: 10px;" />
-            </a>
+      <div class="brand-logo d-flex align-items-center">
+          <a href="/" class="text-nowrap logo-img">
+              <img src="../assets/images/logos/logo.svg" width="190" alt="Logo" style="margin-top: 10px;" />
+          </a>
+      </div>
+      <nav class="navbar-menu d-flex justify-content-around">
+          <ul class="navbar-list d-flex">
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{route('viewDirecteurEmpPage')}}">
+                      <i class="ti ti-table"></i>
+                      <span>Publication de stand</span>
+                  </a>
+              </li>
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{route('viewGestionPersonnel')}}">
+                      <i class="ti ti-user-check"></i>
+                      <span>Gestion personnel</span>
+                  </a>
+              </li>
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{route('viewGestionBrochure')}}">
+                      <i class="ti ti-file-text"></i>
+                      <span>Gestion de brochure</span>
+                  </a>
+              </li>
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{route('viewGestionContenue')}}">
+                      <i class="ti ti-file-info"></i>
+                      <span>Gestion de contenu</span>
+                  </a>
+              </li>
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{route('viewDemandeNouvelleStand')}}">
+                      <i class="ti ti-hand-stop"></i>
+                      <span>Demande de stand</span>
+                  </a>
+              </li>
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{'viewVideoConference'}}">
+                      <i class="ti ti-video"></i>
+                      <span>Vidéo conférence</span>
+                  </a>
+              </li>
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{'viewTemoignage'}}">
+                      <i class="ti ti-microphone-2"></i>
+                      <span>Témoignage</span>
+                  </a>
+              </li>
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{route('viewCalendrierSuivi')}}">
+                      <i class="ti ti-calendar"></i>
+                      <span>Calendrier</span>
+                  </a>
+              </li>
+              <li class="navbar-item">
+                  <a class="navbar-link" href="{{route('viewMessageDirecteur')}}">
+                      <i class="ti ti-help"></i>
+                      <span>Discussion</span>
+                  </a>
+              </li>
 
-        </div>
-        <nav class="navbar-menu d-flex justify-content-around">
-
-            <ul class="navbar-list d-flex">
 
 
+          </ul>
 
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewDirecteurEmpPage')}}">
-                        <i class="ti ti-table"></i>
-                        <span>Publication de stand</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewGestionPersonnel')}}">
-                        <i class="ti ti-user-check"></i>
-                        <span>Gestion personnel</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewGestionBrochure')}}">
-                        <i class="ti ti-file-text"></i>
-                        <span>Gestion de brochure</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewGestionContenue')}}">
-                        <i class="ti ti-file-info"></i>
-                        <span>Gestion de contenu</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewDemandeNouvelleStand')}}">
-                        <i class="ti ti-hand-stop"></i>
-                        <span>Demande de stand</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{'viewVideoConference'}}">
-                        <i class="ti ti-video"></i>
-                        <span>Vidéo conférence</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{'viewTemoignage'}}">
-                        <i class="ti ti-microphone-2"></i>
-                        <span>Témoignage</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewCalendrierSuivi')}}">
-                        <i class="ti ti-calendar"></i>
-                        <span>Calendrier</span>
-                    </a>
-                </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewMessageDirecteur')}}">
-                        <i class="ti ti-help"></i>
-                        <span>Discussion</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+      </nav>
+  </aside>
+
 
     <!--  Sidebar End -->
     <!--  Main wrapper -->
@@ -430,32 +432,35 @@ aside.top-navbar {
   <script src="{{asset('../assets/js/dashboard.js')}}"></script>
   <script>
 
-$(document).ready(function() {
-  $('#notifBell').on('click', function() {
-    $('#notificationsPanel').toggleClass('show');
-    $('#overlay').toggleClass('show');
-    $('.notification-count').remove();
-  });
+    $(document).ready(function() {
+    $('#notifBell').on('click', function() {
+        $('#notificationsPanel').toggleClass('show');
+        $('#overlay').toggleClass('show');
+        $('.notification-count').remove();
+    });
 
-  $('.notification-link').on('click', function(e)
-  {
-        e.preventDefault();
-        let url = $(this).attr('href');
+    $('.notification-link').on('click', function(e)
+    {
+            e.preventDefault();
+            let url = $(this).attr('href');
 
-        // Marque la notification comme lue en arrière-plan
-        $.get(url, function() {
-        $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
-            window.location.href = url;
-        });
-  });
+            // Marque la notification comme lue en arrière-plan
+            $.get(url, function() {
+            $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
+                window.location.href = url;
+            });
+    });
 
-  $('#clearAll, #overlay').on('click', function() {
-    $('#notificationsPanel').removeClass('show');
-    $('#overlay').removeClass('show');
-  });
+    $('#clearAll, #overlay').on('click', function() {
+        $('#notificationsPanel').removeClass('show');
+        $('#overlay').removeClass('show');
+    });
 
 
-});
+    });
+
+
+
 </script>
 <footer>
     <div class="container">

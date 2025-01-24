@@ -1,6 +1,11 @@
 @extends('parent.ParentAdmin')
 
 @section('dasboardAdminSection')
+
+<style>
+    
+</style>
+
 <head>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
@@ -14,7 +19,7 @@
             </div>
             <h5 class="card-title text-muted">Témoignage</h5>
             <h3 class="font-weight-bold">{{$countTemoignage}}</h3>
-          
+
         </div>
     </div>
 </div>

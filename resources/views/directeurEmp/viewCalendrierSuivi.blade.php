@@ -384,14 +384,26 @@
 
 <style>
     #calendar {
-        max-width: 1100px; /* Largeur maximale pour éviter de trop remplir l'écran */
-        margin: 20px auto; /* Centre horizontalement et ajoute un peu d'espace vertical */
-        padding: 10px; /* Ajoute un léger padding interne */
-        background-color: #f9f9f9; /* Ajoute un fond léger pour le démarquer */
-        border: 1px solid #ddd; /* Bordure subtile */
-        border-radius: 8px; /* Coins arrondis pour un rendu plus propre */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effet d'ombre pour plus de lisibilité */
+    max-width: 1100px; /* Largeur maximale */
+    margin: 20px auto; /* Centre horizontalement */
+    padding: 10px; /* Ajoute un léger padding interne */
+    border-radius: 8px; /* Coins arrondis pour un rendu plus propre */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
+    position: relative;
+    left: -20px; /* Décale légèrement vers la gauche */
+}
+@media (min-width: 1200px) {
+    #calendar {
+        left: -40px; /* Décalage plus important pour les grands écrans */
     }
+}
+
+@media (max-width: 768px) {
+    #calendar {
+        left: 0; /* Supprime le décalage sur les petits écrans */
+    }
+}
+
 
     #calendar a {
         color: black !important;

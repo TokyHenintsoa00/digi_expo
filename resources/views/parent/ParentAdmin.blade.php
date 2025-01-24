@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
   <link rel="stylesheet" href="assets/css/style1.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+
 
   <style>
     html, body {
@@ -56,6 +56,91 @@
     background-color: #f6f9fc;
   }
 
+
+
+  /* Barre de navigation horizontale */
+aside.top-navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff; /* Couleur de fond */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto; /* Ajoute un défilement horizontal si l'écran est trop petit */
+    white-space: nowrap; /* Empêche les éléments de passer à la ligne */
+}
+
+/* Logo */
+.brand-logo {
+    margin-right: 20px;
+    flex-shrink: 0; /* Empêche le logo de rétrécir */
+}
+
+/* Liste des liens */
+.navbar-menu {
+    flex-grow: 1;
+}
+
+.navbar-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px; /* Espacement entre les éléments */
+}
+
+.navbar-item {
+    text-align: center;
+    flex-shrink: 0; /* Empêche les liens de se rétrécir */
+}
+
+/* Lien de navigation */
+.navbar-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap; /* Empêche les titres de se couper */
+}
+
+.navbar-link i {
+    font-size: 20px;
+}
+
+.navbar-link:hover {
+    color: #EFB719; /* Couleur au survol */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-link span {
+        font-size: 12px; /* Réduit la taille du texte pour les petits écrans */
+    }
+
+    .navbar-list {
+        gap: 15px; /* Réduit l'espacement entre les liens */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-link i {
+        font-size: 18px; /* Réduit légèrement l'icône */
+    }
+
+    .navbar-link span {
+        font-size: 10px; /* Texte encore plus petit sur mobile */
+    }
+}
+
+
+
   </style>
 </head>
 
@@ -64,7 +149,7 @@
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-    <aside class="left-sidebar">
+    {{-- <aside class="left-sidebar">
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -90,7 +175,8 @@
                     </span>
                     <span class="hide-menu">Formulaire d'ajout</span>
                 </a>
-                </li>
+            </li>
+
             <li class="sidebar-item">
               <a class="sidebar-link" href="/viewAdminPage" aria-expanded="false">
                 <span>
@@ -99,6 +185,7 @@
                 <span class="hide-menu"> Les validations</span>
               </a>
             </li>
+
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{route('viewGestionPersonnelByAdmin')}}" aria-expanded="false">
                     <span>
@@ -147,7 +234,67 @@
         <!-- End Sidebar navigation -->
       </div>
       <!-- End Sidebar scroll-->
+    </aside> --}}
+
+    <aside class="top-navbar">
+        <div class="brand-logo d-flex align-items-center">
+            <a href="/" class="text-nowrap logo-img">
+                <img src="../assets/images/logos/logo.svg" width="190" alt="Logo" style="margin-top: 10px;" />
+            </a>
+        </div>
+        <nav class="navbar-menu d-flex justify-content-around">
+            <ul class="navbar-list d-flex">
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewCreationSalonAdmin')}}">
+                        <i class="ti ti-files"></i>
+                        <span>Formulaire d'ajout</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewAdminPage')}}">
+                        <i class="ti ti-checks"></i>
+                        <span>Les validations</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewGestionPersonnelByAdmin')}}">
+                        <i class="ti ti-user-check"></i>
+                        <span>Gestion personnel</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewListStandAndEmpAndNombreStand')}}">
+                        <i class="ti ti-file-info"></i>
+                        <span>Information de stand <br>et employer</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewListMembreStand')}}">
+                        <i class="ti ti-list"></i>
+                        <span>List des membre du stand</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('dasboardAdmin')}}">
+                        <i class="ti ti-chart-dots"></i>
+                        <span>Statistique et <br>dashboard</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewCalendrierSuiviAdmin')}}">
+                        <i class="ti ti-calendar"></i>
+                        <span>Calendrier de suivi</span>
+                    </a>
+                </li>
+                
+
+
+
+            </ul>
+
+        </nav>
     </aside>
+
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">
@@ -180,7 +327,7 @@
         </nav>
       </header>
       <!--  Header End -->
-      <div class="container-fluid">
+      <div class="container-fluid mx-auto px-3" style="max-width: 95%;">        <!--  Row 1 -->
         <!--  Row 1 -->
         <div class="row">
             @yield('creationSalonAdminSection')
