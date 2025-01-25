@@ -373,26 +373,40 @@
 
 <style>
     #calendar {
-    max-width: 1100px; /* Largeur maximale */
-    margin: 20px auto; /* Centre horizontalement */
-    padding: 10px; /* Ajoute un léger padding interne */
-    border-radius: 8px; /* Coins arrondis pour un rendu plus propre */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
-    position: relative;
-    left: -20px; /* Décale légèrement vers la gauche */
-}
-@media (min-width: 1200px) {
-    #calendar {
-        left: -40px; /* Décalage plus important pour les grands écrans */
+        width: 100%; /* Assure que le calendrier utilise toute la largeur disponible */
+        max-width: 1100px; /* Largeur maximale pour les grands écrans */
+        margin: 20px auto; /* Centre horizontalement */
+        padding: 10px; /* Ajoute un léger padding */
+        border-radius: 8px; /* Coins arrondis */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Effet d'ombre */
+        overflow-x: auto; /* Ajoute un défilement horizontal si le contenu dépasse */
     }
-}
 
-@media (max-width: 768px) {
-    #calendar {
-        left: 0; /* Supprime le décalage sur les petits écrans */
+    /* Styles pour les grands écrans */
+    @media (min-width: 1200px) {
+        #calendar {
+            padding: 15px; /* Ajoute un peu plus d'espace */
+        }
     }
-}
 
+    /* Styles pour les petits écrans */
+    @media (max-width: 768px) {
+        #calendar {
+            padding: 5px; /* Réduit le padding pour éviter que ça déborde */
+            font-size: 14px; /* Réduit la taille de la police pour s'adapter à l'écran */
+        }
+
+        #calendar table {
+            width: 100%; /* Assure que les tableaux à l'intérieur s'adaptent */
+            table-layout: fixed; /* Fixe la largeur des cellules pour éviter les débordements */
+        }
+
+        #calendar table td,
+        #calendar table th {
+            word-wrap: break-word; /* Force le retour à la ligne pour éviter les débordements */
+            font-size: 12px; /* Ajuste la taille des textes des cellules */
+        }
+    }
 
     #calendar a {
         color: black !important;
@@ -401,6 +415,7 @@
 
     #calendar a:hover {
         color: black !important;
+        text-decoration: underline; /* Ajoute un soulignement au survol */
     }
 </style>
 

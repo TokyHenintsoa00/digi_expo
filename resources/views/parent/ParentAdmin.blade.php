@@ -148,93 +148,7 @@ aside.top-navbar {
   <!--  Body Wrapper -->
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-    <!-- Sidebar Start -->
-    {{-- <aside class="left-sidebar">
-      <!-- Sidebar scroll-->
-      <div>
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="/" class="text-nowrap logo-img">
-            <img src="../assets/images/logos/logo.svg" width="190" alt="" style="margin-top: 20px;" />
-          </a>
-          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-            <i class="fa fa-times fs-8"></i>
-          </div>
-        </div>
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-          <ul id="sidebarnav">
 
-            <li class="nav-small-cap">
-              <i class="fa fa-cogs nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Admin</span>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{route('viewCreationSalonAdmin')}}" aria-expanded="false">
-                    <span>
-                    <i class="fa fa-plus"></i>
-                    </span>
-                    <span class="hide-menu">Formulaire d'ajout</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="/viewAdminPage" aria-expanded="false">
-                <span>
-                  <i class="fa fa-check"></i>
-                </span>
-                <span class="hide-menu"> Les validations</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{route('viewGestionPersonnelByAdmin')}}" aria-expanded="false">
-                    <span>
-                        <i class="ti ti-user-check"></i> <!-- Icône mise à jour pour "Recrutement employer" -->
-                    </span>
-                    <span class="hide-menu">Gestion personnel</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{{route('viewListStandAndEmpAndNombreStand')}}" aria-expanded="false">
-                <span>
-                  <i class="fa fa-list"></i>
-                </span>
-                <span class="hide-menu">Information de stand <br>et employer</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{route('viewListMembreStand')}}" aria-expanded="false">
-                  <span>
-                    <i class="fa fa-list"></i>
-                  </span>
-                  <span class="hide-menu">List des membre du stand</span>
-                </a>
-              </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{{route('dasboardAdmin')}}" aria-expanded="false">
-                <span>
-                  <i class="fa fa-chart-line"></i>
-                </span>
-                <span class="hide-menu">Statistique et <br>dashboard</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{route('viewCalendrierSuiviAdmin')}}" aria-expanded="false">
-                    <span>
-                        <i class="ti ti-calendar"></i>
-                    </span>
-                    <span class="hide-menu">Calendrier de suivi</span>
-                </a>
-            </li>
-
-          </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-      </div>
-      <!-- End Sidebar scroll-->
-    </aside> --}}
 
     <aside class="top-navbar">
         <div class="brand-logo d-flex align-items-center">
@@ -286,7 +200,7 @@ aside.top-navbar {
                         <span>Calendrier de suivi</span>
                     </a>
                 </li>
-                
+
 
 
 
@@ -304,7 +218,6 @@ aside.top-navbar {
           <ul class="navbar-nav">
             <li class="nav-item d-block d-xl-none">
               <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                <i class="fa fa-bars"></i>
               </a>
             </li>
           </ul>

@@ -83,6 +83,89 @@
   .app-header{
     background-color: #f6f9fc;
   }
+
+
+  aside.top-navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff; /* Couleur de fond */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto; /* Ajoute un défilement horizontal si l'écran est trop petit */
+    white-space: nowrap; /* Empêche les éléments de passer à la ligne */
+}
+
+/* Logo */
+.brand-logo {
+    margin-right: 20px;
+    flex-shrink: 0; /* Empêche le logo de rétrécir */
+}
+
+/* Liste des liens */
+.navbar-menu {
+    flex-grow: 1;
+}
+
+.navbar-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px; /* Espacement entre les éléments */
+}
+
+.navbar-item {
+    text-align: center;
+    flex-shrink: 0; /* Empêche les liens de se rétrécir */
+}
+
+/* Lien de navigation */
+.navbar-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap; /* Empêche les titres de se couper */
+}
+
+.navbar-link i {
+    font-size: 20px;
+}
+
+.navbar-link:hover {
+    color: #EFB719; /* Couleur au survol */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-link span {
+        font-size: 12px; /* Réduit la taille du texte pour les petits écrans */
+    }
+
+    .navbar-list {
+        gap: 15px; /* Réduit l'espacement entre les liens */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-link i {
+        font-size: 18px; /* Réduit légèrement l'icône */
+    }
+
+    .navbar-link span {
+        font-size: 10px; /* Texte encore plus petit sur mobile */
+    }
+}
+
+
     </style>
 
 <!-- Google tag (gtag.js) -->
@@ -100,77 +183,65 @@
   <!--  Body Wrapper -->
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
-    <!-- Sidebar Start -->
-    <aside class="left-sidebar">
-      <!-- Sidebar scroll-->
-      <div>
-        <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="/" class="text-nowrap logo-img">
-            <img src="../assets/images/logos/logo.svg" width="190" alt="" style="margin-top: 20px;" />
 
-          </a>
-          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-            <i class="ti ti-x fs-8"></i>
-          </div>
+    <aside class="top-navbar">
+        <div class="brand-logo d-flex align-items-center">
+            <a href="/" class="text-nowrap logo-img">
+                <img src="../assets/images/logos/logo.svg" width="190" alt="Logo" style="margin-top: 10px;" />
+            </a>
         </div>
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-          <ul id="sidebarnav">
+        <nav class="navbar-menu d-flex justify-content-around">
+            <ul class="navbar-list d-flex">
+                <li class="navbar-item">
+                    <a class="navbar-link" href="/homePage">
+                        <i class="ti ti-layout"></i>
+                        <span>Exposition</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="/videoDirect">
+                        <i class="ti ti-video"></i>
+                        <span>Video conference avec <br>les hotesses</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewVideoConferenceHome')}}">
+                        <i class="ti ti-video"></i>
+                        <span>Conference</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('listTemoignage')}}">
+                        <i class="ti ti-microphone-2"></i>
+                        <span>Temoignage</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewListMembreStand')}}">
+                        <i class="ti ti-list"></i>
+                        <span>List des membre du stand</span>
+                    </a>
+                </li>
 
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">Home</span>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="/homePage" aria-expanded="false">
-                <span>
-                  <i class="ti ti-layout"></i>
-                </span>
-                <span class="hide-menu">Stand</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="/videoDirect" aria-expanded="false">
-                <span>
-                  <i class="ti ti-video"></i>
-                </span>
-                <span class="hide-menu">video en direct</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="{{route('viewVideoConferenceHome')}}" aria-expanded="false">
-                <span>
-                  <i class="ti ti-video"></i>
-                </span>
-                <span class="hide-menu">Conference</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{route('listTemoignage')}}" aria-expanded="false">
-                  <span>
-                    <i class="ti ti-microphone-2"></i>
-                  </span>
-                  <span class="hide-menu">Temoignage</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="/viewpermissionDeFaireUnStand" aria-expanded="false">
-                <span>
-                  <i class="ti ti-hand-stop"></i>
-                </span>
-                <span class="hide-menu">Permission de faire <br>un stand</span>
-              </a>
-            </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="/viewpermissionDeFaireUnStand">
+                        <i class="ti ti-hand-stop"></i>
+                        <span>Permission de faire <br>un stand</span>
+                    </a>
+                </li>
 
 
+            </ul>
 
         </nav>
-        <!-- End Sidebar navigation -->
-      </div>
-      <!-- End Sidebar scroll-->
+        <div class="ms-auto d-flex align-items-center">
+            <!-- Bouton Se connecter -->
+            <a href="{{route('viewauthentificationEmp')}}" class="btn btn-primary">
+              Se connecter
+            </a>
+        </div>
     </aside>
+
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">
@@ -184,12 +255,12 @@
               </a>
             </li>
           </ul>
-          <div class="ms-auto d-flex align-items-center">
+          {{-- <div class="ms-auto d-flex align-items-center">
             <!-- Bouton Se connecter -->
             <a href="{{route('viewauthentificationEmp')}}" class="btn btn-primary">
               Se connecter
             </a>
-          </div>
+          </div> --}}
         </nav>
       </header>
 
