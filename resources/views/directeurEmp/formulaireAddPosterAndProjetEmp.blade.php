@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="card shadow mb-4">
             <div class="card-header">
-                <strong class="card-title">Formulaire d'ajout de contenue</strong>
+                <strong class="card-title">Formulaire d'ajout de contenue photo</strong>
             </div>
             <div class="card-body">
                   <!-- Afficher le message de succès -->

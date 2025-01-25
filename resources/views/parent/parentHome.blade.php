@@ -216,30 +216,24 @@
                         <span>Temoignage</span>
                     </a>
                 </li>
-                <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewListMembreStand')}}">
-                        <i class="ti ti-list"></i>
-                        <span>List des membre du stand</span>
-                    </a>
-                </li>
-
+    
                 <li class="navbar-item">
                     <a class="navbar-link" href="/viewpermissionDeFaireUnStand">
                         <i class="ti ti-hand-stop"></i>
                         <span>Permission de faire <br>un stand</span>
                     </a>
                 </li>
-
+                <div class="ms-auto d-flex align-items-center">
+                    <!-- Bouton Se connecter -->
+                    <a href="{{route('viewauthentificationEmp')}}" class="btn btn-primary">
+                      Se connecter
+                    </a>
+                  </div>
 
             </ul>
 
         </nav>
-        <div class="ms-auto d-flex align-items-center">
-            <!-- Bouton Se connecter -->
-            <a href="{{route('viewauthentificationEmp')}}" class="btn btn-primary">
-              Se connecter
-            </a>
-        </div>
+
     </aside>
 
     <!--  Sidebar End -->

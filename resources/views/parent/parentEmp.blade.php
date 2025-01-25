@@ -137,6 +137,89 @@
       color: white;
     }
 
+
+      /* Barre de navigation horizontale */
+aside.top-navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff; /* Couleur de fond */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto; /* Ajoute un défilement horizontal si l'écran est trop petit */
+    white-space: nowrap; /* Empêche les éléments de passer à la ligne */
+}
+
+/* Logo */
+.brand-logo {
+    margin-right: 20px;
+    flex-shrink: 0; /* Empêche le logo de rétrécir */
+}
+
+/* Liste des liens */
+.navbar-menu {
+    flex-grow: 1;
+}
+
+.navbar-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px; /* Espacement entre les éléments */
+}
+
+.navbar-item {
+    text-align: center;
+    flex-shrink: 0; /* Empêche les liens de se rétrécir */
+}
+
+/* Lien de navigation */
+.navbar-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap; /* Empêche les titres de se couper */
+}
+
+.navbar-link i {
+    font-size: 20px;
+}
+
+.navbar-link:hover {
+    color: #EFB719; /* Couleur au survol */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-link span {
+        font-size: 12px; /* Réduit la taille du texte pour les petits écrans */
+    }
+
+    .navbar-list {
+        gap: 15px; /* Réduit l'espacement entre les liens */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-link i {
+        font-size: 18px; /* Réduit légèrement l'icône */
+    }
+
+    .navbar-link span {
+        font-size: 10px; /* Texte encore plus petit sur mobile */
+    }
+}
+
+
     </style>
 </head>
 <body>
@@ -158,8 +241,9 @@
   <!--  Body Wrapper -->
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+
     <!-- Sidebar Start -->
-    <aside class="left-sidebar">
+    {{-- <aside class="left-sidebar">
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -221,14 +305,79 @@
                     </a>
                 </li>
             </ul>
-
-
-
         </nav>
         <!-- End Sidebar navigation -->
       </div>
       <!-- End Sidebar scroll-->
+    </aside> --}}
+    <div class="notifications-panel" id="notificationsPanel">
+        <h5>Notifications</h5>
+        <div class="notifications-content">
+          @forelse($notifications as $notification)
+            <div class="notif-item {{ $notification->is_read ? 'read' : 'unread' }}">
+              <i class="ti ti-bell"></i>
+              <span>
+                <a href="{{ route('notifications.markAsRead', ['id' => $notification->id]) }}"
+                   class="notification-link"
+                   data-id="{{ $notification->id }}">
+                  {{ $notification->message }}
+                </a>
+              </span>
+              <small>{{ $notification->created_at->diffForHumans() }}</small>
+            </div>
+          @empty
+            <p>Aucune notification</p>
+          @endforelse
+        </div>
+        <button id="clearAll" class="btn btn-primary">Clear All</button>
+      </div>
+
+    <aside class="top-navbar">
+        <div class="brand-logo d-flex align-items-center">
+            <a href="/" class="text-nowrap logo-img">
+                <img src="../assets/images/logos/logo.svg" width="190" alt="Logo" style="margin-top: 10px;" />
+            </a>
+        </div>
+        <nav class="navbar-menu d-flex justify-content-around">
+            <ul class="navbar-list d-flex">
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewCreationSalonAdmin')}}">
+                        <i class="ti ti-table"></i> <!-- Icône mise à jour pour "Stand" -->
+                        <span class="hide-menu">Publication de stand</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewAdminPage')}}">
+                        <i class="ti ti-file-text"></i> <!-- Icône mise à jour pour "Brouchure" -->
+                        <span class="hide-menu">Gestion de brouchure</span>
+                    </a>
+                </li>
+
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewListStandAndEmpAndNombreStand')}}">
+                        <i class="ti ti-file-info"></i> <!-- Icône mise à jour pour "Brouchure et poster" -->
+                        <span class="hide-menu">Gestion de contenue</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewListMembreStand')}}">
+                        <i class="ti ti-door-exit"></i> </span>
+                        <span class="hide-menu">Demande de démission</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a class="navbar-link" href="{{route('viewCalendrierSuiviAdmin')}}">
+                        <i class="ti ti-message-dots"></i>
+                        <span class="hide-menu">Disscution avec <br>le responsable</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
     </aside>
+
+
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">
@@ -253,27 +402,7 @@
                       </a>
                   </li>
 
-                  <div class="notifications-panel" id="notificationsPanel">
-                      <h5>Notifications</h5>
-                      <div class="notifications-content">
-                        @forelse($notifications as $notification)
-                          <div class="notif-item {{ $notification->is_read ? 'read' : 'unread' }}">
-                            <i class="ti ti-bell"></i>
-                            <span>
-                              <a href="{{ route('notifications.markAsRead', ['id' => $notification->id]) }}"
-                                 class="notification-link"
-                                 data-id="{{ $notification->id }}">
-                                {{ $notification->message }}
-                              </a>
-                            </span>
-                            <small>{{ $notification->created_at->diffForHumans() }}</small>
-                          </div>
-                        @empty
-                          <p>Aucune notification</p>
-                        @endforelse
-                      </div>
-                      <button id="clearAll" class="btn btn-primary">Clear All</button>
-                    </div>
+
               </ul>
             <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                 <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">

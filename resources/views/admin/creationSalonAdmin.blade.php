@@ -7,7 +7,7 @@
     }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-{{-- <link rel="stylesheet" href="{{asset('../assets/css/leaflet.css')}}" /> --}}
+
 <div class="row">
     <div class="col-md-12">
         <div class="card shadow mb-4">
@@ -30,60 +30,61 @@
                 <form action="{{route('creationSalonV1')}}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6 mb-3">
+                    <!-- Première ligne : Nom du salon et Nom organisateur -->
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
                             <label for="nomSalon">Nom du salon</label>
                             <input type="text" name="nom_salon" id="nomSalon" class="form-control">
                         </div>
 
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="nomSalon">Nom organisateur</label>
-                            <input type="text" name="nom_organisateur" id="nomSalon" class="form-control">
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="nomOrganisateur">Nom organisateur</label>
+                            <input type="text" name="nom_organisateur" id="nomOrganisateur" class="form-control">
                         </div>
+                    </div>
 
-                        <div class="form-group col-md-6 mb-3">
+                    <!-- Deuxième ligne : Nombre de contacts et Date de début -->
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
                             <label for="nombreContact">Nombre de contacts</label>
                             <input type="number" name="nombre_contacts" id="nombreContact" class="form-control" min="1" oninput="generateInputs()">
                         </div>
-                          <!-- Conteneur pour les champs dynamiques -->
-                    <div id="dynamicInputsContainer"></div>
 
-                        <div class="form-group col-md-6 mb-3">
+                        <div class="col-md-6 form-group mb-3">
                             <label for="dateDebut">Date de début</label>
                             <input type="date" name="date_debut" id="dateDebut" class="form-control" required>
                         </div>
+                    </div>
 
-                        <div class="form-group col-md-6 mb-3">
+                    <!-- Troisième ligne : Date de fin et Nom du lieu -->
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
                             <label for="dateFin">Date de fin</label>
                             <input type="date" name="date_fin" id="dateFin" class="form-control" required>
                         </div>
 
-                        <input type="hidden" name="id_info_type_stand" value="">
-
-
-                            @csrf
-                            <div class="form-group col-md-6 mb-3">
-                                <label for="name" class="form-label">Nom du lieu</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <div id="map"></div>
-
-                            <input type="hidden" id="latitude" name="latitude">
-                            <input type="hidden" id="longitude" name="longitude">
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
-
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="name" class="form-label">Nom du lieu</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
                     </div>
 
+                    <!-- Map -->
+                    <div class="form-group mb-3">
+                        <div id="map"></div>
+                        <input type="hidden" id="latitude" name="latitude">
+                        <input type="hidden" id="longitude" name="longitude">
+                    </div>
 
-
-
-
-
-
-
+                    <!-- Bouton -->
+                    <div class="row">
+                        <div class="col-md-12 text-end">
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </div>
                 </form>
+
                 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-                {{-- <script src="{{asset('../assets/js/leaflet.js')}}"></script> --}}
             </div> <!-- /. card-body -->
         </div> <!-- /. card -->
     </div> <!-- /. col -->
