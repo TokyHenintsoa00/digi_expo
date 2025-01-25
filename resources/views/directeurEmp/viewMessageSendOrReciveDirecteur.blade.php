@@ -1,12 +1,12 @@
 @extends('parent.parentDirecteurEmp')
 
 @section('viewMessageSendOrReciveDirecteurSection')
-<div class="container-fluid" style="max-width: 600px; margin: 0 auto;">
+<div class="container-fluid" style="max-width: 800px; margin: 0 auto;">
     <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
         <div class="card-header text-center">
             <h5 class="fw-semibold">Chat avec {{$nom_emp}} {{$prenom_emp}}</h5>
         </div>
-        <div class="card-body" id="chatbox" style="height: 400px; overflow-y: auto; background-color: #f8f9fa; border: 1px solid #ddd; padding: 15px;">
+        <div class="card-body" id="chatbox" style="height: 600px; overflow-y: auto; background-color: #f8f9fa; border: 1px solid #ddd; padding: 20px;">
             <div id="loader" class="text-center">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Chargement...</span>
@@ -15,11 +15,12 @@
         </div>
         <div class="card-footer d-flex align-items-center">
             <!-- Input limité en hauteur -->
-            <textarea id="userInput" class="form-control me-2" placeholder="Écrivez votre message..." style="resize: none; max-height: 80px; overflow-y: auto; flex: 1;"></textarea>
+            <textarea id="userInput" class="form-control me-2" placeholder="Écrivez votre message..." style="resize: none; max-height: 100px; overflow-y: auto; flex: 1;"></textarea>
             <button type="button" id="sendBtn" class="btn btn-primary">Envoyer</button>
         </div>
     </div>
 </div>
+
 <script src="{{asset('assets/js/jquery.js')}}"></script>
 <script>
     $(document).ready(function() {

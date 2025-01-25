@@ -341,32 +341,32 @@ aside.top-navbar {
         <nav class="navbar-menu d-flex justify-content-around">
             <ul class="navbar-list d-flex">
                 <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewCreationSalonAdmin')}}">
+                    <a class="navbar-link" href="{{route('viewEmpPage')}}">
                         <i class="ti ti-table"></i> <!-- Icône mise à jour pour "Stand" -->
                         <span class="hide-menu">Publication de stand</span>
                     </a>
                 </li>
                 <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewAdminPage')}}">
+                    <a class="navbar-link" href="{{route('viewGestionBrochureEmp')}}">
                         <i class="ti ti-file-text"></i> <!-- Icône mise à jour pour "Brouchure" -->
                         <span class="hide-menu">Gestion de brouchure</span>
                     </a>
                 </li>
 
                 <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewListStandAndEmpAndNombreStand')}}">
+                    <a class="navbar-link" href="{{route('viewGestionContenueEmp')}}">
                         <i class="ti ti-file-info"></i> <!-- Icône mise à jour pour "Brouchure et poster" -->
                         <span class="hide-menu">Gestion de contenue</span>
                     </a>
                 </li>
                 <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewListMembreStand')}}">
+                    <a class="navbar-link" href="{{route('viewPermissionDemissionEmp')}}">
                         <i class="ti ti-door-exit"></i> </span>
                         <span class="hide-menu">Demande de démission</span>
                     </a>
                 </li>
                 <li class="navbar-item">
-                    <a class="navbar-link" href="{{route('viewCalendrierSuiviAdmin')}}">
+                    <a class="navbar-link" href="{{route('viewMessageEmp')}}">
                         <i class="ti ti-message-dots"></i>
                         <span class="hide-menu">Disscution avec <br>le responsable</span>
                     </a>
@@ -428,7 +428,7 @@ aside.top-navbar {
       </header>
 
       <!--  Header End -->
-      <div class="container-fluid">
+      <div class="container-fluid mx-auto px-3" style="max-width: 95%;">        <!--  Row 1 -->
         <!--  Row 1 -->
         <div class="row">
 

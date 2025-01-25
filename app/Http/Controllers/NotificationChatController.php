@@ -38,7 +38,7 @@ class NotificationChatController extends Controller
             'receiver_id' => $id_receiver,
             'sender_id' => $id_sender,
             'title' => 'Message',
-            'message' => 'Vous avez recu un nouveaux message 90',
+            'message' => 'Vous avez recu un nouveaux message',
             'link' =>$link
         ]);
     }
@@ -93,7 +93,7 @@ class NotificationChatController extends Controller
             'receiver_id' => $receiver_id,
             'sender_id' => $sender_id,
             'title' => 'Message',
-            'message' => 'Vous avez recu un nouveaux message 80',
+            'message' => 'Vous avez recu un nouveaux message',
             'link' =>$link
         ]);
     }
