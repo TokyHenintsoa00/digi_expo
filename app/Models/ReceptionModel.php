@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class ReceptionModel extends Model
 {
     use HasFactory;
@@ -27,6 +27,7 @@ class ReceptionModel extends Model
         }
     }
 
+    
     public function getOrganisateur($nom_organisateur)
     {
         $result = DB::select("SELECT * FROM organisateur WHERE nom_organisateur = ?",[$nom_organisateur]);

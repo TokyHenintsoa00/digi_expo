@@ -630,7 +630,7 @@ class AdminController extends Controller
 
         $stand_directeur = $getStandModel->getAllStandEmpByIdEmpV1($id_directeur);
         $stand_ids = collect($stand_directeur)->pluck('id_stand')->toArray();
-        
+
         $contenue_info = $getStandModel->getAllInfoTypeStandCalendar($stand_ids);
         $id_info_type_stand = collect($contenue_info)->pluck('id_info_type_stand')->toArray();
         $contenue_brochure = $getStandModel->getBrochureCalendar($id_info_type_stand);

@@ -40,7 +40,7 @@
             </div>
             <div>
                 <h2 class="reste-jours">
-                    @if ($reste_jour == 0 )
+                    @if ($reste_jour == 0 || $reste_jour <0  )
                         En attente d'une nouvelle salon
                     @else
                         {{ $reste_jour }} jours restant
@@ -97,7 +97,7 @@
                                             <div class="card-body">
                                                 <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
                                                 <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                <p>Ce stand n'est plus disponible</p>
+                                                <p>Ce stand n'est plus disponible1</p>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@
                                             <div class="card-body">
                                                 <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
                                                 <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                <p>Ce stand n'est plus disponible</p>
+                                                <p>Ce stand n'est plus disponible2</p>
                                             </div>
                                         </div>
                                     </div>

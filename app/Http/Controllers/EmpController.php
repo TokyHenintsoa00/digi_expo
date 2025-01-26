@@ -31,7 +31,7 @@ class EmpController extends Controller
      $email = $request->email;
      $matricule_emp = $request->matricule_emp;
      $remember = $request->has('remember');
-
+    
     $getSignEmp = new EmpModel();
     $verifyEtat = $getSignEmp->getAuthEmp($email,$matricule_emp);
 

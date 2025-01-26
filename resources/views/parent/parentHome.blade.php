@@ -216,7 +216,7 @@
                         <span>Temoignage</span>
                     </a>
                 </li>
-    
+
                 <li class="navbar-item">
                     <a class="navbar-link" href="/viewpermissionDeFaireUnStand">
                         <i class="ti ti-hand-stop"></i>
@@ -228,7 +228,7 @@
                     <a href="{{route('viewauthentificationEmp')}}" class="btn btn-primary">
                       Se connecter
                     </a>
-                  </div>
+                </div>
 
             </ul>
 
