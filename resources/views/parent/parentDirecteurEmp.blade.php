@@ -320,7 +320,7 @@ aside.top-navbar {
               </li>
               <li class="navbar-item">
                   <a class="navbar-link" href="{{route('viewMessageDirecteur')}}">
-                      <i class="ti ti-message-dots"></i>
+                      <i class="ti ti-message"></i>
                       <span>Discussion</span>
                   </a>
               </li>
