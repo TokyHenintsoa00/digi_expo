@@ -259,7 +259,7 @@
       </header>
 
       <!--  Header End -->
-      <div class="container-fluid">
+      <div class="container-fluid mx-auto px-3" style="max-width: 95%;">        <!--  Row 1 -->
         <!--  Row 1 -->
         <div class="row">
             @yield('homeReceptionSection')
