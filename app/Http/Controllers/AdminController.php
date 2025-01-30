@@ -70,6 +70,34 @@ class AdminController extends Controller
 
     }
 
+    public function logout()
+    {
+        try {
+            $accessToken = Session::get('facebook_token');
+
+            if (!$accessToken) {
+                throw new \Exception('Aucun jeton Facebook trouvé.');
+            }
+
+            // Requête pour révoquer les permissions de l'application
+            $response = Http::delete("https://graph.facebook.com/me/permissions", [
+                'access_token' => $accessToken
+            ]);
+
+            if ($response->successful()) {
+                // Supprimer les sessions et rediriger
+                Session::forget('facebook_token');
+                Session::forget('admin');
+                return redirect()->route('login')->with('success', 'Déconnecté de Facebook.');
+            } else {
+                throw new \Exception('Erreur lors de la déconnexion.');
+            }
+
+        } catch (\Exception $e) {
+            return redirect()->route('viewAdminPage')->with('error', $e->getMessage());
+        }
+    }
+
 
     public function getSignInAdmin(Request $request)
     {

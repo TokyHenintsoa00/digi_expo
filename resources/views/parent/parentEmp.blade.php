@@ -367,8 +367,8 @@ aside.top-navbar {
                 </li>
                 <li class="navbar-item">
                     <a class="navbar-link" href="{{route('viewMessageEmp')}}">
-                        <i class="ti ti-message-dots"></i>
-                        <span class="hide-menu">Disscution avec <br>le responsable</span>
+                        <i class="ti ti-message"></i>
+                        <span class="hide-menu">Disscution</span>
                     </a>
                 </li>
 
@@ -490,7 +490,7 @@ aside.top-navbar {
       <div class="row">
         <!-- Section 1 -->
         <div class="col-md-3">
-          <h5>Ressources en ligne</h5>
+          <h5>Gestion d'exposition</h5>
           <ul style="list-style: none; padding: 0;">
             <li><a href="{{route('viewStandEmp')}}" style="color: #ffca28; text-decoration: none;">Publication de stand</a></li>
             <li><a href="{{route('viewChoixDeStandBrochureEmp')}}" style="color: #ffca28; text-decoration: none;">Ajout de brochure</a></li>
