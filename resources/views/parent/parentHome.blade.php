@@ -187,7 +187,7 @@
     <aside class="top-navbar">
         <div class="brand-logo d-flex align-items-center">
             <a href="/" class="text-nowrap logo-img">
-                <img src="../assets/images/logos/logo.svg" width="190" alt="Logo" style="margin-top: 10px;" />
+                <img src="../assets/images/logos/logoV3.svg" width="190" alt="Logo" style="margin-top: 10px;" />
             </a>
         </div>
         <nav class="navbar-menu d-flex justify-content-around">
