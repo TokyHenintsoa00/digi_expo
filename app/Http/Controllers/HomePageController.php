@@ -123,8 +123,8 @@ class HomePageController extends Controller
         $date_fin = $request->date_fin;
 
         $img_stand = $request->file('img_stand');
-        $img_stand_name = $img_stand->getClientOriginalName();
-        $img_stand->move(public_path('assets'),$img_stand_name);
+        //$img_stand_name = $img_stand->getClientOriginalName();
+        //$img_stand->move(public_path('assets'),$img_stand_name);
 
 
 
@@ -146,7 +146,7 @@ class HomePageController extends Controller
 
 
         $getInsertPermission->insertPermissionStand($nom_stand,$id_categorie,$nom_categorie_stand,$description_stand,
-        $nom_employe,$prenom_employe,$date_naissance,$email_employe,$img_stand_name,$date_debut,$date_fin);
+        $nom_employe,$prenom_employe,$date_naissance,$email_employe,$img_stand,$date_debut,$date_fin);
         return redirect()->route('viewpermissionDeFaireUnStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
     }
 
