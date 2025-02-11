@@ -19,13 +19,14 @@ class Mongodb
     ];
 
     private $collection;
+    private $imageCollection;
 
     public function __construct()
     {
         $client = new Client(env('MONGO_DB_URI'));
         $database = $client->selectDatabase(env('MONGO_DB_DATABASE'));
         $this->collection = $database->selectCollection('message');
-        
+        //$this->imageCollection = $database->selectCollection('image');
     }
 
     public function insert(array $data)
