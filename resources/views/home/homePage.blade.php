@@ -92,11 +92,8 @@
     @endforeach
 
     </div>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <div id="map"></div>
-    <script>
 
-    </script>
 
 
 </section>
