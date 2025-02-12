@@ -2,10 +2,48 @@
 @section('homePageSection')
 <style>
     #map {
-        height: 400px;
-        margin-bottom: 20px;
-        position: relative; /* Nécessaire pour que z-index fonctionne */
-        z-index: 1; /* Plus petit z-index = derrière */
+    width: 100%;
+    height: 50vh; /* Réduit la hauteur de la carte à 80% de l'écran */
+
+}
+    #search-container {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        display: flex;
+        gap: 5px;
+    }
+    #search-input {
+        padding: 8px;
+        width: 250px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    #search-button {
+        padding: 8px;
+        background: #001f54;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    #search-button:hover {
+        background: #001f54;
+    }
+
+    .card {
+        position: relative; /* Nécessaire pour z-index */
+        z-index: 2; /* Le formulaire sera devant */
+        background-color: white; /* Pour que le fond soit opaque */
+        padding: 20px; /* Espacement intérieur */
+        border-radius: 8px; /* Bordures arrondies */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour le contraste */
     }
 
     .organisateur-info {
@@ -20,6 +58,8 @@
         font-weight: bold;
         margin: 0; /* Supprimez les marges par défaut */
     }
+
+
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
@@ -138,7 +178,7 @@
         </div>
     </div>
 </div>
-<script>
+{{-- <script>
      const map = L.map('map').setView([-18.8792, 47.5079], 12); // Antananarivo par défaut
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -152,6 +192,40 @@ locations.forEach(location => {
     const marker = L.marker([location.latitude, location.longitude]).addTo(map);
     marker.bindPopup(`<b>${location.name}</b>`);
 });
+</script> --}}
+
+
+<script>
+   const map = new ol.Map({
+            target: 'map',
+            layers: [
+                // Couche Satellite en HD (Optimisée)
+                new ol.layer.Tile({
+                    source: new ol.source.XYZ({
+                        url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&scale=2&hl=fr',
+                        crossOrigin: 'anonymous',
+                        tilePixelRatio: 2 // Améliore la qualité sans ralentir
+                    })
+                }),
+                // Couche Routes et Lieux en HD
+                new ol.layer.Tile({
+                    source: new ol.source.XYZ({
+                        url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&scale=2&hl=fr',
+                        crossOrigin: 'anonymous',
+                        tilePixelRatio: 2
+                    })
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([47.5079, -18.8792]), // 📍 Tananarive
+                zoom: 12,
+                minZoom: 3,
+                maxZoom: 19
+            })
+        });
+
+        const locations = @json($locations); // Passer les lieux existants à la vue
+
 </script>
 
 @endsection
