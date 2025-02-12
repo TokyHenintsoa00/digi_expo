@@ -370,6 +370,20 @@
                     @csrf
 
                     <div class="row">
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="dateDebut">Date de début</label>
+                            <input type="date" name="date_debut" id="dateDebut" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="dateFin">Date de fin</label>
+                            <input type="date" name="date_fin" id="dateFin" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6 form-group mb-3">
                             <label for="nomSalon">Nom du salon</label>
                             <input type="text" name="nom_salon" id="nomSalon" class="form-control" required>
@@ -387,31 +401,27 @@
                             <input type="number" name="nombre_contacts" id="nombreContact" class="form-control" min="1" oninput="generateInputs()">
                         </div>
 
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="dateDebut">Date de début</label>
-                            <input type="date" name="date_debut" id="dateDebut" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="dateFin">Date de fin</label>
-                            <input type="date" name="date_fin" id="dateFin" class="form-control" required>
-                        </div>
 
                         <div class="col-md-6 form-group mb-3">
                             <label for="name">Nom du lieu</label>
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
+
+
                     </div>
+
+                        <div id="dynamicInputsContainer" ></div>
+
+
+
 
                     <div class="form-group mb-3">
                         <div id="map"></div>
                         <input type="hidden" id="latitude" name="latitude">
                         <input type="hidden" id="longitude" name="longitude">
                     </div>
-                    
-                    <div id="dynamicInputsContainer"></div>
+
+
 
                     <div class="row">
                         <div class="col-md-12 text-end">
@@ -437,47 +447,55 @@
             row.className = 'form-row mb-3';
 
             row.innerHTML = `
-                <div class="form-group col-md-6">
+            <div class="row">
+
+                <div class="col-md-6 form-group mb-3">
                     <label>Nom contact ${i}</label>
                     <input type="text" name="contact[${i}][nom]" class="form-control" placeholder="Nom contact ${i}">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="col-md-6 form-group mb-3">
                     <label>Contact ${i}</label>
                     <input type="text" name="contact[${i}][contact]" class="form-control" placeholder="Contact ${i}">
                 </div>
+            </div>
             `;
 
             container.appendChild(row);
         }
     }
 
-    const map = L.map('map').setView([-18.8792, 47.5079], 12);
+    //map
+    //-------------------------------------------------------------------------------
+    // const map = L.map('map').setView([-18.8792, 47.5079], 12);
 
-    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '&copy; <a href="https://www.esri.com/">Esri</a>',
-        maxZoom: 19,
-    });
+    // const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    //     attribution: '&copy; <a href="https://www.esri.com/">Esri</a>',
+    //     maxZoom: 19,
+    // });
 
-    const labelsLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
-        maxZoom: 19,
-    });
+    // const labelsLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+    //     attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+    //     maxZoom: 19,
+    // });
 
-    satelliteLayer.addTo(map);
-    labelsLayer.addTo(map);
+    // satelliteLayer.addTo(map);
+    // labelsLayer.addTo(map);
 
-    let marker;
-    map.on('click', function (e) {
-        const { lat, lng } = e.latlng;
+    // let marker;
+    // map.on('click', function (e) {
+    //     const { lat, lng } = e.latlng;
 
-        if (marker) {
-            map.removeLayer(marker);
-        }
+    //     if (marker) {
+    //         map.removeLayer(marker);
+    //     }
 
-        marker = L.marker(e.latlng).addTo(map);
-        document.getElementById('latitude').value = lat;
-        document.getElementById('longitude').value = lng;
-    });
+    //     marker = L.marker(e.latlng).addTo(map);
+    //     document.getElementById('latitude').value = lat;
+    //     document.getElementById('longitude').value = lng;
+    // });
+
+
+    //----------------------------------------------------------------------------------------
 </script>
 
 @endsection
