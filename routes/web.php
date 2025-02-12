@@ -141,7 +141,7 @@ Route::prefix('directeur')->group(function(){
     Route::get('/getSignOutAdmin',[AdminController::class,'getSignOutAdmin']);
     Route::get('/viewCreationSalonAdmin',[AdminController::class,'viewCreationSalonAdmin'])->name('viewCreationSalonAdmin');
     Route::post('/creationSalon',[AdminController::class,'creationSalon'])->name('creationSalon');
-    Route::post('/creationSalonV1',[AdminController::class,'creationSalonV1'])->name('creationSalonV1');
+    Route::post('/creationSalonV1',[AdminController::class,'creationSalonV2'])->name('creationSalonV1');
 
         Route::get('/viewAdminPage',[AdminController::class,'viewAdminPage'])->name('viewAdminPage');
         Route::get('/viewValidationPermissionStand',[AdminController::class,'viewValidationPermissionStand'])->name('viewValidationPermissionStand');
