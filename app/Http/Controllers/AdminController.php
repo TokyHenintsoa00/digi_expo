@@ -241,6 +241,11 @@ class AdminController extends Controller
 
     }
 
+    public function creationSalonV2()
+    {
+        
+    }
+
 
     public function viewAdminPage(Request $request)
     {

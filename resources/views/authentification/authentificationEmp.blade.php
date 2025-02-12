@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../assets/css/styles.min.css" />
     <link rel="stylesheet" href="assets/css/style1.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="assets1/css/style.css">
     <link rel="stylesheet" href="assets/css/styleAutehtification.css">
 
@@ -72,23 +73,24 @@
             @endif
                 <form action="/signInEmp" class="signin-form" method="POST">
                     @csrf
-                  <div class="form-group mb-3">
-                    <label class="label" for="name">Adresse email</label>
-                    <input type="email" class="form-control" placeholder="XXXX@gmail.com" name="email" required>
-                  </div>
-                  <div class="form-group mb-3">
-                    <label class="label" for="password">Votre matricule</label>
-                    <input type="text" class="form-control" placeholder="pXXX" name="matricule_emp" required>
-                  </div>
+                    <div class="form-group mb-3">
+                        <label class="label" for="name" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Adresse email</label>
+                        <input type="email" class="form-control" placeholder="XXXX@gmail.com" name="email" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="label" for="password" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Votre matricule</label>
+                        <input type="text" class="form-control" placeholder="pXXX" name="matricule_emp" required>
+                    </div>
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary">Se connnecter</button>
                   </div>
                   <div class="form-group d-md-flex">
                     <div class="w-50 text-left">
-                      <label class="checkbox-wrap checkbox-primary mb-0">Se souvenir de moi
-                        <input type="checkbox" checked name="remember">
-                        <span class="checkmark"></span>
-                      </label>
+                        <label class="checkbox-wrap checkbox-primary mb-0" style="font-family: 'Poppins', sans-serif;">Se souvenir de moi
+                            <input type="checkbox" checked name="remember">
+                            <span class="checkmark"></span>
+                        </label>
+
                     </div>
                     <div class="w-50 text-md-right">
                       <a href="{{route('viewAuthentificationAdmin')}}">Se connecter en tant que administrateur</a>

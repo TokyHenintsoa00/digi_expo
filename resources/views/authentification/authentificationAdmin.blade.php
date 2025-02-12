@@ -69,11 +69,11 @@
                 @endif
                 <form action="/getSignInAdmin" class="signin-form" method="GET">
                   <div class="form-group mb-3">
-                    <label class="label" for="name">Adresse mail</label>
+                    <label class="label" for="name" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Adresse mail</label>
                     <input type="email" class="form-control" placeholder="XXXX@gmail.com" name="email" required>
                   </div>
                   <div class="form-group mb-3">
-                    <label class="label" for="password">Mots de passe</label>
+                    <label class="label" for="password" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Mots de passe</label>
                     <input type="password" class="form-control" placeholder="Password" name="pwd" required>
                   </div>
                   <div class="form-group">
