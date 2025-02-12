@@ -61,6 +61,7 @@ class HomePageController extends Controller
 
         $organisateur = $getReceptionModel->getAllOranisateur();
         $contact_organisateur = $getReceptionModel->getAllContactOrganisateur();
+        
         //dd($stand);
         $locations = DB::select("
         SELECT id, name, ST_X(coordinates) AS longitude, ST_Y(coordinates) AS latitude

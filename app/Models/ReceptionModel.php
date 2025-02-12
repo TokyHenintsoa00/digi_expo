@@ -27,7 +27,7 @@ class ReceptionModel extends Model
         }
     }
 
-    
+
     public function getOrganisateur($nom_organisateur)
     {
         $result = DB::select("SELECT * FROM organisateur WHERE nom_organisateur = ?",[$nom_organisateur]);
@@ -49,6 +49,13 @@ class ReceptionModel extends Model
     public function getAllSalon()
     {
         $result = DB::select("SELECT * FROM salon");
+        return $result;
+    }
+
+    public function getAllLocation()
+    {
+        $result = DB::select("SELECT * FROM locations");
+
         return $result;
     }
 
