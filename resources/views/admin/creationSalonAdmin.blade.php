@@ -305,6 +305,8 @@
                 });
 
                 map.addLayer(markerLayer);
+
+                
                 document.getElementById('latitude').value = lat;
                 document.getElementById('longitude').value = lon;
             }

@@ -224,7 +224,75 @@ locations.forEach(location => {
             })
         });
 
-        const locations = @json($locations); // Passer les lieux existants à la vue
+        // const locations = @json($locations); // Passer les lieux existants à la vue
+
+        // locations.forEach(location =>{
+        //     const [lon,lat]= [locations.latitude,locations.longtude];
+        // });
+
+        // // Convertir la longitude/latitude en coordonnées
+        // const coordinate = ol.proj.fromLonLat([lon, lat]);
+
+        // const marker = new ol.Feature({
+        //             geometry: new ol.geom.Point(coordinate),
+        // });
+
+
+        // // Définir le style du marqueur avec une icône
+        // marker.setStyle(new ol.style.Style({
+        //             image: new ol.style.Icon({
+        //                 anchor: [0.5, 1], // Centre l'icône sur le point cliqué
+        //                 src: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', // Icône de Google Maps
+        //                 scale: 1 // Taille normale
+        //             })
+        // }));
+
+
+        //  // Ajouter le marqueur à la source vectorielle
+        //  const markerLayer = new ol.layer.Vector({
+        //     source: new ol.source.Vector({
+        //         features: [marker]
+        //     })
+        // });
+
+        // // Ajouter la couche à la carte
+        // map.addLayer(markerLayer);
+
+            // Récupérer les données de localisation depuis Laravel
+    const locations = @json($locations); // Assurez-vous que $locations contient un tableau de lieux avec lat et long
+
+// Boucle sur les lieux et ajoute un marqueur pour chaque position
+locations.forEach(location => {
+    const [lat, lon] = [location.latitude, location.longitude]; // Assurez-vous que les clés sont correctes
+
+    // Convertir la longitude/latitude en coordonnées
+    const coordinate = ol.proj.fromLonLat([lon, lat]);
+
+    // Créer un marqueur pour chaque position
+    const marker = new ol.Feature({
+        geometry: new ol.geom.Point(coordinate),
+    });
+
+    // Définir le style de l'icône du marqueur
+    marker.setStyle(new ol.style.Style({
+        image: new ol.style.Icon({
+            anchor: [0.5, 1], // Centre l'icône
+            src: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', // Icône de Google Maps
+            scale: 1 // Ajuste la taille de l'icône
+        })
+    }));
+
+    // Ajouter le marqueur à la source vectorielle
+    const markerLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [marker]
+        })
+    });
+
+    // Ajouter la couche à la carte
+    map.addLayer(markerLayer);
+});
+
 
 </script>
 
