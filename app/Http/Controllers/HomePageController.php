@@ -85,7 +85,7 @@ class HomePageController extends Controller
 
         //delcaration de la date de fin du salob
         $date_fin_salon = $reception[0]->date_fin;
-        return view('home.homePage',compact('stand','reception', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon'));
+        return view('home.homePage',compact('stand','reception','location_name', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon'));
     }
 
     //view page video en direct

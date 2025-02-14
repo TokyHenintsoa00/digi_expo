@@ -79,7 +79,7 @@
                 </ul>
                 <ul>
                     <li>
-                        <strong>Lieu</strong>
+                        <strong>Lieu : </strong>{{$location_name}}
                     </li>
                 </ul>
             </div>
