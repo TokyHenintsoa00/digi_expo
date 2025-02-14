@@ -77,6 +77,11 @@
                             </li>
                     @endforeach
                 </ul>
+                <ul>
+                    <li>
+                        <strong>Lieu</strong>
+                    </li>
+                </ul>
             </div>
             <div>
                 <h2 class="reste-jours">

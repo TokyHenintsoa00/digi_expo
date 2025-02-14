@@ -40,6 +40,9 @@ class HomePageController extends Controller
 
         // Récupérer les données via les fonctions existantes
         $reception = $getReceptionModel->getAllSalon();
+
+
+
         $reste_jour = 0;
 
         if (!empty($reception) && !is_null($reception[0]->date_debut) && !is_null($reception[0]->date_fin))
@@ -61,8 +64,10 @@ class HomePageController extends Controller
 
         $organisateur = $getReceptionModel->getAllOranisateur();
         $contact_organisateur = $getReceptionModel->getAllContactOrganisateur();
-        // $locations = $getReceptionModel->
+        $locations_exposition = $getReceptionModel->getAllLocation();
+        $location_name = $locations_exposition[0]->name;
         //dd($stand);
+        //dd($location_name);
         $locations = DB::select("
         SELECT id, name, ST_X(coordinates) AS longitude, ST_Y(coordinates) AS latitude
         FROM locations
@@ -79,8 +84,6 @@ class HomePageController extends Controller
         }
 
         //delcaration de la date de fin du salob
-
-
         $date_fin_salon = $reception[0]->date_fin;
         return view('home.homePage',compact('stand','reception', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon'));
     }

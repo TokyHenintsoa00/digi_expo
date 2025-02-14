@@ -27,29 +27,54 @@ class ReceptionModel extends Model
         }
     }
 
-    public function maxSalon()
-    {
-        $result = DB::select("SELECT MAX(id_sallon) as id_sallon from salon");
-        return $result;
-    }
+    // private function maxSalon()
+    // {
+    //     $result = DB::select("SELECT MAX(id_sallon) as id_sallon from salon");
+    //     return $result;
+    // }
 
-    public function getSalonWhere()
-    {
-        $id_sallon = $this->maxSalon();
+    // public function getSalonWhere()
+    // {
+    //     $id_sallon = $this->maxSalon();
 
-        $result = DB::select("SELECT * FROM SALON WHERE id_sallon = $id_sallon");
+    //     $result = DB::select("SELECT * FROM SALON WHERE id_sallon = $id_sallon");
 
-        return $result;
-    }
+    //     return $result;
+    // }
 
-    
+    // public function getOrganisateur($nom_organisateur)
+    // {
+    //     $result = DB::select("SELECT * FROM organisateur WHERE nom_organisateur = ?",[$nom_organisateur]);
+    //     return $result;
+    // }
 
 
-    public function getOrganisateur($nom_organisateur)
-    {
-        $result = DB::select("SELECT * FROM organisateur WHERE nom_organisateur = ?",[$nom_organisateur]);
-        return $result;
-    }
+    // private function maxOrganisateur()
+    // {
+    //     $result = DB::select("SELECT MAX(id_organisateur) from organsiateur");
+
+    //     return $result;
+    // }
+
+    // public function getOrganisateurWhere()
+    // {
+    //     $maxOrganisateur = $this->maxOrganisateur();
+    //     $result = DB::select("SELECT * FROM organisateur where id_organisateur = $maxOrganisateur");
+    //     return $result;
+    // }
+
+
+    // private function maxContactOrganisateur()
+    // {
+    //     $result = DB::select("SELECT MAX(id_contact_organisateur) from contact_organisateur");
+    //     return $result;
+    // }
+
+    // public function getContactOrganisateurWhere()
+    // {
+    //     $maxContactOrganisateur = $this->maxContactOrganisateur();
+    //     $result = DB::select("SELECT * from contact_organisateur where id_contact_organisateur = ");
+    // }
 
     public function getAllOranisateur()
     {
