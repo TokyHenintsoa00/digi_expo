@@ -27,66 +27,78 @@ class ReceptionModel extends Model
         }
     }
 
-    // private function maxSalon()
-    // {
-    //     $result = DB::select("SELECT MAX(id_sallon) as id_sallon from salon");
-    //     return $result;
-    // }
-
-    // public function getSalonWhere()
-    // {
-    //     $id_sallon = $this->maxSalon();
-
-    //     $result = DB::select("SELECT * FROM SALON WHERE id_sallon = $id_sallon");
-
-    //     return $result;
-    // }
-
-    // public function getOrganisateur($nom_organisateur)
-    // {
-    //     $result = DB::select("SELECT * FROM organisateur WHERE nom_organisateur = ?",[$nom_organisateur]);
-    //     return $result;
-    // }
-
-
-    // private function maxOrganisateur()
-    // {
-    //     $result = DB::select("SELECT MAX(id_organisateur) from organsiateur");
-
-    //     return $result;
-    // }
-
-    // public function getOrganisateurWhere()
-    // {
-    //     $maxOrganisateur = $this->maxOrganisateur();
-    //     $result = DB::select("SELECT * FROM organisateur where id_organisateur = $maxOrganisateur");
-    //     return $result;
-    // }
-
-
-    // private function maxContactOrganisateur()
-    // {
-    //     $result = DB::select("SELECT MAX(id_contact_organisateur) from contact_organisateur");
-    //     return $result;
-    // }
-
-    // public function getContactOrganisateurWhere()
-    // {
-    //     $maxContactOrganisateur = $this->maxContactOrganisateur();
-    //     $result = DB::select("SELECT * from contact_organisateur where id_contact_organisateur = ");
-    // }
-
-    public function getAllOranisateur()
+    private function maxSalon()
     {
-        $result = DB::select("SELECT * FROM ORGANISATEUR");
+        $result = DB::select("SELECT MAX(id_sallon) as id_sallon from salon");
         return $result;
     }
 
-    public function getAllContactOrganisateur()
+    public function getSalonWhere()
     {
-        $result = DB::select("SELECT * FROM contact_organisateur");
+        $getMaxSalon = $this->maxSalon();
+
+        $id_sallon = $getMaxSalon[0]->id_sallon;
+
+        // dd($id_sallon);
+
+        $result = DB::select("SELECT * FROM SALON WHERE id_sallon = $id_sallon");
+
         return $result;
     }
+
+    //------------------------------------------------------
+        public function getOrganisateur($nom_organisateur)
+        {
+            $result = DB::select("SELECT * FROM organisateur WHERE nom_organisateur = ?",[$nom_organisateur]);
+            return $result;
+        }
+    //-----------------------------------------------------
+
+    private function maxOrganisateur()
+    {
+        $result = DB::select("SELECT MAX(id_organisateur) as id_organisateur from organisateur");
+        return $result;
+    }
+
+    public function getOrganisateurWhere()
+    {
+        $getMaxOrganisateur = $this->maxOrganisateur();
+
+       $id_organisateur = $getMaxOrganisateur[0]->id_organisateur;
+
+        $result = DB::select("SELECT * FROM organisateur where id_organisateur = $id_organisateur");
+        return $result;
+    }
+
+
+    private function maxContactOrganisateur()
+    {
+        $result = DB::select("SELECT MAX(id_contact_organisateur) as id_contact_organisateur from contact_organisateur");
+        return $result;
+    }
+
+    public function getContactOrganisateurWhere()
+    {
+        $getMaxContactOrganisateur = $this->maxContactOrganisateur();
+
+        $id_contact_organisateur= $getMaxContactOrganisateur[0]->id_contact_organisateur;
+
+        $result = DB::select("SELECT * from contact_organisateur where id_contact_organisateur = $id_contact_organisateur");
+
+        return $result;
+    }
+
+    // public function getAllOranisateur()
+    // {
+    //     $result = DB::select("SELECT * FROM ORGANISATEUR");
+    //     return $result;
+    // }
+
+    // public function getAllContactOrganisateur()
+    // {
+    //     $result = DB::select("SELECT * FROM contact_organisateur");
+    //     return $result;
+    // }
 
     public function getAllSalon()
     {
@@ -94,12 +106,27 @@ class ReceptionModel extends Model
         return $result;
     }
 
-    public function getAllLocation()
+    public function getMaxLocation()
     {
-        $result = DB::select("SELECT * FROM locations");
-
+        $result = DB::select("SELECT MAX(id) as id from locations");
         return $result;
     }
+
+    public function getLocationWhere()
+    {
+        $getMaxLocation = $this->getMaxLocation();
+        $id = $getMaxLocation[0]->id;
+
+        $location = DB::select("SELECT * FROM locations where id = $id");
+
+        return $location;
+    }
+    // public function getAllLocation()
+    // {
+    //     $result = DB::select("SELECT * FROM locations");
+
+    //     return $result;
+    // }
 
 
     public function insertSalon($nom_sallon,$date_debut,$date_fin)

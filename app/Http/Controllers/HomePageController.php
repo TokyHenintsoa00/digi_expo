@@ -39,7 +39,7 @@ class HomePageController extends Controller
         $getReceptionModel = new ReceptionModel();
 
         // Récupérer les données via les fonctions existantes
-        $reception = $getReceptionModel->getAllSalon();
+        $reception = $getReceptionModel->getSalonWhere();
 
 
 
@@ -62,15 +62,19 @@ class HomePageController extends Controller
 
         // //dd($reste_jour);
 
-        $organisateur = $getReceptionModel->getAllOranisateur();
-        $contact_organisateur = $getReceptionModel->getAllContactOrganisateur();
-        $locations_exposition = $getReceptionModel->getAllLocation();
+        $organisateur = $getReceptionModel->getOrganisateurWhere();
+        $contact_organisateur = $getReceptionModel->getContactOrganisateurWhere();
+        $locations_exposition = $getReceptionModel->getLocationWhere();
         $location_name = $locations_exposition[0]->name;
+
+       $get_id_location = $getReceptionModel->getMaxLocation();
+       $id_location = $get_id_location[0]->id;
+
         //dd($stand);
         //dd($location_name);
         $locations = DB::select("
         SELECT id, name, ST_X(coordinates) AS longitude, ST_Y(coordinates) AS latitude
-        FROM locations
+        FROM locations where id = $id_location
         ");
 
         // $date_fin_salon = $reception[0]->date_fin;
@@ -79,7 +83,7 @@ class HomePageController extends Controller
             # code...
 
             $date_fin_salon = null;
-            return view('home.homePage',compact('stand','reception', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon'));
+            return view('home.homePage',compact('stand','reception','location_name', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon'));
 
         }
 
