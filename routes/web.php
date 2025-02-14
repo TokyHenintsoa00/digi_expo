@@ -136,18 +136,61 @@ Route::prefix('directeur')->group(function(){
 
     });
 //-------------------ADMIN-------------------------------------------------------------------------------
+
+
+
     Route::get('/viewAuthentificationAdmin',[AdminController::class,'viewAuthentificationAdmin'])->name('viewAuthentificationAdmin');
     Route::get('/getSignInAdmin',[AdminController::class,'getSignInAdmin']);
     Route::get('/getSignOutAdmin',[AdminController::class,'getSignOutAdmin']);
-    Route::get('/viewCreationSalonAdmin',[AdminController::class,'viewCreationSalonAdmin'])->name('viewCreationSalonAdmin');
-    Route::post('/creationSalon',[AdminController::class,'creationSalon'])->name('creationSalon');
+
+    Route::get('/viewCreationSalonAdmin', function (Request $request) {
+    if (!session()->has('id')) {
+        return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+    }
+    return app(AdminController::class)->viewCreationSalonAdmin($request);
+    })->name('viewCreationSalonAdmin');
+
+
+    //Route::get('/viewCreationSalonAdmin',[AdminController::class,'viewCreationSalonAdmin'])->name('viewCreationSalonAdmin');
+    //Route::post('/creationSalon',[AdminController::class,'creationSalon'])->name('creationSalon');
     Route::post('/creationSalonV1',[AdminController::class,'creationSalonV2'])->name('creationSalonV1');
 
-        Route::get('/viewAdminPage',[AdminController::class,'viewAdminPage'])->name('viewAdminPage');
-        Route::get('/viewValidationPermissionStand',[AdminController::class,'viewValidationPermissionStand'])->name('viewValidationPermissionStand');
-        Route::post('/validePermissionByAdmin',[AdminController::class,'validePermissionByAdmin']);
-        Route::post('/refusePermissiontandByAdmin',[AdminController::class,'refusePermissiontandByAdmin']);
-        Route::get('/viewValidationRecrutementEmp',[AdminController::class,'viewValidationRecrutementEmp'])->name('viewValidationRecrutementEmp');
+    Route::get('/viewAdminPage', function (Request $request) {
+        if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+        }
+        return app(AdminController::class)->viewAdminPage($request);
+    })->name('viewAdminPage');
+
+
+    Route::get('/viewValidationPermissionStand', function (Request $request) {
+        if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+        }
+        return app(AdminController::class)->viewValidationPermissionStand($request);
+    })->name('viewValidationPermissionStand');
+
+
+    Route::get('/viewValidationPermissionStand', function (Request $request) {
+        if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+        }
+        return app(AdminController::class)->viewValidationPermissionStand($request);
+    })->name('viewValidationPermissionStand');
+
+    //Route::get('/viewValidationPermissionStand',[AdminController::class,'viewValidationPermissionStand'])->name('viewValidationPermissionStand');
+    Route::post('/validePermissionByAdmin',[AdminController::class,'validePermissionByAdmin']);
+    Route::post('/refusePermissiontandByAdmin',[AdminController::class,'refusePermissiontandByAdmin']);
+
+    Route::get('/viewValidationRecrutementEmp', function (Request $request) {
+        if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+        }
+        return app(AdminController::class)->viewValidationRecrutementEmp($request);
+    })->name('viewValidationRecrutementEmp');
+
+
+    //Route::get('/viewValidationRecrutementEmp',[AdminController::class,'viewValidationRecrutementEmp'])->name('viewValidationRecrutementEmp');
         Route::post('/validationRecrutement',[AdminController::class,'validationRecrutement']);
         Route::post('/refusDeRecrutement',[AdminController::class,'refusDeRecrutement'])->name('refusDeRecrutement');
         Route::get('/viewGestionPersonnelByAdmin',[AdminController::class,'viewGestionPersonnelByAdmin'])->name('viewGestionPersonnelByAdmin');
