@@ -3,7 +3,7 @@
 @section('dasboardAdminSection')
 
 <style>
-    
+
 </style>
 
 <head>
@@ -92,11 +92,11 @@
         let areaChart2;
         let donutChart1;
         let areaChartOptions;
-        let areaChartUrl = '/get-data-user-by-year'; // URL par défaut pour les utilisateurs
+        let areaChartUrl = '/admin/get-data-user-by-year'; // URL par défaut pour les utilisateurs
         let areaChartColor = '#40BB58'; // Couleur par défaut
 
 
-
+        //nombre de contenue photo et video
         function initializeDonutChart1() {
             // Initialisation du Donut Chart 1
             donutChart1 = new ApexCharts(document.querySelector("#donutChart1"), {
@@ -129,8 +129,12 @@
             areaChart2.render();
         }
 
+
+
         function updateDonutChart1(year) {
-        fetch(`/get-data-video-contenue-by-year?year=${year}`)
+
+        fetch(`/admin/get-data-video-contenue-by-year?year=${year}`)
+            //fetch(routeName)
             .then(response => response.json())
                     .then(data => {
                         const categories = data.map(item => item.nom_mois || "");
@@ -146,7 +150,8 @@
 
         function updateAreaChart2(year)
         {
-            fetch(`/get-data-photo-contenue-by-year?year=${year}`)
+
+            fetch(`/admin/get-data-photo-contenue-by-year?year=${year}`)
             .then(response => response.json())
                     .then(data => {
                         const categories = data.map(item => item.nom_mois || "");
@@ -196,7 +201,7 @@
 
         // Mise à jour du barChart
         function updateBarChart(year) {
-            fetch(`/get-data-by-year?year=${year}`)
+            fetch(`/admin/get-data-by-year?year=${year}`)
                 .then(response => response.json())
                 .then(data => {
                     const categories = data.map(item => item.nom_mois || "");
@@ -216,7 +221,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const categories = data.map(item => item.nom_mois || "");
-                    const values = areaChartUrl === '/get-data-user-by-year'
+                    const values = areaChartUrl === '/admin/get-data-user-by-year'
                         ? data.map(item => item.nombre_de_personnel || 0)
                         : data.map(item => item.nombre_mouvement || 0);
 
@@ -231,8 +236,8 @@
         document.getElementById("dataFilter").addEventListener("change", function () {
             const filterValue = this.value;
             areaChartUrl = filterValue === 'utilisateurs'
-                ? '/get-data-user-by-year'
-                : '/get-data-mvt-by-year';
+                ? '/admin/get-data-user-by-year'
+                : '/admin/get-data-mvt-by-year';
             areaChartColor = filterValue === 'utilisateurs' ? '#40BB58' : '#FF0000';
 
             areaChartOptions.updateOptions({ colors: [areaChartColor] });

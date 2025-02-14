@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Espace Administrateur</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/logo_head.png" width="32" height="32" />
-  <link rel="stylesheet" href="../assets/css/styles.min.css" />
-  <link rel="stylesheet" href="assets/css/style1.css">
+  <link rel="stylesheet" href="{{asset('../assets/css/styles.min.css')}}" />
+  <link rel="stylesheet" href="{{asset('assets/css/style1.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css">
   <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
@@ -262,13 +262,13 @@ aside.top-navbar {
       </div>
     </div>
   </div>
-  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/sidebarmenu.js"></script>
-  <script src="../assets/js/app.min.js"></script>
-  <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
-  <script src="../assets/js/dashboard.js"></script>
+  <script src="{{asset('../assets/libs/jquery/dist/jquery.min.js')}}"></script>
+  <script src="{{asset('../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('../assets/js/sidebarmenu.js')}}"></script>
+  <script src="{{asset('../assets/js/app.min.js')}}"></script>
+  <script src="{{asset('../assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+  <script src="{{asset('../assets/libs/simplebar/dist/simplebar.js')}}"></script>
+  <script src="{{asset('../assets/js/dashboard.js')}}"></script>
 
   <footer style="background-color: #001f54; color: white; padding: 20px 0;">
     <div class="container">
@@ -314,16 +314,16 @@ aside.top-navbar {
           <br>
           <div>
             <a href="#" aria-label="Facebook" style="color: white; margin-right: 10px;">
-              <img src="assets/images/logos/facebook.svg" alt="Facebook" width="24" height="24">
+              <img src="{{asset('assets/images/logos/facebook.svg')}}" alt="Facebook" width="24" height="24">
             </a>
             <a href="#" aria-label="Twitter" style="color: white; margin-right: 10px;">
-              <img src="assets/images/logos/twitter.svg" alt="Twitter" width="24" height="24">
+              <img src="{{asset('assets/images/logos/twitter.svg')}}" alt="Twitter" width="24" height="24">
             </a>
             <a href="#" aria-label="YouTube" style="color: white; margin-right: 10px;">
-              <img src="assets/images/logos/youtube.svg" alt="YouTube" width="24" height="24">
+              <img src="{{asset('assets/images/logos/youtube.svg')}}" alt="YouTube" width="24" height="24">
             </a>
             <a href="#" aria-label="Microphone" style="color: white; margin-right: 10px;">
-              <img src="assets/images/logos/mic-fill.svg" alt="Microphone" width="24" height="24">
+              <img src="{{asset('assets/images/logos/mic-fill.svg')}}" alt="Microphone" width="24" height="24">
             </a>
           </div>
         </div>

@@ -27,6 +27,23 @@ class ReceptionModel extends Model
         }
     }
 
+    public function maxSalon()
+    {
+        $result = DB::select("SELECT MAX(id_sallon) as id_sallon from salon");
+        return $result;
+    }
+
+    public function getSalonWhere()
+    {
+        $id_sallon = $this->maxSalon();
+
+        $result = DB::select("SELECT * FROM SALON WHERE id_sallon = $id_sallon");
+
+        return $result;
+    }
+
+    
+
 
     public function getOrganisateur($nom_organisateur)
     {

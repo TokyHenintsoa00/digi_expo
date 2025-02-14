@@ -69,7 +69,7 @@ class FacebookController extends Controller
                     'prenom' => $prenom, // Prénom extrait du nom complet
                     'email' => $facebookUser->email,
                     'pwd_admin' => bcrypt($motDePasse), // Hasher le mot de passe généré
-                    'id_etat' => 1 // Statut par défaut
+                    'id_etat' => 6 // Statut par défaut
                 ];
 
                 // Enregistrement du nouvel administrateur

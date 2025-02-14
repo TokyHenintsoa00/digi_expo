@@ -16,7 +16,7 @@ use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Intervention\Image\Facades\Image;
-
+use Illuminate\Http\Request;
 Route::get('/', function () {
     // return view('home.homePage');
     return redirect()->route('viewHomePage');
@@ -137,78 +137,208 @@ Route::prefix('directeur')->group(function(){
     });
 //-------------------ADMIN-------------------------------------------------------------------------------
 
-
-
     Route::get('/viewAuthentificationAdmin',[AdminController::class,'viewAuthentificationAdmin'])->name('viewAuthentificationAdmin');
     Route::get('/getSignInAdmin',[AdminController::class,'getSignInAdmin']);
     Route::get('/getSignOutAdmin',[AdminController::class,'getSignOutAdmin']);
 
-    Route::get('/viewCreationSalonAdmin', function (Request $request) {
-    if (!session()->has('id')) {
-        return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
-    }
-    return app(AdminController::class)->viewCreationSalonAdmin($request);
-    })->name('viewCreationSalonAdmin');
+    Route::prefix("admin")->group(function(){
+
+        Route::get('/viewCreationSalonAdmin', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewCreationSalonAdmin($request);
+            })->name('viewCreationSalonAdmin');
+
+        Route::post('/creationSalonV1',[AdminController::class,'creationSalonV2'])->name('creationSalonV1');
+
+        Route::get('/viewAdminPage', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewAdminPage($request);
+        })->name('viewAdminPage');
+
+        Route::get('/viewValidationPermissionStand', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewValidationPermissionStand($request);
+        })->name('viewValidationPermissionStand');
+
+        Route::post('/validePermissionByAdmin',[AdminController::class,'validePermissionByAdmin']);
+        Route::post('/refusePermissiontandByAdmin',[AdminController::class,'refusePermissiontandByAdmin']);
+
+
+        Route::get('/viewValidationRecrutementEmp', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewValidationRecrutementEmp($request);
+        })->name('viewValidationRecrutementEmp');
+
+        Route::post('/validationRecrutement',[AdminController::class,'validationRecrutement']);
+        Route::post('/refusDeRecrutement',[AdminController::class,'refusDeRecrutement'])->name('refusDeRecrutement');
+
+        Route::get('/viewGestionPersonnelByAdmin', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewGestionPersonnelByAdmin($request);
+        })->name('viewGestionPersonnelByAdmin');
+
+        Route::get('/viewLicensimentEmpByAdmin', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewLicensimentEmpByAdmin($request);
+        })->name('viewLicensimentEmpByAdmin');
+
+
+        Route::get('/viewPromouvoirEmpEnDirecteur', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewPromouvoirEmpEnDirecteur($request);
+        })->name('viewPromouvoirEmpEnDirecteur');
+
+        Route::post('/licensimentDirecteurByAdmin',[AdminController::class,'licensimentDirecteurByAdmin'])->name('licensimentDirecteurByAdmin');
+        Route::post('/licensimentEmployerByAdmin',[AdminController::class,'licensimentEmployerByAdmin'])->name('licensimentEmployerByAdmin');
+
+        Route::get('/viewListStandAndEmpAndNombreStand', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewListStandAndEmpAndNombreStand($request);
+        })->name('viewListStandAndEmpAndNombreStand');
+
+
+        Route::get('/viewInfoStand', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewInfoStand($request);
+        })->name('viewInfoStand');
+
+        Route::get('/viewListMembreStand', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewListMembreStand($request);
+        })->name('viewListMembreStand');
+
+        Route::get('/viewCalendrierSuiviAdmin', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewCalendrierSuiviAdmin($request);
+        })->name('viewCalendrierSuiviAdmin');
+
+
+        Route::get('/dasboardAdmin', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->dasboardAdmin($request);
+        })->name('dasboardAdmin');
+
+            //Route::get('/dasboardAdmin',[AdminController::class,'dasboardAdmin'])->name('dasboardAdmin');
+
+        Route::get('/admin/dashboard/data', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->fetchDashboardData($request);
+        });
+
+        //Route::get('/admin/dashboard/data', [AdminController::class, 'fetchDashboardData']);
+
+        //DONNEE DE STAND DURANT L'ANNEE
+        Route::get('/get-data-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getDataByYear($request);
+        })->name('get.data.by.year');
+
+        //Route::get('/get-data-by-year', [AdminController::class, 'getDataByYear'])->name('get.data.by.year');
+
+        Route::get('/get-data-user-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getDataUtilisateur($request);
+        })->name('get.data.user.by.year');
+
+        //Route::get('/get-data-user-by-year', [AdminController::class, 'getDataUtilisateur'])->name('get.data.user.by.year');
+
+        Route::get('/get-data-mvt-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getMouvementPersonnel($request);
+        })->name('get.data.mvt.by.year');
+
+            //Route::get('/get-data-mvt-by-year', [AdminController::class, 'getMouvementPersonnel'])->name('get.data.mvt.by.year');
+
+        Route::get('/get-data-video-contenue-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getVideoContenueVideo($request);
+        })->name('get.data.video-contenue.by.year');
+
+            //Route::get('/get-data-video-contenue-by-year', [AdminController::class, 'getVideoContenueVideo'])->name('get.data.video-contenue.by.year');
+
+        Route::get('/get-data-photo-contenue-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getContenuePhoto($request);
+        })->name('get.data.photo-contenue.by.year');
+
+    });
+
+
 
 
     //Route::get('/viewCreationSalonAdmin',[AdminController::class,'viewCreationSalonAdmin'])->name('viewCreationSalonAdmin');
     //Route::post('/creationSalon',[AdminController::class,'creationSalon'])->name('creationSalon');
-    Route::post('/creationSalonV1',[AdminController::class,'creationSalonV2'])->name('creationSalonV1');
 
-    Route::get('/viewAdminPage', function (Request $request) {
-        if (!session()->has('id')) {
-            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
-        }
-        return app(AdminController::class)->viewAdminPage($request);
-    })->name('viewAdminPage');
-
-
-    Route::get('/viewValidationPermissionStand', function (Request $request) {
-        if (!session()->has('id')) {
-            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
-        }
-        return app(AdminController::class)->viewValidationPermissionStand($request);
-    })->name('viewValidationPermissionStand');
-
-
-    Route::get('/viewValidationPermissionStand', function (Request $request) {
-        if (!session()->has('id')) {
-            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
-        }
-        return app(AdminController::class)->viewValidationPermissionStand($request);
-    })->name('viewValidationPermissionStand');
+    // Route::get('/viewValidationPermissionStand', function (Request $request) {
+    //     if (!session()->has('id')) {
+    //         return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+    //     }
+    //     return app(AdminController::class)->viewValidationPermissionStand($request);
+    // })->name('viewValidationPermissionStand');
 
     //Route::get('/viewValidationPermissionStand',[AdminController::class,'viewValidationPermissionStand'])->name('viewValidationPermissionStand');
-    Route::post('/validePermissionByAdmin',[AdminController::class,'validePermissionByAdmin']);
-    Route::post('/refusePermissiontandByAdmin',[AdminController::class,'refusePermissiontandByAdmin']);
 
-    Route::get('/viewValidationRecrutementEmp', function (Request $request) {
-        if (!session()->has('id')) {
-            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
-        }
-        return app(AdminController::class)->viewValidationRecrutementEmp($request);
-    })->name('viewValidationRecrutementEmp');
+    //Route::get('/viewLicensimentEmpByAdmin',[AdminController::class,'viewLicensimentEmpByAdmin'])->name('viewLicensimentEmpByAdmin');
 
 
-    //Route::get('/viewValidationRecrutementEmp',[AdminController::class,'viewValidationRecrutementEmp'])->name('viewValidationRecrutementEmp');
-        Route::post('/validationRecrutement',[AdminController::class,'validationRecrutement']);
-        Route::post('/refusDeRecrutement',[AdminController::class,'refusDeRecrutement'])->name('refusDeRecrutement');
-        Route::get('/viewGestionPersonnelByAdmin',[AdminController::class,'viewGestionPersonnelByAdmin'])->name('viewGestionPersonnelByAdmin');
-        Route::get('/viewLicensimentEmpByAdmin',[AdminController::class,'viewLicensimentEmpByAdmin'])->name('viewLicensimentEmpByAdmin');
-        Route::get('/viewPromouvoirEmpEnDirecteur',[AdminController::class,'viewPromouvoirEmpEnDirecteur'])->name('viewPromouvoirEmpEnDirecteur');
-        Route::post('/licensimentDirecteurByAdmin',[AdminController::class,'licensimentDirecteurByAdmin'])->name('licensimentDirecteurByAdmin');
-        Route::post('/licensimentEmployerByAdmin',[AdminController::class,'licensimentEmployerByAdmin'])->name('licensimentEmployerByAdmin');
-        Route::get('/viewListStandAndEmpAndNombreStand',[AdminController::class,'viewListStandAndEmpAndNombreStand'])->name('viewListStandAndEmpAndNombreStand');
-        Route::get('/viewInfoStand',[AdminController::class,'viewInfoStand'])->name('viewInfoStand');
-        Route::get('/viewListMembreStand',[AdminController::class,'viewListMembreStand'])->name('viewListMembreStand');
-        Route::get('/viewCalendrierSuiviAdmin',[AdminController::class,'viewCalendrierSuiviAdmin'])->name('viewCalendrierSuiviAdmin');
-        Route::get('/dasboardAdmin',[AdminController::class,'dasboardAdmin'])->name('dasboardAdmin');
-        Route::get('/admin/dashboard/data', [AdminController::class, 'fetchDashboardData']);
-        Route::get('/get-data-by-year', [AdminController::class, 'getDataByYear'])->name('get.data.by.year');
-        Route::get('/get-data-user-by-year', [AdminController::class, 'getDataUtilisateur'])->name('get.data.user.by.year');
-        Route::get('/get-data-mvt-by-year', [AdminController::class, 'getMouvementPersonnel'])->name('get.data.mvt.by.year');
-        Route::get('/get-data-video-contenue-by-year', [AdminController::class, 'getVideoContenueVideo'])->name('get.data.video-contenue.by.year');
-        Route::get('/get-data-photo-contenue-by-year', [AdminController::class, 'getContenuePhoto'])->name('get.data.photo-contenue.by.year');
+
+
+        //Route::get('/viewPromouvoirEmpEnDirecteur',[AdminController::class,'viewPromouvoirEmpEnDirecteur'])->name('viewPromouvoirEmpEnDirecteur');
+
+
+
+        //Route::get('/viewListStandAndEmpAndNombreStand',[AdminController::class,'viewListStandAndEmpAndNombreStand'])->name('viewListStandAndEmpAndNombreStand');
+
+
+
+        //Route::get('/viewInfoStand',[AdminController::class,'viewInfoStand'])->name('viewInfoStand');
+
+
+
+        //Route::get('/viewListMembreStand',[AdminController::class,'viewListMembreStand'])->name('viewListMembreStand');
+
+
+        //Route::get('/viewCalendrierSuiviAdmin',[AdminController::class,'viewCalendrierSuiviAdmin'])->name('viewCalendrierSuiviAdmin');
+
+
+
+        //Route::get('/get-data-photo-contenue-by-year', [AdminController::class, 'getContenuePhoto'])->name('get.data.photo-contenue.by.year');
         Route::post('/search',[AdminController::class,'search'])->name('search');
 //----------------------RESET DATABASE----------------------------------------------------------------------------
 Route::get('/reset',[ResetDatabaseController::class,'reset']);

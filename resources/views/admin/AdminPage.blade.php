@@ -17,7 +17,7 @@
                     <div class="card-body">
                       <h5 class="card-title">Validez les permissions de stand des clients</h5>
                       <p class="card-text">Examinez les demandes de permission de stand et approuvez ou rejetez les demandes selon les critères établis.</p>
-                      <a href="/viewValidationPermissionStand" class="btn btn-primary">Valider maintenant</a>
+                      <a href="{{route('viewValidationPermissionStand')}}" class="btn btn-primary">Valider maintenant</a>
                     </div>
                   </div>
             </div>
@@ -32,7 +32,7 @@
                   <div class="card-body">
                     <h5 class="card-title">Validez les recrutement des directeurs </h5>
                     <p class="card-text">Vérifiez les données soumises et approuvez ou rejetez la demande de validation.</p>
-                    <a href="/viewValidationRecrutementEmp" class="btn btn-primary">Valider maintenant</a>
+                    <a href="{{route('viewValidationRecrutementEmp')}}" class="btn btn-primary">Valider maintenant</a>
                   </div>
                 </div>
               </div>
