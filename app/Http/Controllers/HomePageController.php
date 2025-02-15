@@ -34,7 +34,7 @@ class HomePageController extends Controller
     public function viewHomePage()
     {
         $getStand = new StandModel();
-        $stand = $getStand->getAllStandSuccess();
+        $stand = $getStand->maxStand();
 
         $getReceptionModel = new ReceptionModel();
 
@@ -135,6 +135,8 @@ class HomePageController extends Controller
         $img_stand->move(public_path('assets'),$img_stand_name);
 
 
+        $getSalonWhere = $getReceptionModel->getSalonWhere();
+        $id_max_id_sallon = $getSalonWhere[0]->id_sallon;
 
         //--------------Emp----------------------
         $nom_employe = $request->nom_employe;
@@ -144,7 +146,8 @@ class HomePageController extends Controller
         //------------------------------------------
         // $getInsertPermission = new EmpModel();
 
-        $getSalon = $getReceptionModel->getAllSalon();
+        //$getSalon = $getReceptionModel->getAllSalon();
+        $getSalon = $getReceptionModel->getSalonWhere();
         // $date_fin_du_salon = $getSalon[0]->date_fin;
 
         if($getSalon == null || $getSalon[0]->date_fin < $date_fin || $getSalon[0]->date_fin == null || $getSalon[0]->date_fin == 0)
@@ -153,8 +156,8 @@ class HomePageController extends Controller
         }
 
 
-        $getInsertPermission->insertPermissionStand($nom_stand,$id_categorie,$nom_categorie_stand,$description_stand,
-        $nom_employe,$prenom_employe,$date_naissance,$email_employe,$img_stand_name,$date_debut,$date_fin);
+        $getInsertPermission->insertPermissionStandV1($nom_stand,$id_categorie,$nom_categorie_stand,$description_stand,
+        $nom_employe,$prenom_employe,$date_naissance,$email_employe,$img_stand_name,$date_debut,$date_fin,$id_max_id_sallon);
         return redirect()->route('viewpermissionDeFaireUnStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
     }
 

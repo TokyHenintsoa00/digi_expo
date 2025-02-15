@@ -47,6 +47,24 @@ class StandModel extends Model
             }
         }
 
+        public function insertPermissionStandV1($nom_stand,$id_categorie,$nom_categorie_stand,$description_stand,
+        $nom_employe,$prenom_employe,$date_naissace,$email_employe,$img_permission_stand,$date_debut,$date_fin,$id_salon)
+        {
+            DB::beginTransaction();
+            try
+            {
+                DB::insert('INSERT INTO permission_stand(nom_stand,id_categorie,nom_categorie_stand,description_stand,
+                nom_emp,prenom_emp,date_naissance,email,img_stand,id_etat,date_debut_stand,date_fin_stand,id_sallon)VALUES(?,?,?,?,?,?,?,?,?,1,?,?,?)',[$nom_stand,$id_categorie,$nom_categorie_stand,
+                $description_stand,$nom_employe,$prenom_employe,$date_naissace,$email_employe,$img_permission_stand,$date_debut,$date_fin,$id_salon]);
+                DB::commit();
+
+
+
+            } catch (\Exception $e) {
+                DB::rollBack(); // Annuler si quelque chose échoue
+                throw $e; // Renvoyer l'erreur
+            }
+        }
 
 
         public function validationPermissionStand($id_permission_Stand,$nom_stand,$id_categorie,
@@ -71,6 +89,29 @@ class StandModel extends Model
             }
         }
 
+
+        public function validationPermissionStandV1($id_permission_Stand,$nom_stand,$id_categorie,
+            $description_stand,$nom_emp,$prenom_emp,$date_naissance,$email,$img_permission_stand,$nom_categorie_stand,$date_debut,$date_fin,$id_salon)
+        {
+            DB::beginTransaction();
+            try
+            {
+                DB::insert("INSERT INTO stand(id_categorie,nom_stand,description_stand,img_stand,id_etat,date_de_creation_stand,nom_categorie_stand,date_debut_stand,date_fin_stand,id_sallon)VALUES
+                (?,?,?,?,4,CURRENT_TIMESTAMP,?,?,?,?)",[$id_categorie,$nom_stand,$description_stand,$img_permission_stand,$nom_categorie_stand,$date_debut,$date_fin,$id_salon]);
+
+                DB::insert("INSERT INTO emp(nom_emp, prenom_emp, date_naissance, email, id_etat, date_membre)VALUES
+                (?,?,?,?,7,CURRENT_TIMESTAMP)",[$nom_emp,$prenom_emp,$date_naissance,$email]);
+
+                DB::update("UPDATE permission_stand set id_etat = 4 where id_permission_stand=?",[$id_permission_Stand]);
+
+                DB::commit();
+            } catch (\Throwable $e) {
+                //throw $th;
+                DB::rollBack(); // Annuler si quelque chose échoue
+                throw $e; // Renvoyer l'erreur
+            }
+        }
+
         public function insertStand($id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand)
         {
             DB::beginTransaction();
@@ -78,6 +119,28 @@ class StandModel extends Model
             {
                 DB::insert("INSERT INTO stand(id_categorie,nom_stand,description_stand,img_stand,id_etat,date_de_creation_stand,nom_categorie_stand)VALUES
                 (?,?,?,?,4,CURRENT_TIMESTAMP,?)",[$id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand]);
+
+                // Retrieve the last inserted id_stand
+                $lastInsertId = DB::getPdo()->lastInsertId();
+
+                DB::commit();
+
+                return $lastInsertId;
+
+            } catch (\Throwable $th) {
+                //throw $th;
+                DB::rollBack(); // Annuler si quelque chose échoue
+                throw $e; // Renvoyer l'erreur
+            }
+        }
+
+        public function insertStandV1($id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand,$id_salon)
+        {
+            DB::beginTransaction();
+            try
+            {
+                DB::insert("INSERT INTO stand(id_categorie,nom_stand,description_stand,img_stand,id_etat,date_de_creation_stand,nom_categorie_stand,id_salon)VALUES
+                (?,?,?,?,4,CURRENT_TIMESTAMP,?,?)",[$id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand,$id_salon]);
 
                 // Retrieve the last inserted id_stand
                 $lastInsertId = DB::getPdo()->lastInsertId();
@@ -650,5 +713,17 @@ class StandModel extends Model
     }
 
 
+    public function maxStand()
+    {
+        $getReceptionModel = new ReceptionModel();
+
+        $maxSalon = $getReceptionModel->maxSalon();
+
+        $id_salon = $maxSalon[0]->id_sallon;
+
+        $result = DB::select("SELECT * FROM stand where id_etat = 3 and id_sallon = $id_salon group by id_stand order by date_de_creation_stand desc");
+
+        return $result;
+    }
 }
 

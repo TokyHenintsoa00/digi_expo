@@ -257,8 +257,8 @@ class AdminController extends Controller
         $date_fin = $request->date_fin;
 
         $reception = new ReceptionModel();
-        $getAllSalon = $reception->getAllSalon();
-
+        //$getAllSalon = $reception->getAllSalon();
+        $getAllSalon = $reception->getSalonWhere();
         //get date du salon
         $date_fin_salon = $getAllSalon[0]->date_fin;
 
@@ -438,15 +438,19 @@ class AdminController extends Controller
             $prenom_emp = $request->prenom_emp;
             $email = $request->email;
             $date_naissance = $request->date_naissance;
-            //-------------------------------------------------------------
+            //----------------Salon ---------------------------------------------
+            $id_salon = $request->id_salon;
+            // dd($id_salon);
+            //------------------------------------------------------------
             $getStandModel = new StandModel();
             $getEmpModel = new EmpModel();
             $getAllEmp = $getEmpModel->getAllEmpById($nom_emp,$prenom_emp,$email);
 
             if($getAllEmp ==null)
             {
-                $validate = $getStandModel->validationPermissionStand($id_permission_stand,$nom_stand,$id_categorie,
-                $description_stand, $nom_emp,$prenom_emp,$date_naissance,$email,$img_stand,$nom_categorie_stand,$date_debut_stand,$date_fin_stand);
+                $validate = $getStandModel->validationPermissionStandV1($id_permission_stand,$nom_stand,$id_categorie,
+                $description_stand, $nom_emp,$prenom_emp,$date_naissance,$email,
+                $img_stand,$nom_categorie_stand,$date_debut_stand,$date_fin_stand,$id_salon);
                 //appele de la fonction getallemp pour geter le pmatricule de emp
                 $getAllEmp = $getEmpModel->getAllEmpById($nom_emp,$prenom_emp,$email);
                 //appelle de la fonction insert membre stand

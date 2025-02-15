@@ -204,7 +204,7 @@ Route::prefix('directeur')->group(function(){
             return app(AdminController::class)->viewValidationPermissionStand($request);
         })->name('viewValidationPermissionStand');
 
-        Route::post('/validePermissionByAdmin',[AdminController::class,'validePermissionByAdmin']);
+        Route::post('/validePermissionByAdmin',[AdminController::class,'validePermissionByAdmin'])->name('validePermissionByAdmin');
         Route::post('/refusePermissiontandByAdmin',[AdminController::class,'refusePermissiontandByAdmin']);
 
 

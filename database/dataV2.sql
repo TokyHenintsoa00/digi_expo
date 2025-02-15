@@ -83,7 +83,8 @@ CREATE TABLE permission_stand
     date_naissance date,
     email varchar(50),
     img_stand text,
-    id_etat integer REFERENCES etat(id_etat)
+    id_etat integer REFERENCES etat(id_etat),
+    id_sallon integer references salon(id_sallon)
 );
 
 CREATE TABLE permission_recrutement_emp
@@ -109,7 +110,8 @@ CREATE TABLE stand
     id_etat integer REFERENCES etat(id_etat),
     date_de_creation_stand timestamp,
     date_debut_stand date,
-    date_fin_stand date
+    date_fin_stand date,
+    id_sallon integer references salon(id_sallon)
 );
 
 CREATE TABLE type_stand

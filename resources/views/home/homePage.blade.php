@@ -65,7 +65,7 @@
 
 <section class="organisateur-section py-5">
     <div class="container">
-        <h2 class="mb-4 text-center">Informations de l'Organisateur</h2>
+        <h2 class="mb-4 text-center">Nom de l'exposition : {{$reception[0]->nom_du_sallon}}</h2>
         @foreach ($organisateur as $organisateur)
         <div class="organisateur-info bg-white p-4 rounded shadow-sm mb-4">
             <div>

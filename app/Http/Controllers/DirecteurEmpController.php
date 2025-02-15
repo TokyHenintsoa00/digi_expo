@@ -115,7 +115,8 @@ class DirecteurEmpController extends Controller
         $date_naissance = $getEmpId[0]->date_naissance;
         $email = $getEmpId[0]->email;
 
-        $getSalon = $getReceptionModel->getAllSalon();
+        //$getSalon = $getReceptionModel->getAllSalon();
+        $getSalon = $getReceptionModel->getSalonWhere();
 
         if ($getSalon[0]->date_fin < $date_fin) {
             return redirect()->back()->withErrors(['error' => 'Vous ne pouvez pas creer une exposition pour le moment'])->withInput();
