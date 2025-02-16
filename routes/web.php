@@ -46,64 +46,383 @@ Route::post('/send-messageV1', [ChatController::class, 'sendMessageV1']);
 Route::get('/fetch-messagesV1/{sender_id}/{receiver_id}', [ChatController::class, 'fetchMessagesV1']);
 //------------------DIRECTEUR EMP-----------------------------------------------------------------------
 Route::prefix('directeur')->group(function(){
-    Route::get('/viewDirecteurEmpPage',[DirecteurEmpController::class, 'viewDirecteurEmpPage'])->name('viewDirecteurEmpPage');
-    Route::get('/viewStandDirecteur',[DirecteurEmpController::class,'viewStandDirecteur'])->name('viewStandDirecteur');
+
+    Route::get('/viewDirecteurEmpPage', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewDirecteurEmpPage();
+    })->name('viewDirecteurEmpPage');
+
+    Route::get('/viewStandDirecteur', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewStandDirecteur();
+    })->name('viewStandDirecteur');
+
+    //Route::get('/viewDirecteurEmpPage',[DirecteurEmpController::class, 'viewDirecteurEmpPage'])->name('viewDirecteurEmpPage');
+    //Route::get('/viewStandDirecteur',[DirecteurEmpController::class,'viewStandDirecteur'])->name('viewStandDirecteur');
     Route::post('/publication',[DirecteurEmpController::class,'publication'])->name('publication');
-    Route::get('/viewModifierStand',[DirecteurEmpController::class,'viewModifierStand'])->name('viewModifierStand');
+
+    Route::get('/viewModifierStand', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewModifierStand($request);
+    })->name('viewModifierStand');
+
+    //Route::get('/viewModifierStand',[DirecteurEmpController::class,'viewModifierStand'])->name('viewModifierStand');
     Route::post('/modifier',[DirecteurEmpController::class,'modifier'])->name('modifier');
-    Route::get('/viewDemandeNouvelleStand',[DirecteurEmpController::class,'viewDemandeNouvelleStand'])->name('viewDemandeNouvelleStand');
-    Route::post('/demandeStandEmp',[DirecteurEmpController::class,'demandeStandEmp'])->name('demandeStandEmp');
-    Route::get('/viewGestionPersonnel',[DirecteurEmpController::class,'viewGestionPersonnel'])->name('viewGestionPersonnel');
-    Route::get('/viewRecrutementEmp',[DirecteurEmpController::class,'viewRecrutementEmp'])->name('viewRecrutementEmp');
+
+    Route::get('/viewDemandeNouvelleStand', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewDemandeNouvelleStand($request);
+    })->name('viewDemandeNouvelleStand');
+
+    //Route::get('/viewDemandeNouvelleStand',[DirecteurEmpController::class,'viewDemandeNouvelleStand'])->name('viewDemandeNouvelleStand');
+
+    Route::get('/demandeStandEmp', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->demandeStandEmp($request);
+    })->name('demandeStandEmp');
+
+    //Route::post('/demandeStandEmp',[DirecteurEmpController::class,'demandeStandEmp'])->name('demandeStandEmp');
+
+    Route::get('/viewGestionPersonnel', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewGestionPersonnel($request);
+    })->name('viewGestionPersonnel');
+
+    //Route::get('/viewGestionPersonnel',[DirecteurEmpController::class,'viewGestionPersonnel'])->name('viewGestionPersonnel');
+
+    Route::get('/viewRecrutementEmp', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewRecrutementEmp($request);
+    })->name('viewRecrutementEmp');
+
+    //Route::get('/viewRecrutementEmp',[DirecteurEmpController::class,'viewRecrutementEmp'])->name('viewRecrutementEmp');
     Route::post('/recrutementEmp',[DirecteurEmpController::class,'recrutementEmp'])->name('recrutementEmp');
-    Route::get('/viewLicensimentEmployer',[DirecteurEmpController::class,'viewLicensimentEmployer'])->name('viewLicensimentEmployer');
+
+    Route::get('/viewLicensimentEmployer', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewLicensimentEmployer($request);
+    })->name('viewLicensimentEmployer');
+
+    //Route::get('/viewLicensimentEmployer',[DirecteurEmpController::class,'viewLicensimentEmployer'])->name('viewLicensimentEmployer');
     Route::post('/licensiment',[DirecteurEmpController::class,'licensiment'])->name('licensiment');
-    Route::get('/viewGestionContenue',[DirecteurEmpController::class,'viewGestionContenue'])->name('viewGestionContenue');
-    Route::get('/viewformulaireAddPosterAndProjetEmp',[DirecteurEmpController::class,'viewformulaireAddPosterAndProjetEmp'])->name('viewformulaireAddPosterAndProjetEmp');
+
+    Route::get('/viewGestionContenue', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewGestionContenue($request);
+    })->name('viewGestionContenue');
+
+    //Route::get('/viewGestionContenue',[DirecteurEmpController::class,'viewGestionContenue'])->name('viewGestionContenue');
+
+    Route::get('/viewformulaireAddPosterAndProjetEmp', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewformulaireAddPosterAndProjetEmp($request);
+    })->name('viewformulaireAddPosterAndProjetEmp');
+
+    //Route::get('/viewformulaireAddPosterAndProjetEmp',[DirecteurEmpController::class,'viewformulaireAddPosterAndProjetEmp'])->name('viewformulaireAddPosterAndProjetEmp');
     Route::post('/AddPosterAndProjetEmp',[DirecteurEmpController::class,'AddPosterAndProjetEmp'])->name('AddPosterAndProjetEmp');
-    Route::get('/viewModifierPosterProjet',[DirecteurEmpController::class,'viewModifierPosterProjet'])->name('viewModifierPosterProjet');
-    Route::get('/viewformulaireModifierAddPosterAndProjetEmp',[DirecteurEmpController::class,'viewformulaireModifierAddPosterAndProjetEmp'])->name('viewformulaireModifierAddPosterAndProjetEmp');
+
+    Route::get('/viewModifierPosterProjet', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewModifierPosterProjet($request);
+    })->name('viewModifierPosterProjet');
+
+    //Route::get('/viewModifierPosterProjet',[DirecteurEmpController::class,'viewModifierPosterProjet'])->name('viewModifierPosterProjet');
+
+    Route::get('/viewformulaireModifierAddPosterAndProjetEmp', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewformulaireModifierAddPosterAndProjetEmp($request);
+    })->name('viewformulaireModifierAddPosterAndProjetEmp');
+
+    //Route::get('/viewformulaireModifierAddPosterAndProjetEmp',[DirecteurEmpController::class,'viewformulaireModifierAddPosterAndProjetEmp'])->name('viewformulaireModifierAddPosterAndProjetEmp');
     Route::post('/modifierContenue',[DirecteurEmpController::class,'modifierContenue'])->name('modifierContenue');
-    Route::get('/viewFormulaireAddVideo',[DirecteurEmpController::class,'viewFormulaireAddVideo'])->name('viewFormulaireAddVideo');
-    Route::POST('/addVideo',[DirecteurEmpController::class,'addVideo'])->name('addVideo');
-    Route::get('/viewModificationVideo',[DirecteurEmpController::class,'viewModificationVideo'])->name('viewModificationVideo');
-    Route::get('/viewFormulaireModificationVideo',[DirecteurEmpController::class,'viewFormulaireModificationVideo'])->name('viewFormulaireModificationVideo');
+
+
+    Route::get('/viewFormulaireAddVideo', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewFormulaireAddVideo($request);
+    })->name('viewFormulaireAddVideo');
+
+    //Route::get('/viewFormulaireAddVideo',[DirecteurEmpController::class,'viewFormulaireAddVideo'])->name('viewFormulaireAddVideo');
+    Route::post('/addVideo',[DirecteurEmpController::class,'addVideo'])->name('addVideo');
+
+    Route::get('/viewModificationVideo', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewModificationVideo($request);
+    })->name('viewModificationVideo');
+
+    //Route::get('/viewModificationVideo',[DirecteurEmpController::class,'viewModificationVideo'])->name('viewModificationVideo');
+
+    Route::get('/viewFormulaireModificationVideo', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewModificationVideo($request);
+    })->name('viewFormulaireModificationVideo');
+
+    //Route::get('/viewFormulaireModificationVideo',[DirecteurEmpController::class,'viewFormulaireModificationVideo'])->name('viewFormulaireModificationVideo');
     Route::post('/modificationVideo',[DirecteurEmpController::class,'modificationVideo'])->name('modificationVideo');
-    Route::get('/viewGestionBrochure',[DirecteurEmpController::class,'viewGestionBrochure'])->name('viewGestionBrochure');
-    Route::get('/viewChoixDeStandBrochure',[DirecteurEmpController::class,'viewChoixDeStandBrochure'])->name('viewChoixDeStandBrochure');
-    Route::get('/viewChoixContenuePourBrochure',[DirecteurEmpController::class,'viewChoixContenuePourBrochure'])->name('viewChoixContenuePourBrochure');
-    Route::get('/viewFormulaireAjoutBrochure',[DirecteurEmpController::class,'viewFormulaireAjoutBrochure'])->name('viewFormulaireAjoutBrochure');
+
+    Route::get('/viewGestionBrochure', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewGestionBrochure($request);
+    })->name('viewGestionBrochure');
+
+    //Route::get('/viewGestionBrochure',[DirecteurEmpController::class,'viewGestionBrochure'])->name('viewGestionBrochure');
+
+
+    Route::get('/viewChoixDeStandBrochure', function (Request $request) {
+            if (!session()->has('id_emp')) {
+                return redirect('/authentification')->with('error', 'Accès interdit !');
+            }
+            return app(DirecteurEmpController::class)->viewChoixDeStandBrochure($request);
+        })->name('viewChoixDeStandBrochure');
+
+    //Route::get('/viewChoixDeStandBrochure',[DirecteurEmpController::class,'viewChoixDeStandBrochure'])->name('viewChoixDeStandBrochure');
+
+
+    Route::get('/viewChoixContenuePourBrochure', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewChoixContenuePourBrochure($request);
+    })->name('viewChoixContenuePourBrochure');
+
+    //Route::get('/viewChoixContenuePourBrochure',[DirecteurEmpController::class,'viewChoixContenuePourBrochure'])->name('viewChoixContenuePourBrochure');
+
+    Route::get('/viewFormulaireAjoutBrochure', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewFormulaireAjoutBrochure($request);
+    })->name('viewFormulaireAjoutBrochure');
+
+    //Route::get('/viewFormulaireAjoutBrochure',[DirecteurEmpController::class,'viewFormulaireAjoutBrochure'])->name('viewFormulaireAjoutBrochure');
     Route::post('/publierBrochure',[DirecteurEmpController::class,'publierBrochure'])->name('publierBrochure');
-    Route::get('/viewFormulaireDeModificationBrochure',[DirecteurEmpController::class,'viewFormulaireDeModificationBrochure'])->name('viewFormulaireDeModificationBrochure');
+
+    Route::get('/viewFormulaireDeModificationBrochure', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewFormulaireDeModificationBrochure($request);
+    })->name('viewFormulaireDeModificationBrochure');
+
+
+    //Route::get('/viewFormulaireDeModificationBrochure',[DirecteurEmpController::class,'viewFormulaireDeModificationBrochure'])->name('viewFormulaireDeModificationBrochure');
     Route::post('/modificationBrochure',[DirecteurEmpController::class,'modificationBrochure'])->name('modificationBrochure');
-    Route::get('/viewDemissionEmployer',[DirecteurEmpController::class,'viewDemissionEmployer'])->name('viewDemissionEmployer');
+
+    Route::get('/viewDemissionEmployer', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewDemissionEmployer($request);
+    })->name('viewDemissionEmployer');
+
+    //Route::get('/viewDemissionEmployer',[DirecteurEmpController::class,'viewDemissionEmployer'])->name('viewDemissionEmployer');
     Route::post('/demissionEmployer',[DirecteurEmpController::class,'demissionEmployer'])->name('demissionEmployer');
-    Route::get('/viewListEmpAndNombreEmpParStand',[DirecteurEmpController::class,'viewListEmpAndNombreEmpParStand'])->name('viewListEmpAndNombreEmpParStand');
-    Route::get('/viewVideoConference',[DirecteurEmpController::class,'viewVideoConference'])->name('viewVideoConference');
-    Route::get('/viewPlanificationVideoConference',[DirecteurEmpController::class,'viewPlanificationVideoConference'])->name('viewPlanificationVideoConference');
+
+    Route::get('/viewListEmpAndNombreEmpParStand', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewListEmpAndNombreEmpParStand($request);
+    })->name('viewListEmpAndNombreEmpParStand');
+
+    //Route::get('/viewListEmpAndNombreEmpParStand',[DirecteurEmpController::class,'viewListEmpAndNombreEmpParStand'])->name('viewListEmpAndNombreEmpParStand');
+
+    Route::get('/viewVideoConference', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewVideoConference($request);
+    })->name('viewVideoConference');
+
+    //Route::get('/viewVideoConference',[DirecteurEmpController::class,'viewVideoConference'])->name('viewVideoConference');
+
+    Route::get('/viewPlanificationVideoConference', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewPlanificationVideoConference($request);
+    })->name('viewPlanificationVideoConference');
+
+    //Route::get('/viewPlanificationVideoConference',[DirecteurEmpController::class,'viewPlanificationVideoConference'])->name('viewPlanificationVideoConference');
     Route::post('/planificationVideoConference',[DirecteurEmpController::class,'planificationVideoConference'])->name('planificationVideoConference');
-    Route::get('/viewModificationVideoConference',[DirecteurEmpController::class,'viewModificationVideoConference'])->name('viewModificationVideoConference');
-    Route::get('/viewFormulaireModificationVideoConference',[DirecteurEmpController::class,'viewFormulaireModificationVideoConference'])->name('viewFormulaireModificationVideoConference');
+
+    Route::get('/viewModificationVideoConference', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewModificationVideoConference($request);
+    })->name('viewModificationVideoConference');
+
+    //Route::get('/viewModificationVideoConference',[DirecteurEmpController::class,'viewModificationVideoConference'])->name('viewModificationVideoConference');
+
+    Route::get('/viewFormulaireModificationVideoConference', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewFormulaireModificationVideoConference($request);
+    })->name('viewFormulaireModificationVideoConference');
+
+    //Route::get('/viewFormulaireModificationVideoConference',[DirecteurEmpController::class,'viewFormulaireModificationVideoConference'])->name('viewFormulaireModificationVideoConference');
     Route::post('/modificationVideoConference',[DirecteurEmpController::class,'modificationVideoConference'])->name('modificationVideoConference');
-    Route::get('/viewAddLinkVideo',[DirecteurEmpController::class,'viewAddLinkVideo'])->name('viewAddLinkVideo');
+
+    Route::get('/viewAddLinkVideo', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewAddLinkVideo($request);
+    })->name('viewAddLinkVideo');
+
+    //Route::get('/viewAddLinkVideo',[DirecteurEmpController::class,'viewAddLinkVideo'])->name('viewAddLinkVideo');
     Route::post('/addLinkVideo',[DirecteurEmpController::class,'addLinkVideo'])->name('addLinkVideo');
-    Route::get('/viewCalendrierSuivi',[DirecteurEmpController::class,'viewCalendrierSuivi'])->name('viewCalendrierSuivi');
-    Route::get('/viewMessageDirecteur',[DirecteurEmpController::class,'viewMessageDirecteur'])->name('viewMessageDirecteur');
-    Route::get('/viewMessageSendOrReciveDirecteur',[DirecteurEmpController::class,'viewMessageSendOrReciveDirecteur'])->name('viewMessageSendOrReciveDirecteur');
+
+    Route::get('/viewCalendrierSuivi', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewCalendrierSuivi($request);
+    })->name('viewCalendrierSuivi');
+
+    //Route::get('/viewCalendrierSuivi',[DirecteurEmpController::class,'viewCalendrierSuivi'])->name('viewCalendrierSuivi');
+
+    Route::get('/viewMessageDirecteur', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewMessageDirecteur($request);
+    })->name('viewMessageDirecteur');
+
+    //Route::get('/viewMessageDirecteur',[DirecteurEmpController::class,'viewMessageDirecteur'])->name('viewMessageDirecteur');
+
+    Route::get('/viewMessageSendOrReciveDirecteur', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewMessageSendOrReciveDirecteur($request);
+    })->name('viewMessageSendOrReciveDirecteur');
+
+    //Route::get('/viewMessageSendOrReciveDirecteur',[DirecteurEmpController::class,'viewMessageSendOrReciveDirecteur'])->name('viewMessageSendOrReciveDirecteur');
     Route::post('/supprimerStand',[DirecteurEmpController::class,'supprimerStand'])->name('supprimerStand');
-    Route::get('/viewTemoignage',[DirecteurEmpController::class,'viewTemoignage'])->name('viewTemoignage');
-    Route::get('/viewPlanificationTemoignage',[DirecteurEmpController::class,'viewPlanificationTemoignage'])->name('viewPlanificationTemoignage');
+
+    Route::get('/viewTemoignage', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewTemoignage($request);
+    })->name('viewTemoignage');
+
+    //Route::get('/viewTemoignage',[DirecteurEmpController::class,'viewTemoignage'])->name('viewTemoignage');
+
+    Route::get('/viewPlanificationTemoignage', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewPlanificationTemoignage($request);
+    })->name('viewPlanificationTemoignage');
+
+    //Route::get('/viewPlanificationTemoignage',[DirecteurEmpController::class,'viewPlanificationTemoignage'])->name('viewPlanificationTemoignage');
     Route::post('/insertTemoignage',[DirecteurEmpController::class,'insertTemoignage'])->name('insertTemoignage');
-    Route::get('/viewInformationExposition',[DirecteurEmpController::class,'viewInformationExposition'])->name('viewInformationExposition');
-    Route::get('/viewConferenceClient',[DirecteurEmpController::class,'viewConferenceClient'])->name('viewConferenceClient');
-    Route::get('/viewJustificationDemissionEditeur',[DirecteurEmpController::class,'viewJustificationDemissionEditeur'])->name('viewJustificationDemissionEditeur');
-    Route::get('/viewGalerie',[DirecteurEmpController::class,'viewGalerie'])->name('viewGalerie');
+
+    Route::get('/viewInformationExposition', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewInformationExposition($request);
+    })->name('viewInformationExposition');
+
+    //Route::get('/viewInformationExposition',[DirecteurEmpController::class,'viewInformationExposition'])->name('viewInformationExposition');
+
+    Route::get('/viewConferenceClient', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewConferenceClient($request);
+    })->name('viewConferenceClient');
+
+    //Route::get('/viewConferenceClient',[DirecteurEmpController::class,'viewConferenceClient'])->name('viewConferenceClient');
+
+    Route::get('/viewJustificationDemissionEditeur', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewJustificationDemissionEditeur($request);
+    })->name('viewJustificationDemissionEditeur');
+
+    //Route::get('/viewJustificationDemissionEditeur',[DirecteurEmpController::class,'viewJustificationDemissionEditeur'])->name('viewJustificationDemissionEditeur');
+
+    Route::get('/viewGalerie', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewGalerie($request);
+    })->name('viewGalerie');
+
+    //Route::get('/viewGalerie',[DirecteurEmpController::class,'viewGalerie'])->name('viewGalerie');
     Route::post('/planificationGallerie',[DirecteurEmpController::class,'planificationGallerie'])->name('planificationGallerie');
     Route::post('/ajoutDeReunion',[DirecteurEmpController::class,'ajoutDeReunion'])->name('ajoutDeReunion');
-    Route::get('/viewListTemoignage',[DirecteurEmpController::class,'viewListTemoignage'])->name('viewListTemoignage');
-    Route::get('/viewModificationemoignage',[DirecteurEmpController::class,'viewModificationemoignage'])->name('viewModificationemoignage');
+
+    Route::get('/viewListTemoignage', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewListTemoignage($request);
+    })->name('viewListTemoignage');
+
+
+    //Route::get('/viewListTemoignage',[DirecteurEmpController::class,'viewListTemoignage'])->name('viewListTemoignage');
+
+
+    Route::get('/viewModificationemoignage', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewModificationemoignage($request);
+    })->name('viewModificationemoignage');
+
+
+    //Route::get('/viewModificationemoignage',[DirecteurEmpController::class,'viewModificationemoignage'])->name('viewModificationemoignage');
+
     Route::post('/modificationTemoignage',[DirecteurEmpController::class,'modificationTemoignage'])->name('modificationTemoignage');
-    Route::get('/viewAjoutLiensTemoignage',[DirecteurEmpController::class,'viewAjoutLiensTemoignage'])->name('viewAjoutLiensTemoignage');
+
+    Route::get('/viewAjoutLiensTemoignage', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewAjoutLiensTemoignage($request);
+    })->name('viewAjoutLiensTemoignage');
+
+    //Route::get('/viewAjoutLiensTemoignage',[DirecteurEmpController::class,'viewAjoutLiensTemoignage'])->name('viewAjoutLiensTemoignage');
     Route::post('/ajoutLiensTemoignage',[DirecteurEmpController::class,'ajoutLiensTemoignage'])->name('ajoutLiensTemoignage');
 
 });
@@ -117,6 +436,7 @@ Route::prefix('directeur')->group(function(){
 
 // -----------------EMP--------------------------------------------------------------------------------
     Route::prefix('employer')->group(function(){
+
         Route::get('/viewEmpPage', function (Request $request) {
             if (!session()->has('id_emp')) {
                 return redirect('/authentification')->with('error', 'Accès interdit !');
@@ -155,21 +475,72 @@ Route::prefix('directeur')->group(function(){
             return app(EmpController::class)->viewGestionBrochure($request);
         })->name('viewGestionBrochureEmp');
 
+        Route::get('/viewChoixDeStandBrochureEmp', function (Request $request) {
+            if (!session()->has('id_emp')) {
+                return redirect('/authentification')->with('error', 'Accès interdit !');
+            }
+            return app(EmpController::class)->viewChoixDeStandBrochureEmp($request);
+        })->name('viewChoixDeStandBrochureEmp');
+
+        Route::get('/viewChoixContenuePourBrochureEmp', function (Request $request) {
+            if (!session()->has('id_emp')) {
+                return redirect('/authentification')->with('error', 'Accès interdit !');
+            }
+            return app(EmpController::class)->viewChoixContenuePourBrochureEmp($request);
+        })->name('viewChoixContenuePourBrochureEmp');
+
+        Route::get('/viewFormulaireAjoutBrochureEmp', function (Request $request) {
+            if (!session()->has('id_emp')) {
+                return redirect('/authentification')->with('error', 'Accès interdit !');
+            }
+            return app(EmpController::class)->viewFormulaireAjoutBrochureEmp($request);
+        })->name('viewFormulaireAjoutBrochureEmp');
+
+        Route::post('/publierBrochureEmp',[EmpController::class,'publierBrochureEmp'])->name('publierBrochureEmp');
+
+
+        Route::get('/viewPermissionDemissionEmp', function (Request $request) {
+            if (!session()->has('id_emp')) {
+                return redirect('/authentification')->with('error', 'Accès interdit !');
+            }
+            return app(EmpController::class)->viewPermissionDemissionEmp($request);
+        })->name('viewPermissionDemissionEmp');
+
+        Route::post('/permissionDemission',[EmpController::class,'permissionDemission'])->name('permissionDemission');
+
+        Route::get('/viewMessageEmp', function (Request $request) {
+            if (!session()->has('id_emp')) {
+                return redirect('/authentification')->with('error', 'Accès interdit !');
+            }
+            return app(EmpController::class)->viewMessageEmp($request);
+        })->name('viewMessageEmp');
+
+        Route::get('/viewMessageSendOrReciveEmp', function (Request $request) {
+            if (!session()->has('id_emp')) {
+                return redirect('/authentification')->with('error', 'Accès interdit !');
+            }
+            return app(EmpController::class)->viewMessageSendOrReciveEmp($request);
+        })->name('viewMessageSendOrReciveEmp');
+
+        Route::get('/viewformulaireAddVideoEmpSection', function (Request $request) {
+            if (!session()->has('id_emp')) {
+                return redirect('/authentification')->with('error', 'Accès interdit !');
+            }
+            return app(EmpController::class)->viewformulaireAddVideoEmpSection($request);
+        })->name('viewformulaireAddVideoEmpSection');
 
         //Route::get('/viewEmpPage',[EmpController::class,'viewEmpPage'])->name('viewEmpPage');
         //Route::get('/viewStandEmp',[EmpController::class,'viewStandEmp'])->name('viewStandEmp');
         //Route::get('/viewGestionContenueEmp',[EmpController::class,'viewGestionContenue'])->name('viewGestionContenueEmp');
         //Route::get('/viewformulaireAddPosterAndProjet',[EmpController::class,'viewformulaireAddPosterAndProjet'])->name('viewformulaireAddPosterAndProjet');
         //Route::get('/viewGestionBrochureEmp',[EmpController::class,'viewGestionBrochure'])->name('viewGestionBrochureEmp');
-        Route::get('/viewChoixDeStandBrochureEmp',[EmpController::class,'viewChoixDeStandBrochureEmp'])->name('viewChoixDeStandBrochureEmp');
-        Route::get('/viewChoixContenuePourBrochureEmp',[EmpController::class,'viewChoixContenuePourBrochureEmp'])->name('viewChoixContenuePourBrochureEmp');
-        Route::get('/viewFormulaireAjoutBrochureEmp',[EmpController::class,'viewFormulaireAjoutBrochureEmp'])->name('viewFormulaireAjoutBrochureEmp');
-        Route::post('/publierBrochureEmp',[EmpController::class,'publierBrochureEmp'])->name('publierBrochureEmp');
-        Route::get('/viewPermissionDemissionEmp',[EmpController::class,'viewPermissionDemissionEmp'])->name('viewPermissionDemissionEmp');
-        Route::post('/permissionDemission',[EmpController::class,'permissionDemission'])->name('permissionDemission');
-        Route::get('/viewMessageEmp',[EmpController::class,'viewMessageEmp'])->name('viewMessageEmp');
-        Route::get('/viewMessageSendOrReciveEmp',[EmpController::class,'viewMessageSendOrReciveEmp'])->name('viewMessageSendOrReciveEmp');
-        Route::get('/viewformulaireAddVideoEmpSection',[EmpController::class,'viewformulaireAddVideoEmpSection'])->name('viewformulaireAddVideoEmpSection');
+        //Route::get('/viewChoixDeStandBrochureEmp',[EmpController::class,'viewChoixDeStandBrochureEmp'])->name('viewChoixDeStandBrochureEmp');
+        //Route::get('/viewChoixContenuePourBrochureEmp',[EmpController::class,'viewChoixContenuePourBrochureEmp'])->name('viewChoixContenuePourBrochureEmp');
+        //Route::get('/viewFormulaireAjoutBrochureEmp',[EmpController::class,'viewFormulaireAjoutBrochureEmp'])->name('viewFormulaireAjoutBrochureEmp');
+        //Route::get('/viewPermissionDemissionEmp',[EmpController::class,'viewPermissionDemissionEmp'])->name('viewPermissionDemissionEmp');
+        //Route::get('/viewMessageEmp',[EmpController::class,'viewMessageEmp'])->name('viewMessageEmp');
+        //Route::get('/viewMessageSendOrReciveEmp',[EmpController::class,'viewMessageSendOrReciveEmp'])->name('viewMessageSendOrReciveEmp');
+        //Route::get('/viewformulaireAddVideoEmpSection',[EmpController::class,'viewformulaireAddVideoEmpSection'])->name('viewformulaireAddVideoEmpSection');
         Route::post('/addVideoEmp',[EmpController::class,'addVideoEmp'])->name('addVideoEmp');
 
     });
