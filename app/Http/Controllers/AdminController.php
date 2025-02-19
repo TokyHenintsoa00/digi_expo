@@ -250,8 +250,11 @@ class AdminController extends Controller
         $nom_organisateur = $request->nom_organisateur;
         //NOM DU LIEU
         $name = $request->name;
+
         $longitude = $request->longitude;
         $latitude = $request->latitude;
+
+        //dd($longitude);
 
         $date_debut = $request->date_debut;
         $date_fin = $request->date_fin;
@@ -259,50 +262,134 @@ class AdminController extends Controller
         $reception = new ReceptionModel();
         //$getAllSalon = $reception->getAllSalon();
         $getAllSalon = $reception->getSalonWhere();
+
+
+        if(!isset($getAllSalon[0]->date_fin))
+        {
+            $date_fin_salon = null;
+        }
+
+        else{
         //get date du salon
-        $date_fin_salon = $getAllSalon[0]->date_fin;
+            $date_fin_salon = $getAllSalon[0]->date_fin;
+        }
 
 
         $date_now = Carbon::now()->toDateString(); // 'YYYY-MM-DD'
 
         //dd($date_fin_salon,$now);
 
-        // if (Carbon::parse($date_now)->isAfter($date_fin_salon))
-        if((Carbon::parse($date_fin_salon))->isAfter(Carbon::parse($date_now)))
-        {
-            return redirect()->back()->withErrors(['error' => 'Une salon est encore en cours'])->withInput();
 
+        // if((Carbon::parse($date_fin_salon))->isAfter(Carbon::parse($date_now)))
+        // {
+        //     return redirect()->back()->withErrors(['error' => 'Une salon est encore en cours'])->withInput();
+
+        // }
+
+        // elseif ($date_fin_salon = null) {
+        //     # code...
+        //     //insert salon
+        //     $getReceptionModel->insertSalon($nom_salon,$date_debut,$date_fin);
+
+        //     //insert organisateur
+        //     $getReceptionModel->insertOrganisateur($nom_organisateur);
+
+
+        //     //insert contact
+        //     $getId_organisateur = $getReceptionModel->getOrganisateur($nom_organisateur);
+        //     $id_organisateur = $getId_organisateur[0]->id_organisateur;
+        //     $contacts = $request->contact;
+
+        //     if (is_array($contacts)) {
+        //         foreach ($contacts as $key => $contactData) {
+        //             $nomcontact = $contactData['nom'];  // Access individual contact's 'nom' field
+        //             $contact = $contactData['contact']; // Access individual contact's 'contact' field
+        //             // Process contact information (e.g., validation, storage)
+        //             // echo "Contact Name: $nomcontact, Contact Info: $contact<br>"; // Example output
+        //             $getReceptionModel->insertContact($id_organisateur,$nomcontact,$contact);
+        //         }
+
+        //     $locationModel = new LocationModel();
+        //     $location = $locationModel->insertLocation($name,$longitude,$latitude);
+
+        //     return redirect()->route('viewCreationSalonAdmin')->with('success', 'Creation de salon effectuée avec succes');
+
+        //     } else {
+        //         // Handle the case where $contacts is not an array (e.g., error message)
+        //         echo "Error: Contact information not provided in the expected format.";
+        //     }
+        // }
+        if($date_fin_salon == null)
+        {
+
+            $getReceptionModel->insertSalon($nom_salon,$date_debut,$date_fin);
+
+            //insert organisateur
+            $getReceptionModel->insertOrganisateur($nom_organisateur);
+
+
+            //insert contact
+            $getId_organisateur = $getReceptionModel->getOrganisateur($nom_organisateur);
+            $id_organisateur = $getId_organisateur[0]->id_organisateur;
+            $contacts = $request->contact;
+
+            if (is_array($contacts)) {
+                foreach ($contacts as $key => $contactData) {
+                    $nomcontact = $contactData['nom'];  // Access individual contact's 'nom' field
+                    $contact = $contactData['contact']; // Access individual contact's 'contact' field
+                    // Process contact information (e.g., validation, storage)
+                    // echo "Contact Name: $nomcontact, Contact Info: $contact<br>"; // Example output
+                    $getReceptionModel->insertContact($id_organisateur,$nomcontact,$contact);
+                }
+
+            $locationModel = new LocationModel();
+            $location = $locationModel->insertLocation($name,$longitude,$latitude);
+
+            return redirect()->route('viewCreationSalonAdmin')->with('success', 'Creation de salon effectuée avec succes');
+
+            } else {
+                // Handle the case where $contacts is not an array (e.g., error message)
+                echo "Error: Contact information not provided in the expected format.";
+            }
         }
 
-        //insert salon
-        $getReceptionModel->insertSalon($nom_salon,$date_debut,$date_fin);
+        elseif ((Carbon::parse($date_fin_salon))->isAfter(Carbon::parse($date_now))) {
+            # code...
+            //insert salon
+            return redirect()->back()->withErrors(['error' => 'Une salon est encore en cours'])->withInput();
+        }
+        else{
 
-        //insert organisateur
-        $getReceptionModel->insertOrganisateur($nom_organisateur);
+            $getReceptionModel->insertSalon($nom_salon,$date_debut,$date_fin);
+
+            //insert organisateur
+            $getReceptionModel->insertOrganisateur($nom_organisateur);
 
 
-        //insert contact
-        $getId_organisateur = $getReceptionModel->getOrganisateur($nom_organisateur);
-        $id_organisateur = $getId_organisateur[0]->id_organisateur;
-        $contacts = $request->contact;
+            //insert contact
+            $getId_organisateur = $getReceptionModel->getOrganisateur($nom_organisateur);
+            $id_organisateur = $getId_organisateur[0]->id_organisateur;
+            $contacts = $request->contact;
 
-        if (is_array($contacts)) {
-            foreach ($contacts as $key => $contactData) {
-                $nomcontact = $contactData['nom'];  // Access individual contact's 'nom' field
-                $contact = $contactData['contact']; // Access individual contact's 'contact' field
-                // Process contact information (e.g., validation, storage)
-                // echo "Contact Name: $nomcontact, Contact Info: $contact<br>"; // Example output
-                $getReceptionModel->insertContact($id_organisateur,$nomcontact,$contact);
+            if (is_array($contacts)) {
+                foreach ($contacts as $key => $contactData) {
+                    $nomcontact = $contactData['nom'];  // Access individual contact's 'nom' field
+                    $contact = $contactData['contact']; // Access individual contact's 'contact' field
+                    // Process contact information (e.g., validation, storage)
+                    // echo "Contact Name: $nomcontact, Contact Info: $contact<br>"; // Example output
+                    $getReceptionModel->insertContact($id_organisateur,$nomcontact,$contact);
+                }
+
+            $locationModel = new LocationModel();
+            $location = $locationModel->insertLocation($name,$longitude,$latitude);
+
+            return redirect()->route('viewCreationSalonAdmin')->with('success', 'Creation de salon effectuée avec succes');
+
+            } else {
+                // Handle the case where $contacts is not an array (e.g., error message)
+                echo "Error: Contact information not provided in the expected format.";
             }
 
-        $locationModel = new LocationModel();
-        $location = $locationModel->insertLocation($name,$longitude,$latitude);
-
-        return redirect()->route('viewCreationSalonAdmin')->with('success', 'Creation de salon effectuée avec succes');
-
-        } else {
-            // Handle the case where $contacts is not an array (e.g., error message)
-            echo "Error: Contact information not provided in the expected format.";
         }
 
     }
@@ -995,8 +1082,6 @@ class AdminController extends Controller
         // Retourne les résultats au format JSON
         return response()->json($results);
     }
-
-
 
 
 }

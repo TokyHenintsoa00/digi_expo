@@ -41,7 +41,7 @@ class ReceptionModel extends Model
 
         // dd($id_sallon);
 
-        $result = DB::select("SELECT * FROM SALON WHERE id_sallon = $id_sallon");
+        $result = DB::select("SELECT * FROM SALON WHERE id_sallon = ?",[$id_sallon]);
 
         return $result;
     }
@@ -66,7 +66,7 @@ class ReceptionModel extends Model
 
        $id_organisateur = $getMaxOrganisateur[0]->id_organisateur;
 
-        $result = DB::select("SELECT * FROM organisateur where id_organisateur = $id_organisateur");
+        $result = DB::select("SELECT * FROM organisateur where id_organisateur = ?",[$id_organisateur]);
         return $result;
     }
 
@@ -83,7 +83,7 @@ class ReceptionModel extends Model
 
         $id_contact_organisateur= $getMaxContactOrganisateur[0]->id_contact_organisateur;
 
-        $result = DB::select("SELECT * from contact_organisateur where id_contact_organisateur = $id_contact_organisateur");
+        $result = DB::select("SELECT * from contact_organisateur where id_contact_organisateur = ?",[$id_contact_organisateur]);
 
         return $result;
     }
@@ -117,7 +117,7 @@ class ReceptionModel extends Model
         $getMaxLocation = $this->getMaxLocation();
         $id = $getMaxLocation[0]->id;
 
-        $location = DB::select("SELECT * FROM locations where id = $id");
+        $location = DB::select("SELECT * FROM locations where id = ?",[$id]);
 
         return $location;
     }

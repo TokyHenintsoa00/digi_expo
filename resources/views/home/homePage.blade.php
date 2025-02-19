@@ -65,7 +65,12 @@
 
 <section class="organisateur-section py-5">
     <div class="container">
-        <h2 class="mb-4 text-center">Nom de l'exposition : {{$reception[0]->nom_du_sallon}}</h2>
+        @if (!isset($reception[0]->nom_du_sallon))
+            <h2 class="mb-4 text-center">Nom de l'exposition : pas econre d'exposition</h2>
+        @else
+            <h2 class="mb-4 text-center">Nom de l'exposition : {{$reception[0]->nom_du_sallon}}</h2>
+        @endif
+
         @foreach ($organisateur as $organisateur)
         <div class="organisateur-info bg-white p-4 rounded shadow-sm mb-4">
             <div>
@@ -119,60 +124,67 @@
                         @endphp
                         <!-- First row of 3 cards -->
                         <div class="row">
-                            @foreach ($stand as $list_stand_success)
-                                {{-- @if (Carbon::parse($list_stand_success->date_fin_stand)->isAfter($date_fin_salon))
 
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card transition-effect">
-                                            <img src="../assets/{{$list_stand_success->img_stand}}" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
-                                                <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                <p>Ce stand n'est plus disponible</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else --}}
+                            @if (empty($stand))
+                                <p class="text-center">Aucun stand disponible pour le moment.</p>
+                            @else
+                                @foreach ($stand as $list_stand_success)
+                                    {{-- @if (Carbon::parse($list_stand_success->date_fin_stand)->isAfter($date_fin_salon))
 
-                                @if ($reste_jour == 0)
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card transition-effect">
+                                                <img src="../assets/{{$list_stand_success->img_stand}}" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
+                                                    <p class="card-text">{{$list_stand_success->description_stand}}</p>
+                                                    <p>Ce stand n'est plus disponible</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else --}}
+
+                                    @if ($reste_jour == 0)
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card transition-effect">
+                                                <img src="../assets/{{$list_stand_success->img_stand}}" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
+                                                    <p class="card-text">{{$list_stand_success->description_stand}}</p>
+                                                    <p>Ce stand n'est plus disponible1</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @elseif ( Carbon::parse(now())->isAfter($list_stand_success->date_fin_stand) ||
+                                                Carbon::parse($list_stand_success->date_fin_stand)->isAfter($date_fin_salon))
+                                        <div class="col-md-4 mb-4">
+                                            <div class="card transition-effect">
+                                                <img src="../assets/{{$list_stand_success->img_stand}}" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
+                                                    <p class="card-text">{{$list_stand_success->description_stand}}</p>
+                                                    <p>Ce stand n'est plus disponible2</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
                                     <div class="col-md-4 mb-4">
                                         <div class="card transition-effect">
                                             <img src="../assets/{{$list_stand_success->img_stand}}" class="card-img-top" alt="...">
                                             <div class="card-body">
                                                 <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
                                                 <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                <p>Ce stand n'est plus disponible1</p>
+                                            <form action="{{route('viewGestionContenueHome')}}" method="GET">
+                                                    <input type="hidden" name="id_stand" value="{{$list_stand_success->id_stand}}">
+                                                    <input type="submit" value="Voir les contenues" class="btn btn-primary">
+                                            </form>
                                             </div>
                                         </div>
                                     </div>
-                                @elseif ( Carbon::parse(now())->isAfter($list_stand_success->date_fin_stand) ||
-                                            Carbon::parse($list_stand_success->date_fin_stand)->isAfter($date_fin_salon))
-                                    <div class="col-md-4 mb-4">
-                                        <div class="card transition-effect">
-                                            <img src="../assets/{{$list_stand_success->img_stand}}" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
-                                                <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                <p>Ce stand n'est plus disponible2</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-                                <div class="col-md-4 mb-4">
-                                    <div class="card transition-effect">
-                                        <img src="../assets/{{$list_stand_success->img_stand}}" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                            <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
-                                            <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                        <form action="{{route('viewGestionContenueHome')}}" method="GET">
-                                                <input type="hidden" name="id_stand" value="{{$list_stand_success->id_stand}}">
-                                                <input type="submit" value="Voir les contenues" class="btn btn-primary">
-                                        </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                            @endforeach
+                                    @endif
+                                @endforeach
+                            @endif
+
+
                         </div>
                     </div>
                 </div>

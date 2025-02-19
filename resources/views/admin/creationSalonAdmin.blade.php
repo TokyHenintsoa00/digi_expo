@@ -72,9 +72,21 @@
                 </div>
                 @endif
 
+                <div class="form-group mb-3">
+
+                    <input type="text" id="search-input" placeholder="Rechercher un lieu..." >
+                    <button id="search-button">🔍</button>
+                        <br>
+                        <br>
+                    <div id="map"></div>
+
+                </div>
+
+
                 <form action="{{route('creationSalonV1')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
                     <div class="row">
 
                         <div class="col-md-6 form-group mb-3">
@@ -121,22 +133,13 @@
 
 
 
-                    <div class="form-group mb-3">
 
-                        <input type="text" id="search-input" placeholder="Rechercher un lieu..." >
-                        <button id="search-button">🔍</button>
-                            <br>
-                            <br>
-                        <div id="map"></div>
-                        <input type="hidden" id="latitude" name="latitude">
-                        <input type="hidden" id="longitude" name="longitude">
-                    </div>
 
 
 
                     <div class="row">
                         <div class="col-md-12 text-end">
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                            <input type="submit" class="btn btn-primary" value="Ajouter"></input>
                         </div>
                     </div>
                 </form>
@@ -306,7 +309,7 @@
 
                 map.addLayer(markerLayer);
 
-                
+
                 document.getElementById('latitude').value = lat;
                 document.getElementById('longitude').value = lon;
             }

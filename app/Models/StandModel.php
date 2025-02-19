@@ -721,7 +721,7 @@ class StandModel extends Model
 
         $id_salon = $maxSalon[0]->id_sallon;
 
-        $result = DB::select("SELECT * FROM stand where id_etat = 3 and id_sallon = $id_salon group by id_stand order by date_de_creation_stand desc");
+        $result = DB::select("SELECT * FROM stand where id_etat = 3 and id_sallon = ? group by id_stand order by date_de_creation_stand desc",[$id_salon]);
 
         return $result;
     }

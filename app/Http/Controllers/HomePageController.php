@@ -65,8 +65,12 @@ class HomePageController extends Controller
         $organisateur = $getReceptionModel->getOrganisateurWhere();
         $contact_organisateur = $getReceptionModel->getContactOrganisateurWhere();
         $locations_exposition = $getReceptionModel->getLocationWhere();
-        $location_name = $locations_exposition[0]->name;
-
+        if (!isset($locations_exposition[0]->name)) {
+            $location_name = "pas ecore de location de salon";
+        }
+        else{
+            $location_name = $locations_exposition[0]->name;
+        }
        $get_id_location = $getReceptionModel->getMaxLocation();
        $id_location = $get_id_location[0]->id;
 
@@ -74,8 +78,10 @@ class HomePageController extends Controller
         //dd($location_name);
         $locations = DB::select("
         SELECT id, name, ST_X(coordinates) AS longitude, ST_Y(coordinates) AS latitude
-        FROM locations where id = $id_location
-        ");
+        FROM locations where id = ?
+        ",[$id_location]);
+
+
 
         // $date_fin_salon = $reception[0]->date_fin;
 
