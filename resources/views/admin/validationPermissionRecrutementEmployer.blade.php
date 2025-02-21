@@ -43,7 +43,7 @@
                         @endif
                     </td>
                     <td>
-                        <form action="/validationRecrutement" method="POST">
+                        <form action="{{route('validationRecrutement')}}" method="POST">
                             @csrf
                             <input type="hidden" name="nom_emp" value="{{$list_recrutement->nom_emp}}">
                             <input type="hidden" name="prenom_emp" value="{{$list_recrutement->prenom_emp}}">

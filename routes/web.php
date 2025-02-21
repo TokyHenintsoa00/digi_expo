@@ -575,6 +575,7 @@ Route::prefix('directeur')->group(function(){
             return app(AdminController::class)->viewValidationPermissionStand($request);
         })->name('viewValidationPermissionStand');
 
+        //--------Stand
         Route::post('/validePermissionByAdmin',[AdminController::class,'validePermissionByAdmin'])->name('validePermissionByAdmin');
         Route::post('/refusePermissiontandByAdmin',[AdminController::class,'refusePermissiontandByAdmin']);
 
@@ -586,7 +587,7 @@ Route::prefix('directeur')->group(function(){
             return app(AdminController::class)->viewValidationRecrutementEmp($request);
         })->name('viewValidationRecrutementEmp');
 
-        Route::post('/validationRecrutement',[AdminController::class,'validationRecrutement']);
+        Route::post('/validationRecrutement',[AdminController::class,'validationRecrutement'])->name('validationRecrutement');
         Route::post('/refusDeRecrutement',[AdminController::class,'refusDeRecrutement'])->name('refusDeRecrutement');
 
         Route::get('/viewGestionPersonnelByAdmin', function (Request $request) {

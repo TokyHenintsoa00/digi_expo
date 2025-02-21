@@ -28,14 +28,13 @@ insert into etat(etat) values
 ('Supprimer');
 
 --insert admin
-INSERT INTO admin (id_facebook, nom, prenom, email, pwd_admin, id_etat)
+INSERT INTO admin(nom, prenom, email, pwd_admin, id_etat, created_at, updated_at)
 VALUES
-('fb_admin1', 'Randrianarison', 'Andry', 'andry.randrianarison@gmail.com', 'password123', 6),
-('fb_admin2', 'Rasoanaivo', 'Tahina', 'tahina.rasoanaivo@gmail.com', 'adminpass456', 6),
-('fb_admin3', 'Rakotovao', 'Heriniaina', 'heriniaina.rakotovao@gmail.com', 'heripass789', 6),
-('fb_admin4', 'Ramanana', 'Lalao', 'lalao.ramanana@gmail.com', 'lalaopass101', 6),
-('fb_admin5', 'Razafimahaleo', 'Mialy', 'mialy.razafimahaleo@gmail.com', 'mialypass202', 6),
-('fb_admin6', 'Rakotonirina', 'Solo', 'solo.rakotonirina@gmail.com', 'solopass303', 6);
+('Toky', 'Ramanalina', 'tokyramanalina@gmail.com', 'password123', 1, NOW(), NOW()),
+('Ranomenjanahary', 'Mamy', 'ramanalinarivomamy@gmail.com', 'password123', 1, NOW(), NOW()),
+('Toky', 'Ramanalinarivo', 'tokyramanalinarivo@gmail.com', 'password123', 1, NOW(), NOW());
+
+
 
 
 --insert Emp

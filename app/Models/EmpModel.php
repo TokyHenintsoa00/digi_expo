@@ -144,6 +144,9 @@ class EmpModel extends Model
         return $result;
     }
 
+    //list dde permission de recrutement "en attente" a valider V1
+    
+
     //validation de permission de recrutement
     public function validePermissionRecrutement($nom_emp,$prenom_emp,$date_naissance,$email,$id_stand,$id_permission_recrutement_emp,$id_directeur)
     {
@@ -290,7 +293,7 @@ class EmpModel extends Model
         return $result;
     }
 
-    
+
 
     //list de toute les employer non licensier
     public function getAllEmployer()

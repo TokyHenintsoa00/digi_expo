@@ -110,6 +110,11 @@
         <div class="row justify-content-center">
           <div class="col-md-6 text-center mb-5">
             <h2 class="heading-section">Espace Administrateur</h2>
+            @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {!! session('success') !!}
+            </div>
+            @endif
             @if ($errors->any())
             <div class="error">
                 <strong>Oups !</strong> Il y a eu des problèmes avec votre entrée.<br>
@@ -119,7 +124,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+            @endif
           </div>
         </div>
         <div class="row justify-content-center">
