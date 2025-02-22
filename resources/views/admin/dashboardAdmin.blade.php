@@ -33,7 +33,7 @@
             <div class="mb-2">
                 <i class="fas fa-video fa-2x text-danger"></i>
             </div>
-            <h5 class="card-title text-muted">Vidéo</h5>
+            <h5 class="card-title text-muted">Vidéo conference</h5>
             <h3 class="font-weight-bold">{{$countVideo}}</h3>
 
         </div>

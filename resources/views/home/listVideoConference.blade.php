@@ -20,8 +20,8 @@
         <thead>
             <tr>
                 <th>Titre de video Conference</th>
-                <th>Type</th>
                 <th>Type de conference </th>
+                <th>Categorie</th>
                 <th>Date de membre</th>
                 <th>Liens</th>
             </tr>

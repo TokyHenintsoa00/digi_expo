@@ -22,7 +22,7 @@
         <thead>
             <tr>
                 <th>Titre de video Conference</th>
-                <th>Type</th>
+                <th>Stand</th>
                 <th>Date de membre</th>
                 <th>Liens</th>
             </tr>
