@@ -98,7 +98,28 @@
                 </div>
             </div>
             @endif
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Stand</th>
+                        <th>Date de conference</th>
+                        <th>Liens</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach ($video_conference_client as $list_video_conference_client)
+                    <tr>
+                        <td>{{$list_video_conference_client->nom_stand}}</td>
+                        <td>{{$list_video_conference_client->date_debut_conference_client}}</td>
+                        <td>{{$list_video_conference_client->liens_video}}</td>
+
+                    </tr>
+                   @endforeach
+                </tbody>
+            </table>
         </div>
+
+
     </div>
 </div>
 @endsection

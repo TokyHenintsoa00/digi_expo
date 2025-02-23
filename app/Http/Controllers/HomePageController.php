@@ -101,7 +101,9 @@ class HomePageController extends Controller
     //view page video en direct
     public function viewVideoDirect()
     {
-        return view('home.videoDirect');
+        $videoModel = new VideoModel();
+        $video_conference_client = $videoModel->getAllReunionPersonne();
+        return view('home.videoDirect',compact('video_conference_client'));
     }
 
     //view page demande aide chatBot

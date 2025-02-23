@@ -1,13 +1,6 @@
 @extends('parent.parentHome')
 @section('ContenueDeStandSection')
 <style>
-    /* .container {
-        font-family: 'Arial', sans-serif;
-        color: #333;
-        padding: 20px;
-        background-color: #f9f9f9;
-    } */
-
     .stand-title {
         font-size: 28px;
         font-weight: bold;
@@ -52,6 +45,7 @@
         overflow: hidden;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease;
+        cursor: pointer;
     }
 
     .stand-image-link:hover {
@@ -67,42 +61,23 @@
         border-radius: 4px;
     }
 
-    body, h2, h3, label, p, input, button {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    .stand-date, .stand-type {
-        font-size: 15px;
-        color: #777;
-        margin-top: 10px;
-    }
-
-    .stand-date strong, .stand-type strong {
-        color: #000000;
-    }
-
-    .font-custom {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    /* Style for aligning buttons horizontally */
-    .button-container {
-        display: flex;
-        gap: 15px; /* Adjust the gap between buttons */
-    }
-
-    .button-container form {
-        margin: 0; /* To remove any extra margins */
+    .modal-img {
+        max-width: 100%;
+        max-height: 80vh;
+        display: block;
+        margin: auto;
     }
 </style>
+
 <div class="container mt-4">
     @foreach ($stand as $nom_stand)
-    <h2 class="stand-title">Galerie photo:{{$nom_stand->nom_stand}}</h2>
+        <h2 class="stand-title">Galerie photo: {{ $nom_stand->nom_stand }}</h2>
     @endforeach
+
     @if (session('success'))
-    <div class="alert alert-success" role="alert">
-        {!! session('success') !!}
-    </div>
+        <div class="alert alert-success" role="alert">
+            {!! session('success') !!}
+        </div>
     @endif
 
     @if ($errors->any())
@@ -110,24 +85,54 @@
             {{ $errors->first('error') }}
         </div>
     @endif
+
     @foreach ($contenue as $contenue_stand)
         <div class="stand-info">
-            <h3 class="stand-name">Titre:{{ $contenue_stand->nom_info_type_stand }}</h3>
-            <p class="stand-description">Description:{{ $contenue_stand->description_info_type_stand }}</p>
+            <h3 class="stand-name">Titre: {{ $contenue_stand->nom_info_type_stand }}</h3>
+            <p class="stand-description">Description: {{ $contenue_stand->description_info_type_stand }}</p>
+
             <div class="stand-images d-flex flex-wrap">
                 @foreach (json_decode($contenue_stand->img_info_type_stand) as $image)
-                    <a href="{{ asset('assets/' . $image) }}" class="stand-image-link" target="_blank">
+                    <a href="javascript:void(0)" class="stand-image-link" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="{{ asset('assets/' . $image) }}">
                         <img src="{{ asset('assets/' . $image) }}" alt="Image du stand" class="stand-image img-thumbnail me-2" width="200" height="150">
                     </a>
                 @endforeach
             </div>
-            <p class="stand-type"><strong>Type de contenue :</strong> {{ $contenue_stand->nom_type_stand }}</p>
+
+            <p class="stand-type"><strong>Type de contenu :</strong> {{ $contenue_stand->nom_type_stand }}</p>
             <form action="{{route('pdfDownload')}}" method="POST">
                 @csrf
                 <input type="hidden" name="id_info_type_stand" value="{{$contenue_stand->id_info_type_stand}}">
-                <input type="submit" value="Telecharger une brochure" class="btn btn-primary font-custom">
+                <input type="submit" value="Télécharger une brochure" class="btn btn-primary font-custom">
             </form>
         </div>
     @endforeach
 </div>
+
+<!-- Modal pour afficher l'image en grand -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Aperçu de l'image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="" id="modalImage" class="modal-img" alt="Image du stand">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const imageModal = document.getElementById('imageModal');
+        imageModal.addEventListener('show.bs.modal', function (event) {
+            let button = event.relatedTarget;
+            let imageSrc = button.getAttribute('data-image');
+            let modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+        });
+    });
+</script>
 @endsection
