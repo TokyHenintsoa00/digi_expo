@@ -33,7 +33,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="faculteSelect" class="form-label">Votre categorie</label>
+                                    <label for="faculteSelect" class="form-label">Votre catégorie</label>
                                     <select class="form-select" id="faculteSelect" aria-label="Select faculté" name="id_categorie" required>
                                         <option selected disabled>Choisissez votre faculté</option>
                                         @foreach ($categorie as $list_categorie)
@@ -44,7 +44,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="nomStand" class="form-label">Nom de la categorie</label>
+                                    <label for="nomStand" class="form-label">Nom de la catégorie</label>
                                     <input type="text" class="form-control" id="nomStand" aria-describedby="nomHelp" name="nom_categorie_stand" required>
                                 </div>
 
@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="emailEmploye" class="form-label">Date du debut de l'exposition</label>
+                                    <label for="emailEmploye" class="form-label">Date de debut de l'exposition</label>
                                     <input type="date" class="form-control" id="emailEmploye" aria-describedby="emailHelp" name="date_debut" required>
                                 </div>
 
@@ -64,7 +64,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="nomStand" class="form-label">image de stand</label>
+                                    <label for="nomStand" class="form-label">image du stand</label>
                                     <input type="file" class="form-control" id="img_stand" name="img_stand" accept="image/*" required>
                                 </div>
 
