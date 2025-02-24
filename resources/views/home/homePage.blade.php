@@ -150,7 +150,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
                                                     <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                    <p>Ce stand n'est plus disponible1</p>
+                                                    <p>Ce stand n'est plus disponible</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,7 +162,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
                                                     <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                    <p>Ce stand n'est plus disponible2</p>
+                                                    <p>Ce stand n'est plus disponible</p>
                                                 </div>
                                             </div>
                                         </div>

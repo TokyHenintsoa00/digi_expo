@@ -158,6 +158,7 @@ class HomePageController extends Controller
         $getSalon = $getReceptionModel->getSalonWhere();
         // $date_fin_du_salon = $getSalon[0]->date_fin;
 
+        //verification de date
         if($getSalon == null || $getSalon[0]->date_fin < $date_fin || $getSalon[0]->date_fin == null || $getSalon[0]->date_fin == 0)
         {
             return redirect()->back()->withErrors(['error' => 'Vous ne pouvez pas creer une exposition pour le moment'])->withInput();
