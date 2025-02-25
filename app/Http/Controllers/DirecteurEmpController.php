@@ -595,6 +595,8 @@ class DirecteurEmpController extends Controller
         $id_type_video = $request->id_type_video;
 
 
+
+
         //type conference atelier => podcast
         //type conference salle de conference =>streaming
 
@@ -849,8 +851,13 @@ class DirecteurEmpController extends Controller
         $liens = $request->liens_video;
         $id_stand = $request->id_stand;
 
+        $salon = new ReceptionModel();
+        $getMaxSalon = $salon->maxSalon();
+
+        $idMaxSalon = $getMaxSalon[0]->id_sallon;
+
         $getVideoModel = new VideoModel();
-        $reunionPersonne = $getVideoModel->reunionPersonne($id_stand,$date_heure,$liens);
+        $reunionPersonne = $getVideoModel->reunionPersonne($id_stand,$date_heure,$liens,$idMaxSalon);
 
         return redirect()->route('viewConferenceClient')->with('success', 'AudioConference planifier');
 
@@ -859,7 +866,9 @@ class DirecteurEmpController extends Controller
     public function viewListTemoignage()
     {
         $getTemoignageModel = new Temoignage();
-        $temoignage = $getTemoignageModel->getAllTemoignage();
+
+        $id_directeur = Session::get('id_emp');
+        $temoignage = $getTemoignageModel->getTemoignageByDirecteur($id_directeur);
         return view('directeurEmp.ListTemoignage',compact('temoignage'));
     }
 

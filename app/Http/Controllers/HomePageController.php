@@ -261,7 +261,8 @@ class HomePageController extends Controller
     public function listTemoignage()
     {
         $getTemoigange = new Temoignage();
-        $getAllTemoignage = $getTemoigange->getAllTemoignage();
+        // $getAllTemoignage = $getTemoigange->getAllTemoignage();
+        $getAllTemoignage = $getTemoigange->getTemoignageBySalon();
         return view('home.listTemoignage',compact('getAllTemoignage'));
     }
 

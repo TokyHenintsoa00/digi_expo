@@ -189,7 +189,8 @@ CREATE table video_conference
     id_type_video integer references type_video(id_type_video),
     id_type_conference integer references type_conference(id_type_conference),
     date_heure_salle_conference timestamp(0),
-    liens_video text
+    liens_video text,
+    id_Sallon integer references salon(id_Sallon)
 );
 
 
@@ -271,7 +272,8 @@ CREATE TABLE video_conference_client
     id_video_conference_client serial primary key,
     id_stand integer references stand(id_stand),
     date_debut_conference_client timestamp(0),
-    liens_video text
+    liens_video text,
+    id_salon integer references salon(id_salon)
 );
 
 

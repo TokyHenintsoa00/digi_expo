@@ -17,8 +17,12 @@ class Temoignage extends Model
         DB::beginTransaction();
         try {
             //code...
-            DB::insert("INSERT INTO temoignage(id_stand,id_directeur,date_temoignage,liens_video,titre)
-                VALUES(?,?,?,?,?)",[$id_stand,$id_directeur,$date_temoignage,$liens_video,$titre]);
+            $getReception = new ReceptionModel();
+            $maxSalon = $getReception->maxSalon();
+            $id_salon = $maxSalon[0]->id_sallon;
+
+            DB::insert("INSERT INTO temoignage(id_stand,id_directeur,date_temoignage,liens_video,titre,id_sallon)
+                VALUES(?,?,?,?,?,?)",[$id_stand,$id_directeur,$date_temoignage,$liens_video,$titre,$id_salon]);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
@@ -30,6 +34,29 @@ class Temoignage extends Model
     public function getAllTemoignage()
     {
         $temoignage = DB::table('v_temoignage')->get();
+        return $temoignage;
+    }
+
+    //cote DIRECTEUR => by id_directeur
+    public function getTemoignageByDirecteur($id_directeur)
+    {
+        $temoignage = DB::table('v_temoignage')
+                    ->where('id_directeur',$id_directeur)
+                    ->get();
+        return $temoignage;
+    }
+
+    //cote client => by max salon
+    public function getTemoignageBySalon()
+    {
+        $getReceptionModel = new ReceptionModel();
+        $maxSalon = $getReceptionModel->maxSalon();
+
+        $id_salon = $maxSalon[0]->id_sallon;
+
+        $temoignage = DB::table('v_temoignage')
+                    ->where('id_sallon',$id_salon)
+                    ->get();
         return $temoignage;
     }
 

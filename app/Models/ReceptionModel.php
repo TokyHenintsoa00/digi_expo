@@ -27,6 +27,7 @@ class ReceptionModel extends Model
         }
     }
 
+    //max id salon
     public function maxSalon()
     {
         $result = DB::select("SELECT MAX(id_sallon) as id_sallon from salon");

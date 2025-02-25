@@ -10,13 +10,18 @@ class VideoModel extends Model
 {
     use HasFactory;
 
-    public function insertSalleConferenceWithLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_salle_conference,$liens_Video)
+    public function insertSalleConferenceWithLink($titre_video,$id_directeur,$id_type_video,
+    $id_type_conference,$date_heure_salle_conference,$liens_Video)
     {
         DB::beginTransaction();
         try {
             //code...
-            DB::insert("INSERT INTO video_conference(titre_video,id_directeur,id_type_video,id_type_conference,date_heure_salle_conference,liens_video)VALUES
-            (?,?,?,?,?,?)",[$titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_salle_conference,$liens_Video]);
+            $getReceptionModel = new ReceptionModel();
+            $maxSalon = $getReceptionModel->maxSalon();
+            $id_sallon = $maxSalon[0]->id_sallon;
+
+            DB::insert("INSERT INTO video_conference(titre_video,id_directeur,id_type_video,id_type_conference,date_heure_salle_conference,liens_video,id_sallon)VALUES
+            (?,?,?,?,?,?,?)",[$titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_salle_conference,$liens_Video,$id_sallon]);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
@@ -30,8 +35,13 @@ class VideoModel extends Model
         DB::beginTransaction();
         try {
             //code...
-            DB::insert("INSERT INTO video_conference(titre_video,id_directeur,id_type_video,id_type_conference,date_heure_salle_conference,liens_video)VALUES
-            (?,?,?,?,?,null)",[$titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_salle_conference]);
+
+            $getReceptionModel = new ReceptionModel();
+            $maxSalon = $getReceptionModel->maxSalon();
+            $id_sallon = $maxSalon[0]->id_sallon;
+
+            DB::insert("INSERT INTO video_conference(titre_video,id_directeur,id_type_video,id_type_conference,date_heure_salle_conference,liens_video,id_sallon)VALUES
+            (?,?,?,?,?,null,?)",[$titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_salle_conference,$id_sallon]);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
@@ -128,16 +138,19 @@ class VideoModel extends Model
         }
     }
 
-
+    //cote directeur
     public function viewVideoConferenceByIdDirecteur($id_directeur)
     {
         $result = DB::select("SELECT * FROM v_video_conference WHERE id_directeur =? order by date_heure_salle_conference  DESC",[$id_directeur]);
         return $result;
     }
-
+    //cote client
     public function viewVideoConference()
     {
-        $result = DB::select("SELECT * FROM v_video_conference order by date_heure_salle_conference  DESC");
+        $getReceptionModel = new ReceptionModel();
+        $max_salon = $getReceptionModel->maxSalon();
+        $id_salon = $max_salon[0]->id_sallon;
+        $result = DB::select("SELECT * FROM v_video_conference where id_sallon = ? order by date_heure_salle_conference  DESC",[$id_salon]);
         return $result;
     }
 
@@ -149,11 +162,11 @@ class VideoModel extends Model
     }
 
 
-    public function reunionPersonne($id_stand,$date_debut_conference_client,$liens_video)
+    public function reunionPersonne($id_stand,$date_debut_conference_client,$liens_video,$id_max_salon)
     {
         DB::beginTransaction();
         try {
-            DB::insert("INSERT INTO video_conference_client(id_stand,date_debut_conference_client,liens_video)VALUES(?,?,?)",[$id_stand,$date_debut_conference_client,$liens_video]);
+            DB::insert("INSERT INTO video_conference_client(id_stand,date_debut_conference_client,liens_video,id_sallon)VALUES(?,?,?,?)",[$id_stand,$date_debut_conference_client,$liens_video,$id_max_salon]);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
@@ -164,9 +177,16 @@ class VideoModel extends Model
 
     public function getAllReunionPersonne()
     {
+        $salon = new ReceptionModel();
+        $getMaxSalon = $salon->maxSalon();
+
+        $max_salon = $getMaxSalon[0]->id_sallon;
+
         $result = DB::select("SELECT video_conference_client.*,nom_Stand from video_conference_client
-                                join stand on video_conference_client.id_stand = stand.id_Stand ");
+                                join stand on video_conference_client.id_stand = stand.id_Stand where video_conference_client.id_sallon = ?",[$max_salon]);
         return $result;
     }
+
+
 
 }
