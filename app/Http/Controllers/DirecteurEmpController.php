@@ -203,7 +203,7 @@ class DirecteurEmpController extends Controller
         $id_type_stand = $request->id_type_stand;
         $nom_info_type_stand = $request->nom_info_type_stand;
         $description_info_type_stand = $request->description_info_type_stand;
-
+       // dd($id_type_stand);
         $image = [];
         foreach ($request->file('img_info_type_stand') as $img_stand)
         {

@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION generate_emp_matricule()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.matricule_emp := 'p' || LPAD(NEW.id_emp::text, 3, '0');  -- Concaténation avec remplissage de zéros
+    NEW.matricule_emp := 'MAT-EXPO-' || LPAD(NEW.id_emp::text, 3, '0');  -- Concaténation avec remplissage de zéros
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

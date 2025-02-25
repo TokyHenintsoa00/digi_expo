@@ -423,6 +423,8 @@ class StandModel extends Model
 
         } catch (\Throwable $th) {
             //throw $th;
+            DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
         }
     }
 

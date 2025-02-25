@@ -153,3 +153,18 @@ SELECT distinct(id_stand),id_directeur,nom_stand,description_Stand,
                                 img_stand,id_etat,nom_directeur,prenom_directeur,date_de_creation_stand
                                 FROM  v_membre_Stand where id_etat in(3,4) and id_directeur = 118
                                 order by date_de_creation_stand desc
+
+
+
+
+
+INSERT INTO temoignage (id_stand, id_directeur, date_temoignage, liens_video, titre) VALUES
+(1, 1, '2025-02-25 10:30:00', 'https://pro.zoom.us/j/9876543210', 'Temoignage 1 : Introduction'),
+(1, 1, '2025-02-28 14:45:00', 'https://pro.zoom.us/j/8765432109', 'Temoignage 2 : Retour d experience'),
+(1, 1, '2025-03-03 09:00:00', 'https://pro.zoom.us/j/7654321098', 'Temoignage 3 : Innovation et technologie'),
+(1, 1, '2025-03-10 11:15:00', 'https://pro.zoom.us/j/6543210987', 'Temoignage 5 : Perspectives d avenir'),
+(1, 1, '2025-03-14 13:45:00', 'https://pro.zoom.us/j/5432109876', 'Temoignage 6 : Defis rencontres'),
+(1, 1, '2025-03-18 17:30:00', 'https://pro.zoom.us/j/4321098765', 'Temoignage 7 : Opportunites a saisir'),
+(1, 1, '2025-03-22 08:30:00', 'https://pro.zoom.us/j/3210987654', 'Temoignage 8 : Avis des visiteurs'),
+(1, 1, '2025-03-25 15:00:00', 'https://pro.zoom.us/j/2109876543', 'Temoignage 9 : Cloture de l evenement'),
+(1, 1, '2025-03-27 18:45:00', 'https://pro.zoom.us/j/1098765432', 'Temoignage 10 : Bilan et remerciements');

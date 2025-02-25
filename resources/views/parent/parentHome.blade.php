@@ -245,23 +245,23 @@
 
 
       <!--  Header End -->
-      <div class="container-fluid mx-auto px-2" style="max-width: 90%;">        <!--  Row 1 -->
+        <div class="container-fluid mx-auto px-2" style="max-width: 90%;">        <!--  Row 1 -->
         <!--  Row 1 -->
-        <div class="row">
-            @yield('homeReceptionSection')
-            @yield('homePageSection')
-            @yield('videoDirectSection')
-            @yield('demandeAideSection')
-            @yield('permissionDeFaireUnStandSection')
-            @yield('gestionContenueHomeSection')
-            @yield('ContenueDeStandSection')
-            @yield('contenueVideoSection')
-            @yield('linkVideoSection')
-            @yield('listTemoignageSection')
+            <div class="row">
+                @yield('homeReceptionSection')
+                @yield('homePageSection')
+                @yield('videoDirectSection')
+                @yield('demandeAideSection')
+                @yield('permissionDeFaireUnStandSection')
+                @yield('gestionContenueHomeSection')
+                @yield('ContenueDeStandSection')
+                @yield('contenueVideoSection')
+                @yield('linkVideoSection')
+                @yield('listTemoignageSection')
 
+            </div>
         </div>
     </div>
-  </div>
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/js/sidebarmenu.js"></script>
