@@ -22,22 +22,22 @@
       }
 
       .custom-error {
-    display: flex;
-    align-items: center;
-    background-color: #b92532; /* Couleur de fond rouge clair */
-    color: #ffffff; /* Couleur du texte rouge foncé */
-    border: 1px solid #b92532; /* Bordure */
-    padding: 10px 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 14px;
-}
+        display: flex;
+        align-items: center;
+        background-color: #b92532; /* Couleur de fond rouge clair */
+        color: #ffffff; /* Couleur du texte rouge foncé */
+        border: 1px solid #b92532; /* Bordure */
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-size: 14px;
+      }
 
-.custom-error i {
-    font-size: 18px;
-    margin-right: 10px;
-    color: #ffffff;
-}
+      .custom-error i {
+        font-size: 18px;
+        margin-right: 10px;
+        color: #ffffff;
+      }
 
     </style>
   </head>
@@ -46,15 +46,13 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-6 text-center mb-5">
-
-
           </div>
 
         </div>
         <div class="row justify-content-center">
           <div class="col-md-12 col-lg-10">
             <div class="wrap d-md-flex">
-              <div class="img" style="background-image: url(assets1/images/bg-4.png);"></div>
+                <div class="img" style="background-image: url(assets1/images/bg-4.png);"></div>
               <div class="login-wrap p-4 p-md-5">
                 <div class="d-flex">
                   <div class="w-100">
@@ -64,7 +62,6 @@
                   </div>
 
                 </div>
-                 {{-- <h2 class="heading-section">Espace personel</h2> --}}
             @if ($errors->any())
             <div class="alert alert-danger custom-error">
                 <i class="fa fa-exclamation-circle"></i>
@@ -81,16 +78,18 @@
                         <label class="label" for="password" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Votre matricule</label>
                         <input type="text" class="form-control" placeholder="pXXX" name="matricule_emp" required>
                     </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Se connnecter</button>
+                  <div class="form-group d-flex">
+                    <button type="submit" class="btn btn-primary mr-2">Se connecter</button>
+                    <!-- Le bouton pour revenir à l'accueil -->
+                    <a href="{{ route('viewHomePage') }}" class="btn btn-primary">Revenir à l'accueil</a>
                   </div>
+
                   <div class="form-group d-md-flex">
                     <div class="w-50 text-left">
                         <label class="checkbox-wrap checkbox-primary mb-0" style="font-family: 'Poppins', sans-serif;">Se souvenir de moi
                             <input type="checkbox" checked name="remember">
                             <span class="checkmark"></span>
                         </label>
-
                     </div>
                     <div class="w-50 text-md-right">
                       <a href="{{route('viewAuthentificationAdmin')}}">Se connecter en tant que administrateur</a>

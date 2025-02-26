@@ -76,8 +76,10 @@
                     <label class="label" for="password" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Mots de passe</label>
                     <input type="password" class="form-control" placeholder="Password" name="pwd" required>
                   </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                  <div class="form-group d-flex">
+                    <button type="submit" class="btn btn-primary mr-2">Se connecter</button>
+                    <!-- Le bouton pour revenir à l'accueil -->
+                    <a href="{{ route('viewHomePage') }}" class="btn btn-primary">Revenir à l'accueil</a>
                   </div>
                   <div class="form-group d-md-flex">
                     <div class="w-50 text-left">

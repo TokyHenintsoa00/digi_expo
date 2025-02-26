@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="card shadow mb-4">
             <div class="card-header">
-                <strong class="card-title">modification de video conference</strong>
+                <strong class="card-title">formulaire de modification</strong>
             </div>
             <div class="card-body">
                   <!-- Afficher le message de succès -->
