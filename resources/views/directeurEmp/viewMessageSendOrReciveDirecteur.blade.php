@@ -27,7 +27,7 @@
         const sender_id = {{ Session::get('id_emp') }}; // ID du directeur ou utilisateur connecté
         const receiver_id = {{ $id_emp }}; // ID de l'employé
 
-        console.log(sender_id);
+        //console.log(sender_id);
 
 
         const nom_directeur = {!! json_encode($nom_directeur) !!};
@@ -46,7 +46,9 @@ function checkIfAtBottom() {
 
 function fetchMessages() {
     $.ajax({
-        url: `/fetch-messagesV1/${sender_id}/${receiver_id}`,
+        // url: `/fetch-messagesV1/${sender_id}/${receiver_id}`,
+        url: `http://localhost:8080/message/fetchMessage?sender_id=${sender_id}&receiver_id=${receiver_id}`,
+
         method: 'GET',
         beforeSend: function() {
             $('#loader').show();
@@ -55,26 +57,34 @@ function fetchMessages() {
             let chatbox = $('#chatbox');
             let shouldScroll = checkIfAtBottom();
             chatbox.empty();
+            let sender = true;
 
             data.forEach(message => {
-                if (message.is_sent) {
-                    // Message envoyé (aligné à droite)
-                    chatbox.append(`
-                           <div class="text-end mb-2">
-                                <div style="display: inline-block; background-color: #001365; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word; direction: ltr; text-align: left;">
-                                    ${message.content}
-                                </div>
-                            </div>
-                    `);
-                } else {
+                if (message.sende) {
+
+
                     // Message reçu (aligné à gauche)
                     chatbox.append(`
                         <div class="text-start mb-2">
                             <div style="display: inline-block; background-color: #2f2f2f; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word;">
-                                ${message.content}
+                                ${message.content_message}
                             </div>
                         </div>
                     `);
+
+
+                } else {
+
+                    // Message envoyé (aligné à droite)
+                    chatbox.append(`
+                           <div class="text-end mb-2">
+                                <div style="display: inline-block; background-color: #001365; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word; direction: ltr; text-align: left;">
+                                    ${message.content_message}
+                                </div>
+                            </div>
+                    `);
+
+
                 }
             });
 
@@ -94,18 +104,25 @@ $('#chatbox').on('scroll', function() {
 
 fetchMessages();
 
+console.log("sender = "+ sender_id);
+
+
 $('#sendBtn').on('click', function() {
     let content = $('#userInput').val().trim();
     if (content !== "") {
         $.ajax({
-            url: `/send-messageV1`,
+
+
+
+            // url: `/send-messageV1`,
+            url: `http://localhost:8080/message/send_message?content_message=${content}&sender_id=${sender_id}&receiver_id=${receiver_id}`,
             method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                sender_id: sender_id,
-                receiver_id: receiver_id,
-                content: content
-            },
+            // data: {
+            //     _token: '{{ csrf_token() }}',
+            //     sender_id: sender_id,
+            //     receiver_id: receiver_id,
+            //     content: content
+            // },
             success: function() {
                 $('#userInput').val('');
                 fetchMessages();
