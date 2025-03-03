@@ -41,9 +41,9 @@
                             'prenom' => $list_membre_stand->prenom_emp ?? $list_membre_stand->prenom_directeur,
                             'id' => $list_membre_stand->id_emp ??  $list_membre_stand->id_directeur,
                             'etat' => $list_membre_stand->id_etat_personne,
-                            'nom_emp' =>$list_membre_stand->nom_emp,
-                            'prenom_emp' =>$list_membre_stand->prenom_emp,
-                            'id_emp' =>$list_membre_stand->id_emp
+                            // 'nom_emp' =>$list_membre_stand->nom_emp,
+                            // 'prenom_emp' =>$list_membre_stand->prenom_emp,
+                            // 'id_emp' =>$list_membre_stand->id_emp
                         ]) }}">
                             Voir Messages
                         </a>

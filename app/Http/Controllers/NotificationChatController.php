@@ -72,6 +72,7 @@ class NotificationChatController extends Controller
     {
         $sender_id = $request->sender_id;
         $receiver_id = $request->receiver_id;
+        
         $nom_emp = $request->nom_emp;
         $prenom_emp = $request->prenom_emp;
         $id_emp = $request->id_emp;

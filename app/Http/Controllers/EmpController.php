@@ -31,7 +31,7 @@ class EmpController extends Controller
      $email = $request->email;
      $matricule_emp = $request->matricule_emp;
      $remember = $request->has('remember');
-    
+
     $getSignEmp = new EmpModel();
     $verifyEtat = $getSignEmp->getAuthEmp($email,$matricule_emp);
 
@@ -341,12 +341,11 @@ class EmpController extends Controller
 
     public function viewMessageSendOrReciveEmp(Request $request)
     {
-        //pour directeur
+        //id de la personne cliquer
         $id = $request->id;
         $nom = $request->nom;
         $prenom = $request->prenom;
         $id_etat_personne = $request->etat;
-
 
 
         if ($id_etat_personne == 7) {

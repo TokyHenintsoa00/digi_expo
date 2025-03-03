@@ -1,5 +1,23 @@
 @extends('parent.parentEmp')
 @section('viewMessageSendOrReciveEmpSection')
+<style>
+    #chatbox {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.message-time {
+    font-size: 12px;
+    color: #bbb;
+    margin-top: 2px;
+    text-align: right;
+}
+.text-start .message-time {
+    text-align: left;
+}
+
+</style>
 <div class="container-fluid" style="max-width: 800px; margin: 0 auto;">
     <div class="card" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
         <div class="card-header text-center">
@@ -32,7 +50,15 @@
         const prenom_emp = {!! json_encode($prenom_emp) !!};
         const id_emp = {{$id_emp}};
 
+        console.log("id"+id_emp);
+
+        let sender_id_fixed = parseInt(sender_id, 10);
+        let receiver_id_fixed = parseInt(receiver_id, 10);
+
         const id_directeur = {{$id}};
+
+        console.log(id_directeur);
+
         const nom_directeur = {!! json_encode($nom) !!};
         const prenom_directeur = {!! json_encode($prenom) !!};
 
@@ -44,9 +70,10 @@
             return chatbox.scrollTop() + chatbox.innerHeight() >= chatbox[0].scrollHeight;
         }
 
-        function fetchMessages() {
-            $.ajax({
-                url: `/fetch-messagesV1/${sender_id}/${receiver_id}`,
+        function fetchMessages()
+        {
+                $.ajax({
+                url: `http://localhost:8080/message/fetchMessage?sender_id=${sender_id}&receiver_id=${receiver_id}&sender_id2=${receiver_id}&receiver_id2=${sender_id}`,
                 method: 'GET',
                 beforeSend: function() {
                     $('#loader').show();
@@ -57,25 +84,24 @@
                     chatbox.empty();
 
                     data.forEach(message => {
-                        if (message.is_sent) {
-                            // Message envoyé (aligné à droite)
-                            chatbox.append(`
-                                <div class="text-end mb-2">
-                                <div style="display: inline-block; background-color: #001365; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word; direction: ltr; text-align: left;">
-                                    ${message.content}
+                        let isCurrentUser = message.senderId == sender_id; // Vérifie si l'expéditeur est l'utilisateur actuel
+                        let alignmentClass = isCurrentUser ? "text-end" : "text-start";
+                        let bgColor = isCurrentUser ? "#001365" : "#2f2f2f"; // Différenciation des couleurs
+                        let textAlign = isCurrentUser ? "right" : "left";
+
+                        // Formater la date en HH:mm
+                        let date = new Date(message.dateMessage);
+                        let formattedTime = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+                        chatbox.append(`
+                            <div class="${alignmentClass} mb-2">
+                                <div class="message-time">${formattedTime}</div>
+                                <div style="display: inline-block; background-color: ${bgColor}; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word; text-align: ${textAlign};">
+                                    ${message.content_message}
                                 </div>
+
                             </div>
-                            `);
-                        } else {
-                            // Message reçu (aligné à gauche)
-                            chatbox.append(`
-                                <div class="text-start mb-2">
-                                    <div style="display: inline-block; background-color: #2f2f2f; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word;">
-                                        ${message.content}
-                                    </div>
-                                </div>
-                            `);
-                        }
+                        `);
                     });
 
                     if (shouldScroll) {
@@ -96,16 +122,18 @@
 
         $('#sendBtn').on('click', function() {
             let content = $('#userInput').val().trim();
+            //console.log("sender = "+ sender_id);
             if (content !== "") {
                 $.ajax({
-                    url: `/send-messageV1`,
+                    //url: `/send-messageV1`,
+                    url: `http://localhost:8080/message/send_message?content_message=${content}&sender_id=${sender_id}&receiver_id=${receiver_id}`,
                     method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        sender_id: sender_id,
-                        receiver_id: receiver_id,
-                        content: content
-                    },
+                    // data: {
+                    //     _token: '{{ csrf_token() }}',
+                    //     sender_id: sender_id,
+                    //     receiver_id: receiver_id,
+                    //     content: content
+                    // },
                     success: function() {
                         $('#userInput').val('');
                         fetchMessages();
@@ -158,7 +186,7 @@
             }
         });
 
-        setInterval(fetchMessages, 3000);
+        //setInterval(fetchMessages, 3000);
     });
 </script>
 @endsection

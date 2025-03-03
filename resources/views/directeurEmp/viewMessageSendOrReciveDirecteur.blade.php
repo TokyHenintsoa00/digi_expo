@@ -29,6 +29,8 @@
 
         console.log(sender_id);
 
+        let sender_id_fixed = parseInt(sender_id, 10);
+        let receiver_id_fixed = parseInt(receiver_id, 10);
 
         const nom_directeur = {!! json_encode($nom_directeur) !!};
         const prenom_directeur = {!! json_encode($prenom_directeur) !!};
@@ -46,7 +48,7 @@ function checkIfAtBottom() {
 
 function fetchMessages() {
     $.ajax({
-        url: `/fetch-messagesV1/${sender_id}/${receiver_id}`,
+        url: `http://localhost:8080/message/fetchMessage?sender_id=${sender_id}&receiver_id=${receiver_id}&sender_id2=${receiver_id}&receiver_id2=${sender_id}`,
         method: 'GET',
         beforeSend: function() {
             $('#loader').show();
@@ -57,25 +59,24 @@ function fetchMessages() {
             chatbox.empty();
 
             data.forEach(message => {
-                if (message.is_sent) {
-                    // Message envoyé (aligné à droite)
-                    chatbox.append(`
-                           <div class="text-end mb-2">
-                                <div style="display: inline-block; background-color: #001365; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word; direction: ltr; text-align: left;">
-                                    ${message.content}
-                                </div>
-                            </div>
-                    `);
-                } else {
-                    // Message reçu (aligné à gauche)
-                    chatbox.append(`
-                        <div class="text-start mb-2">
-                            <div style="display: inline-block; background-color: #2f2f2f; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word;">
-                                ${message.content}
-                            </div>
+                let isCurrentUser = message.senderId == sender_id; // Vérifie si l'expéditeur est l'utilisateur actuel
+                let alignmentClass = isCurrentUser ? "text-end" : "text-start";
+                let bgColor = isCurrentUser ? "#001365" : "#2f2f2f"; // Différenciation des couleurs
+                let textAlign = isCurrentUser ? "right" : "left";
+
+                // Formater la date en HH:mm
+                let date = new Date(message.dateMessage);
+                let formattedTime = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+                chatbox.append(`
+                    <div class="${alignmentClass} mb-2">
+                        <div class="message-time">${formattedTime}</div>
+                        <div style="display: inline-block; background-color: ${bgColor}; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word; text-align: ${textAlign};">
+                            ${message.content_message}
                         </div>
-                    `);
-                }
+
+                    </div>
+                `);
             });
 
             if (shouldScroll) {
@@ -96,16 +97,18 @@ fetchMessages();
 
 $('#sendBtn').on('click', function() {
     let content = $('#userInput').val().trim();
+    console.log("sender = "+ sender_id);
     if (content !== "") {
         $.ajax({
-            url: `/send-messageV1`,
+            //url: `/send-messageV1`,
+            url: `http://localhost:8080/message/send_message?content_message=${content}&sender_id=${sender_id_fixed}&receiver_id=${receiver_id_fixed}`,
             method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                sender_id: sender_id,
-                receiver_id: receiver_id,
-                content: content
-            },
+            // data: {
+            //     _token: '{{ csrf_token() }}',
+            //     sender_id: sender_id,
+            //     receiver_id: receiver_id,
+            //     content: content
+            // },
             success: function() {
                 $('#userInput').val('');
                 fetchMessages();
@@ -132,7 +135,7 @@ $('#sendBtn').on('click', function() {
     }
 });
 
-setInterval(fetchMessages, 3000);
+//setInterval(fetchMessages, 3000);
 });
 </script>
 @endsection
