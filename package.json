@@ -18,6 +18,8 @@
     "dependencies": {
         "apexcharts": "^3.49.0",
         "laravel-echo": "^1.16.1",
-        "pusher-js": "^8.4.0-rc2"
+        "pusher-js": "^8.4.0-rc2",
+        "sockjs-client": "^1.6.1",
+        "stompjs": "^2.3.3"
     }
 }

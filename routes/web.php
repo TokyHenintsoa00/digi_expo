@@ -21,6 +21,11 @@ Route::get('/', function () {
     // return view('home.homePage');
     return redirect()->route('viewHomePage');
 });
+
+
+Route::get('/testApi',function(){
+    return view('testAPI');
+});
 //------------------HOME----------------------------------------
 Route::get('/homePage',[HomepageController::class,'viewHomePage'])->name('viewHomePage');
 Route::get('/viewReception',[HomepageController::class,'viewReception'])->name('viewReception');
