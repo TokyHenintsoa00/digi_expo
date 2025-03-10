@@ -50,6 +50,9 @@ Route::get('/fetch-messages/{sender_id}/{receiver_id}', [ChatController::class, 
 Route::post('/send-messageV1', [ChatController::class, 'sendMessageV1']);
 Route::get('/fetch-messagesV1/{sender_id}/{receiver_id}', [ChatController::class, 'fetchMessagesV1']);
 //------------------DIRECTEUR EMP-----------------------------------------------------------------------
+
+Route::get('/emp/{id}', [EmpController::class, 'getEmpById']);
+
 Route::prefix('directeur')->group(function(){
 
     Route::get('/viewDirecteurEmpPage', function (Request $request) {

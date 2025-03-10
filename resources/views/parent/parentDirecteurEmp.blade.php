@@ -423,13 +423,70 @@ aside.top-navbar {
         </div>
     </div>
   </div>
-  <script src="{{asset('../assets/libs/jquery/dist/jquery.min.js')}}"></script>
-  <script src="{{asset('../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{asset('../assets/js/sidebarmenu.js')}}"></script>
-  <script src="{{asset('../assets/js/app.min.js')}}"></script>
-  <script src="{{asset('../assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
-  <script src="{{asset('../assets/libs/simplebar/dist/simplebar.js')}}"></script>
-  <script src="{{asset('../assets/js/dashboard.js')}}"></script>
+    <script src="{{asset('../assets/libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{asset('../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('../assets/js/sidebarmenu.js')}}"></script>
+    <script src="{{asset('../assets/js/app.min.js')}}"></script>
+    <script src="{{asset('../assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{asset('../assets/libs/simplebar/dist/simplebar.js')}}"></script>
+    <script src="{{asset('../assets/js/dashboard.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+    <script>
+
+    function getEmployeeById(id_emp)
+    {
+        try {
+            const response = fetch(`http://localhost:8000/emp/${id_emp}`);
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données');
+            }
+            const data = response.json();
+            console.log('Données de l\'employé :', data);
+
+            // Stocker dans une variable pour l'utiliser plus tard
+            return data;
+        } catch (error) {
+            console.error('Erreur :', error);
+            return null;
+        }
+    }
+
+        let stompClient = null;
+        function connectWebSocket()
+        {
+           const id_emp = {{ Session::get('id_emp') }}
+            //const empData = getEmployeeById(id_emp);
+            // const prenom_directeur = "popo";
+
+            //console.log("preeeeenommmmmm"+prenom_emp);
+
+
+            const socket = new SockJS('http://localhost:8080/ws');
+            stompClient = Stomp.over(socket);
+            // let username = "carl";
+            const prenom_directeur = "max";
+            stompClient.connect({}, function (frame)
+            {
+                console.log('Connecté : ' + frame);
+
+                stompClient.subscribe('/topic/notifications/' + prenom_directeur, function (message) {
+                    //showNotification(JSON.parse(message.body));
+                });
+            });
+
+            // Charger les anciennes notifications
+            //loadNotifications(prenom_directeur);
+        }
+
+        window.onload = function() {
+        connectWebSocket(); // Connexion automatique à WebSocket au chargement de la page
+    };
+
+    </script>
+
   <script>
 
     $(document).ready(function() {

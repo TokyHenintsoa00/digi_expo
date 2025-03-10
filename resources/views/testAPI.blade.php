@@ -119,8 +119,10 @@ function showNotification(notification) {
 
     const socket = new SockJS('http://localhost:8080/ws');
     stompClient = Stomp.over(socket);
+    // let username = "carl";
     let username = document.getElementById("username").value;
-    stompClient.connect({}, function (frame) {
+    stompClient.connect({}, function (frame)
+    {
         console.log('Connecté : ' + frame);
 
         stompClient.subscribe('/topic/notifications/' + username, function (message) {
@@ -145,7 +147,8 @@ function showNotification(notification) {
 
 
     // ✅ Fonction pour envoyer une notification via l'API REST
-    function sendNotification() {
+    function sendNotification()
+{
     let username = document.getElementById("username").value;
     //console.log(username);
 
@@ -166,6 +169,7 @@ function showNotification(notification) {
 }
 
 
+
     // ✅ Fonction pour afficher la notification sur la page
     function showNotification(notification) {
         //console.log("📩 Affichage de la notification :", notification);
@@ -174,7 +178,7 @@ function showNotification(notification) {
         const newNotification = document.createElement("li");
 
         // Vérifie le bon champ pour récupérer le sender
-        const sender = notification.sender || notification.username || "Inconnu";
+        const sender = notification.sender || "Inconnu";
 
         newNotification.innerText = `📢 De ${sender} : ${notification.content}`;
 
@@ -183,5 +187,9 @@ function showNotification(notification) {
 
         //notificationList.appendChild(newNotification);
     }
+
+    // window.onload = function() {
+    //     connectWebSocket(); // Connexion automatique à WebSocket au chargement de la page
+    // };
 
 </script>

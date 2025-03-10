@@ -23,7 +23,16 @@ class EmpController extends Controller
     }
 
 
+    public function getEmpById($id_emp)
+    {
+        $result = DB::select("SELECT * FROM emp WHERE id_emp = ?", [$id_emp]);
 
+        if (!empty($result)) {
+            return response()->json($result[0]); // Retourne un JSON avec l'employé trouvé
+        }
+
+        return response()->json(['message' => 'Employé non trouvé'], 404);
+    }
 
  //function authentification de l'employer
  public function signInEmp(Request $request)

@@ -726,6 +726,8 @@ class DirecteurEmpController extends Controller
         $id_directeur = $request->id_directeur;
         $etat_directeur = $request->etat_dir;
 
+        
+
         //dd($etat_directeur,$prenom_directeur);
         return view('directeurEmp.viewMessageSendOrReciveDirecteur',compact('nom_emp','prenom_emp','id_emp',
         'nom_directeur','prenom_directeur','id_directeur','etat_directeur'));
