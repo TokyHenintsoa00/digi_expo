@@ -37,6 +37,22 @@
         </div>
     </div>
 </div>
+<style>
+    .message-time {
+    font-size: 12px;
+    color: gray;
+    margin-bottom: 5px;
+}
+
+.text-center {
+    font-weight: bold;
+}
+
+.text-muted {
+    font-size: 14px;
+    color: #a0a0a0;
+}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -60,6 +76,73 @@ async function getEmployeeById(id_emp)
             return null;
         }
     }
+
+function sendMessage()
+{
+    const sender_id = {{Session::get('id_emp')}};
+    const receiver_id = {{$id}};
+    let content = $('#userInput').val().trim();
+    // Obtenir la date actuelle
+    let currentDate = new Date();
+
+    // Convertir la date actuelle en chaîne de caractères
+    let dateString = currentDate.toString();
+    //console.log("hello");
+
+
+    fetch('http://localhost:8080/message/realTime/sendMessage',{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:JSON.stringify({
+            senderId:sender_id,
+            receiverId:receiver_id,
+            dateMessage:dateString,
+            content_message:content
+        })
+    });
+}
+let lastMessageTime = null; // Stocke l'heure du dernier message affiché
+
+function showMessage(message)
+{
+    let chatbox = $('#chatbox');
+    let isCurrentUser = message.senderId == {{ Session::get('id_emp') }}; // Vérifie si l'expéditeur est l'utilisateur actuel
+    let alignmentClass = isCurrentUser ? "text-end" : "text-start";
+    let bgColor = isCurrentUser ? "#001365" : "#2f2f2f";
+    let textAlign = isCurrentUser ? "right" : "left";
+
+    // Convertir la date du message
+    let messageTime = new Date(message.dateMessage);
+    let formattedTime = messageTime.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    let formattedDate = messageTime.toLocaleDateString('fr-FR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+
+    // Vérifier si on doit afficher la date
+    let shouldShowDate = lastMessageTime === null || messageTime.toDateString() !== lastMessageTime.toDateString();
+    let shouldShowTime = lastMessageTime === null || (messageTime - lastMessageTime) >= (15 * 60 * 1000); // 30 min d'écart
+
+    // Ajouter la date si nécessaire
+    if (shouldShowDate) {
+        chatbox.append(`
+            <div class="text-center text-muted my-2">
+                <small>${formattedDate}</small>
+            </div>
+        `);
+    }
+
+    // Ajouter le message
+    chatbox.append(`
+        <div class="${alignmentClass} mb-2">
+            ${shouldShowTime ? `<div class="message-time">${formattedTime}</div>` : ""}
+            <div style="display: inline-block; background-color: ${bgColor}; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word; text-align: ${textAlign};">
+                ${message.content_message}
+            </div>
+        </div>
+    `);
+
+    lastMessageTime = messageTime; // Mettre à jour l'heure du dernier message affiché
+    chatbox.scrollTop(chatbox.prop("scrollHeight")); // Scroll auto vers le bas
+}
+
 
 function sendNotification()
 {
@@ -140,7 +223,7 @@ function sendNotification()
         function fetchMessages()
         {
                 $.ajax({
-                url: `http://localhost:8080/message/fetchMessage?sender_id=${sender_id}&receiver_id=${receiver_id}&sender_id2=${receiver_id}&receiver_id2=${sender_id}`,
+                    url: `http://localhost:8080/message/fetchMessage?sender_id=${sender_id}&receiver_id=${receiver_id}&sender_id2=${receiver_id}&receiver_id2=${sender_id}`,
                 method: 'GET',
                 beforeSend: function() {
                     $('#loader').show();
@@ -149,26 +232,43 @@ function sendNotification()
                     let chatbox = $('#chatbox');
                     let shouldScroll = checkIfAtBottom();
                     chatbox.empty();
+                    let lastMessageTime = null;
 
                     data.forEach(message => {
-                        let isCurrentUser = message.senderId == sender_id; // Vérifie si l'expéditeur est l'utilisateur actuel
+                        let isCurrentUser = message.senderId == sender_id;
                         let alignmentClass = isCurrentUser ? "text-end" : "text-start";
-                        let bgColor = isCurrentUser ? "#001365" : "#2f2f2f"; // Différenciation des couleurs
+                        let bgColor = isCurrentUser ? "#001365" : "#2f2f2f";
                         let textAlign = isCurrentUser ? "right" : "left";
 
-                        // Formater la date en HH:mm
-                        let date = new Date(message.dateMessage);
-                        let formattedTime = date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+                        // Convertir la date du message
+                        let messageTime = new Date(message.dateMessage);
+                        let formattedTime = messageTime.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+                        let formattedDate = messageTime.toLocaleDateString('fr-FR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
 
+                        // Vérifier si on doit afficher la date
+                        let shouldShowDate = lastMessageTime === null || messageTime.toDateString() !== lastMessageTime.toDateString();
+                        let shouldShowTime = lastMessageTime === null || (messageTime - lastMessageTime) >= (30 * 60 * 1000); // 30 min d'écart
+
+                        // Ajouter la date si nécessaire
+                        if (shouldShowDate) {
+                            chatbox.append(`
+                                <div class="text-center text-muted my-2">
+                                    <small>${formattedDate}</small>
+                                </div>
+                            `);
+                        }
+
+                        // Ajouter le message
                         chatbox.append(`
                             <div class="${alignmentClass} mb-2">
-                                <div class="message-time">${formattedTime}</div>
+                                ${shouldShowTime ? `<div class="message-time">${formattedTime}</div>` : ""}
                                 <div style="display: inline-block; background-color: ${bgColor}; color: #fff; padding: 10px 15px; border-radius: 15px; max-width: 75%; word-wrap: break-word; text-align: ${textAlign};">
                                     ${message.content_message}
                                 </div>
-
                             </div>
                         `);
+
+                        lastMessageTime = messageTime;
                     });
 
                     if (shouldScroll) {
@@ -191,16 +291,8 @@ function sendNotification()
             let content = $('#userInput').val().trim();
             //console.log("sender = "+ sender_id);
             if (content !== "") {
+                sendMessage();
                 $.ajax({
-                    //url: `/send-messageV1`,
-                    url: `http://localhost:8080/message/send_message?content_message=${content}&sender_id=${sender_id}&receiver_id=${receiver_id}`,
-                    method: 'POST',
-                    // data: {
-                    //     _token: '{{ csrf_token() }}',
-                    //     sender_id: sender_id,
-                    //     receiver_id: receiver_id,
-                    //     content: content
-                    // },
                     success: function() {
                         $('#userInput').val('');
                         fetchMessages();

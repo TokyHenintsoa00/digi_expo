@@ -437,6 +437,17 @@ aside.top-navbar {
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
     <script>
 
+    function markNotificationAsRead(notification)
+    {
+        fetch(`http://localhost:8080/api/notifications/updateRead/${notification}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    }
+
     function updateUnreadNotifications(receiver)
     {
         fetch(`http://localhost:8080/api/notifications/unread/count/${receiver}`)
@@ -487,6 +498,7 @@ aside.top-navbar {
     link.href = `${notification.url}`; // Mets ici le lien si nécessaire
     link.classList.add("notification-link");
     link.dataset.id = notification.id || ""; // Ajoute un ID si disponible
+    link.dataset.url = notification.url || ""; // Ajoute l'URL comme attribut data-url
     link.innerText = `📢 ${notification.sender || "Inconnu"} : ${notification.content}`;
 
     // Date ou heure de la notification
@@ -616,12 +628,34 @@ aside.top-navbar {
                     }
                 });
 
+                stompClient.subscribe(`/topic/messaging/`+id_emp,function (message)
+                {
+                    showMessage(JSON.parse(message.body));
+                });
+
             });
 
             updateUnreadNotifications(prenom_directeur);
             //load notifcation
 
             loadNotifications(prenom_directeur);
+
+            $(document).on('click', '.notification-link', function (e)
+            {
+                e.preventDefault(); // Empêche la redirection immédiate
+                let notificationId = $(this).data('id');
+                markNotificationAsRead(notificationId);
+                let notificationUrl = $(this).data('url');
+
+                //console.log(notificationUrl);
+
+
+                $.get(notificationUrl, function() {
+                $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
+                    window.location.href = notificationUrl;
+                });
+
+            });
 
 
             //nombre notification
@@ -644,17 +678,17 @@ window.onload =  async function ()
         $('.notification-count').remove();
     });
 
-    $('.notification-link').on('click', function(e)
-    {
-            e.preventDefault();
-            let url = $(this).attr('href');
+    // $('.notification-link').on('click', function(e)
+    // {
+    //         e.preventDefault();
+    //         let url = $(this).attr('href');
 
-            // Marque la notification comme lue en arrière-plan
-            $.get(url, function() {
-            $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
-                window.location.href = url;
-            });
-    });
+    //         // Marque la notification comme lue en arrière-plan
+    //         $.get(url, function() {
+    //         $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
+    //             window.location.href = url;
+    //         });
+    // });
 
     $('#clearAll, #overlay').on('click', function() {
         $('#notificationsPanel').removeClass('show');

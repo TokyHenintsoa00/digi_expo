@@ -416,13 +416,13 @@ aside.top-navbar {
 
     function markNotificationAsRead(notification)
     {
-        fetch(`http://localhost:8080/updateRead/${notification.url}`, { // Remplace localhost:8080 par ton URL réelle
+        fetch(`http://localhost:8080/api/notifications/updateRead/${notification}`,
+        {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             }
         });
-
     }
 
 
@@ -459,6 +459,7 @@ aside.top-navbar {
     link.href = `${notification.url}`; // Mets ici le lien si nécessaire
     link.classList.add("notification-link");
     link.dataset.id = notification.id || ""; // Ajoute un ID si disponible
+    link.dataset.url = notification.url || ""; // Ajoute l'URL comme attribut data-url
     link.innerText = `📢 ${notification.sender || "Inconnu"} : ${notification.content}`;
 
     // Date ou heure de la notification
@@ -513,10 +514,8 @@ aside.top-navbar {
             const socket = new SockJS('http://localhost:8080/ws');
             const stompClient = Stomp.over(socket);
 
-            stompClient.connect({}, function (frame)
-            {
+            stompClient.connect({}, function (frame){
                 //console.log('Connecté : ' + frame);
-
                 stompClient.subscribe(`/topic/notifications/`+prenom_emp, function (message) {
                     console.log("Notification reçue :", message.body);
                     showNotification(JSON.parse(message.body));
@@ -539,13 +538,28 @@ aside.top-navbar {
                     }
                 });
 
+                stompClient.subscribe(`/topic/messaging/`+id_emp,function (message)
+                {
+                    showMessage(JSON.parse(message.body));
+                });
+
+
                 updateUnreadNotifications(prenom_emp);
                 loadNotifications(prenom_emp);
 
-                $(document).on('click', '.notification-link', function (e) {
+                $(document).on('click', '.notification-link', function (e)
+                {
                     e.preventDefault(); // Empêche la redirection immédiate
-                    
-                }
+                    let notificationId = $(this).data('id');
+                    markNotificationAsRead(notificationId);
+                    let notificationUrl = $(this).data('url');
+
+                    $.get(notificationUrl, function() {
+                    $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
+                        window.location.href = notificationUrl;
+                    });
+
+                });
 
             });
         } catch (error) {
@@ -559,40 +573,41 @@ window.onload =  async function ()
 };
 
 //--------------------------------------------------------------------------------------------------------------------
-    $(document).ready(function() {
+    $(document).ready(function()
+    {
       $('#notifBell').on('click', function() {
         $('#notificationsPanel').toggleClass('show');
         $('#overlay').toggleClass('show');
         $('.notification-count').remove();
       });
 
-      $('.notification-link').on('click', function(e)
-      {
-            e.preventDefault();
-            // let url = $(this).attr('href');
+    //   $('.notification-link').on('click', function(e)
+    //   {
+    //         e.preventDefault();
+    //         // let url = $(this).attr('href');
 
-            // // Marque la notification comme lue en arrière-plan
-            // $.get(url, function() {
-            // $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
-            //     window.location.href = url;
-            // });
+    //         // // Marque la notification comme lue en arrière-plan
+    //         // $.get(url, function() {
+    //         // $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
+    //         //     window.location.href = url;
+    //         // });
 
-            let url = $(this).attr('href');
-            let notificationId = $(this).data('id'); // Récupère l'ID de la notification
+    //         let url = $(this).attr('href');
+    //         let notificationId = $(this).data('id'); // Récupère l'ID de la notification
 
-            console.log(notificationId);
+    //         console.log(notificationId);
 
 
-            if (notificationId) {
-                markNotificationAsRead(notificationId); // Marque la notification comme lue en appelant l'API REST
-            }
+    //         if (notificationId) {
+    //             markNotificationAsRead(notificationId); // Marque la notification comme lue en appelant l'API REST
+    //         }
 
-      });
+    //   });
 
-      $('#clearAll, #overlay').on('click', function() {
-        $('#notificationsPanel').removeClass('show');
-        $('#overlay').removeClass('show');
-      });
+    //   $('#clearAll, #overlay').on('click', function() {
+    //     $('#notificationsPanel').removeClass('show');
+    //     $('#overlay').removeClass('show');
+    //   });
 
 
     });
