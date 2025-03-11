@@ -52,11 +52,23 @@
 
 function sendNotification()
 {
+    //nom direteur
+    const nom_directeur = {!! json_encode($nom_directeur) !!};
+
+    //prenom directeur
     const username = {!! json_encode($prenom_directeur) !!};
+
+    //etat directeur
+    const etat = {!! json_encode($etat_directeur) !!};
+
     //console.log(username);
+
     const receiver = {!! json_encode($prenom_emp) !!};
 
-    let content = "une nouvelle notification";
+    //id directeur
+    const id = {{ Session::get('id_emp') }};
+
+    let content = "Vous a envoyez un message";
 
     // Obtenir la date actuelle
     let currentDate = new Date();
@@ -64,16 +76,20 @@ function sendNotification()
     // Convertir la date actuelle en chaîne de caractères
     let dateString = currentDate.toString();
 
+    //let url = `http://127.0.0.1:8000/viewMessageSendOrReciveDirecteur?nom=${nom_directeur}&prenom=${username}&id=${id}&etat=${etat}`
+    let url = `http://127.0.0.1:8000/employer/viewMessageSendOrReciveEmp?nom=${nom_directeur}&prenom=${username}&id=${id}&etat=${etat}`
     fetch('http://localhost:8080/api/notifications/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sender: username, receiver: receiver, content: content , dateNotification:dateString})
+        body: JSON.stringify(
+            {   sender: username,
+                receiver: receiver,
+                content: content ,
+                dateNotification:dateString,
+                url:url
+            })
     });
 }
-
- window.onload = function() {
-        connectWebSocket(); // Connexion automatique à WebSocket au chargement de la page
-    };
 
 //--------------------------------------------------------------------------------------------
 

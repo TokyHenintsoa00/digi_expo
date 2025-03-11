@@ -225,7 +225,7 @@ aside.top-navbar {
     </style>
 </head>
 <body>
-    @php
+    {{-- @php
     use App\Models\Notification;
     $notifications = Notification::where('user_id', Session::get('id_emp'))
                         ->orWhere('receiver_id', Session::get('id_emp'))
@@ -234,32 +234,26 @@ aside.top-navbar {
 
     $unreadCount = $notifications->where('is_read', false)->count();
 
-  @endphp
+  @endphp --}}
   <!--  Body Wrapper -->
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
     {{-- NOTIFICATION PANNEL --}}
-      <div class="notifications-panel" id="notificationsPanel">
+    <div class="notifications-panel" id="notificationsPanel">
         <h5>Notifications</h5>
           <div class="notifications-content">
-            @forelse($notifications as $notification)
-              <div class="notif-item {{ $notification->is_read ? 'read' : 'unread' }}">
-                <i class="ti ti-bell"></i>
-                <span>
-                  <a href="{{ route('notifications.markAsRead', ['id' => $notification->id]) }}"
-                    class="notification-link"
-                    data-id="{{ $notification->id }}">
-                    {{ $notification->message }}
-                  </a>
-                </span>
-                <small>{{ $notification->created_at->diffForHumans() }}</small>
+              <div class="notif-item">
+                    <i class="ti ti-bell"></i>
+                    <span>
+                    <a href=""class="notification-link" data-id="">
+
+                    </a>
+                    </span>
+                    <small></small>
               </div>
-            @empty
-              <p>Aucune notification</p>
-            @endforelse
           </div>
         <button id="clearAll" class="btn btn-primary">Sortir</button>
-      </div>
+    </div>
 
     <!-- Sidebar Start -->
     <aside class="top-navbar">
@@ -344,14 +338,22 @@ aside.top-navbar {
                 <!-- Overlay sombre (initialement caché) -->
                 <div id="overlay" class="hidden"></div>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
                     <i class="ti ti-bell-ringing"></i>
-                    @if($unreadCount > 0)
+                     @if($unreadCount > 0)
                         <span class="notification-count" style="color: red">{{ $unreadCount }}</span>
                     @endif
+                </li> --}}
+
+                <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
+                        <i class="ti ti-bell-ringing"></i>
+                        <!-- L'élément avec la classe notification-count s'affiche uniquement si unreadCount > 0 -->
+                        <span class="notification-count" style="color: red" id="notificationCount" hidden></span>
                     </a>
                 </li>
+
             </ul>
 
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
@@ -433,20 +435,101 @@ aside.top-navbar {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
-
     <script>
 
-    function getEmployeeById(id_emp)
+    function updateUnreadNotifications(receiver)
+    {
+        fetch(`http://localhost:8080/api/notifications/unread/count/${receiver}`)
+            .then(response => response.json()) // On suppose que l'API renvoie un nombre directement
+            .then(data => {
+                const unreadCount = data; // Si l'API renvoie directement un chiffre
+                const notificationCountElement = document.getElementById('notificationCount');
+
+                if (unreadCount > 0) {
+                    // Mettre à jour l'élément pour afficher le nombre de notifications non lues
+                    notificationCountElement.textContent = unreadCount;
+                    notificationCountElement.hidden = false; // Affiche l'élément
+                } else {
+                    notificationCountElement.hidden = true; // Cache l'élément si aucune notification non lue
+                }
+            })
+            .catch(error => console.error('Erreur lors de la récupération des notifications:', error));
+    }
+
+    function loadNotifications(username) {
+        fetch(`http://localhost:8080/api/notifications/${username}`)
+            .then(response => response.json())
+            .then(notifications => {
+                //parcourir tous ca et afficher en appeller la fontion showNotification
+                notifications.forEach(showNotification);
+            })
+            .catch(error => console.error('Erreur chargement des notifications:', error));
+    }
+
+    function showNotification(notification)
+    {
+
+    const notificationPanel = document.querySelector(".notifications-content"); // Trouve le conteneur des notifications
+
+    // Crée un nouvel élément pour la notification
+    const newNotification = document.createElement("div");
+    newNotification.classList.add("notif-item"); // Garde la même classe pour le style
+
+    // Icône de notification
+    const icon = document.createElement("i");
+    icon.classList.add("ti", "ti-bell"); // Ajoute l'icône de la cloche
+
+    // Conteneur du texte de la notification
+    const textContainer = document.createElement("span");
+
+    // Lien vers la notification (si nécessaire)
+    const link = document.createElement("a");
+    link.href = `${notification.url}`; // Mets ici le lien si nécessaire
+    link.classList.add("notification-link");
+    link.dataset.id = notification.id || ""; // Ajoute un ID si disponible
+    link.innerText = `📢 ${notification.sender || "Inconnu"} : ${notification.content}`;
+
+    // Date ou heure de la notification
+    const time = document.createElement("small");
+    time.innerText = notification.timestamp || ""; // Ajoute la date si elle est dispo
+
+    // Assemble les éléments
+    textContainer.appendChild(link);
+    newNotification.appendChild(icon);
+    newNotification.appendChild(textContainer);
+    newNotification.appendChild(time);
+
+    // Ajoute la notification au début de la liste
+    notificationPanel.prepend(newNotification);
+}
+
+
+    // function showNotification(notification) {
+    //         //console.log("📩 Affichage de la notification :", notification);
+
+    //         const notificationList = document.getElementById("notifications");
+    //         const newNotification = document.createElement("li");
+
+    //         // Vérifie le bon champ pour récupérer le sender
+    //         const sender = notification.sender || "Inconnu";
+
+    //         newNotification.innerText = `📢 De ${sender} : ${notification.content}`;
+
+    //         // Ajouter la notification au début de la liste (au lieu de la fin)
+    //         notificationList.insertBefore(newNotification, notificationList.firstChild);
+    //         //notificationList.appendChild(newNotification);
+    // }
+
+
+    async function getEmployeeById(id_emp)
     {
         try {
-            const response = fetch(`http://localhost:8000/emp/${id_emp}`);
+            const response = await fetch(`http://127.0.0.1:8000/emp/${id_emp}`);
             if (!response.ok) {
                 throw new Error('Erreur lors de la récupération des données');
             }
-            const data = response.json();
-            console.log('Données de l\'employé :', data);
-
-            // Stocker dans une variable pour l'utiliser plus tard
+            const data = await response.json();
+            //console.log('Données de l\'employé :', data);
             return data;
         } catch (error) {
             console.error('Erreur :', error);
@@ -454,40 +537,105 @@ aside.top-navbar {
         }
     }
 
-        let stompClient = null;
-        function connectWebSocket()
-        {
-           const id_emp = {{ Session::get('id_emp') }}
-            //const empData = getEmployeeById(id_emp);
-            // const prenom_directeur = "popo";
+    //     let stompClient = null;
+    //     function connectWebSocket()
+    //     {
+    //        const id_emp = {{ Session::get('id_emp') }}
 
-            //console.log("preeeeenommmmmm"+prenom_emp);
+    //         // const prenom_directeur = "popo";
 
+    //         //console.log("preeeeenommmmmm"+prenom_emp);
+
+
+    //         const socket = new SockJS('http://localhost:8080/ws');
+    //         stompClient = Stomp.over(socket);
+    //         // let username = "carl";
+    //         const prenom_directeur = "max";
+    //         stompClient.connect({}, function (frame)
+    //         {
+    //             console.log('Connecté : ' + frame);
+
+    //             stompClient.subscribe('/topic/notifications/' + prenom_directeur, function (message) {
+    //                 //showNotification(JSON.parse(message.body));
+    //             });
+    //         });
+
+    //         // Charger les anciennes notifications
+    //         //loadNotifications(prenom_directeur);
+    //     }
+
+    //     window.onload = function() {
+    //     connectWebSocket(); // Connexion automatique à WebSocket au chargement de la page
+    // };
+
+    async function connectWebSocket()
+    {
+        const id_emp = {{ Session::get('id_emp') }}; // Assure-toi que cette ligne est bien interprétée côté Laravel
+
+        if (!id_emp) {
+            console.error("ID employé non défini !");
+            return;
+        }
+        try {
+
+            const employee = await getEmployeeById(id_emp);
+
+            if (employee == null) {
+                console.log("null emp");
+
+            }
+
+            const prenom_directeur = employee.prenom_emp; // Suppose que le prénom se trouve sous "prenom"
 
             const socket = new SockJS('http://localhost:8080/ws');
-            stompClient = Stomp.over(socket);
-            // let username = "carl";
-            const prenom_directeur = "max";
+            const stompClient = Stomp.over(socket);
+
             stompClient.connect({}, function (frame)
             {
-                console.log('Connecté : ' + frame);
+                //console.log('Connecté : ' + frame);
 
-                stompClient.subscribe('/topic/notifications/' + prenom_directeur, function (message) {
-                    //showNotification(JSON.parse(message.body));
+                stompClient.subscribe(`/topic/notifications/`+prenom_directeur, function (message) {
+                    console.log("Notification reçue :", message.body);
+                    showNotification(JSON.parse(message.body));
                 });
+
+
+                stompClient.subscribe(`/topic/unreadCount/` + prenom_directeur, function (message)
+                {
+                    console.log("Nombre de notifications non lues reçu :", message.body);
+
+                    let unreadCount = parseInt(message.body);  // Convertir en entier
+
+                    // Mettre à jour l'affichage du nombre de notifications non lues
+                    let notificationCountElement = document.getElementById("notificationCount");
+                    if (unreadCount >= 0) {
+                        notificationCountElement.innerText = unreadCount;  // Afficher le nombre
+                        notificationCountElement.hidden = false;  // Afficher l'élément
+                    } else {
+                        notificationCountElement.hidden = true;  // Cacher l'élément si pas de notifications non lues
+                    }
+                });
+
             });
 
-            // Charger les anciennes notifications
-            //loadNotifications(prenom_directeur);
+            updateUnreadNotifications(prenom_directeur);
+            //load notifcation
+
+            loadNotifications(prenom_directeur);
+
+
+            //nombre notification
+
+
+        } catch (error) {
+            console.error("Erreur lors de la connexion WebSocket :", error);
         }
+    }
 
-        window.onload = function() {
-        connectWebSocket(); // Connexion automatique à WebSocket au chargement de la page
-    };
-
-    </script>
-
-  <script>
+window.onload =  async function ()
+{
+    connectWebSocket();
+};
 
     $(document).ready(function() {
     $('#notifBell').on('click', function() {

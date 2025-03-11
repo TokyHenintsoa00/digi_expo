@@ -153,7 +153,7 @@ function showNotification(notification) {
     //console.log(username);
 
     let receiver = document.getElementById("receiver").value;
-    let content = "une nouvelle notification";
+    let content = "Vous a envoyer une message";
 
     // Obtenir la date actuelle
     let currentDate = new Date();

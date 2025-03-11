@@ -38,7 +38,74 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 <script>
+
+
+
+async function getEmployeeById(id_emp)
+    {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/emp/${id_emp}`);
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données');
+            }
+            const data = await response.json();
+            //console.log('Données de l\'employé :', data);
+            return data;
+        } catch (error) {
+            console.error('Erreur :', error);
+            return null;
+        }
+    }
+
+function sendNotification()
+{
+    //nom emp,prenom emp,id_emp,id_directeur,nom_dir,prenom dir,etat dir
+
+    const nom_emp = {!! json_encode($nom_emp) !!};
+    const prenom_emp = {!! json_encode($prenom_emp) !!};
+    const id_emp = {{$id_emp}};
+    //nom direteur
+    const nom_directeur = {!! json_encode($nom) !!};
+    const prenom_directeur = {!! json_encode($prenom) !!};
+
+    //etat directeur
+    const id_etat_personne = {{$id_etat_personne}};
+    //id_directeur
+    const id_directeur = {{$id}};
+
+    console.log(id_directeur);
+
+
+    let content = "Vous a envoyez un message";
+
+    // Obtenir la date actuelle
+    let currentDate = new Date();
+
+    // Convertir la date actuelle en chaîne de caractères
+    let dateString = currentDate.toString();
+
+    //let url = `http://127.0.0.1:8000/viewMessageSendOrReciveDirecteur?nom=${nom_directeur}&prenom=${username}&id=${id}&etat=${etat}`
+    let url = `http://127.0.0.1:8000/directeur/viewMessageSendOrReciveDirecteur?nom_emp=${nom_emp}&prenom_emp=${prenom_emp}&id_emp=${id_emp}&id_directeur=${id_directeur}&nom_dir=${nom_directeur}&prenom_dir=${prenom_directeur}&etat_dir=${id_etat_personne}`
+    fetch('http://localhost:8080/api/notifications/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            {   sender: prenom_emp,
+                receiver: prenom_directeur,
+                content: content ,
+                dateNotification:dateString,
+                url:url
+            })
+    });
+
+}
+
+
+    //--------------------------------------------------------------------------------------------------------------------------
     $(document).ready(function() {
         const sender_id = {{Session::get('id_emp')}}; // ID du directeur ou utilisateur connecté
         const receiver_id = {{$id}}; // ID de l'employé
@@ -57,7 +124,7 @@
 
         const id_directeur = {{$id}};
 
-        console.log(id_directeur);
+        //console.log(id_directeur);
 
         const nom_directeur = {!! json_encode($nom) !!};
         const prenom_directeur = {!! json_encode($prenom) !!};
@@ -137,48 +204,48 @@
                     success: function() {
                         $('#userInput').val('');
                         fetchMessages();
-
-                        if (id_etat_personne == 7)
-                        {
-                            $.ajax({
-                                url:'/createNotificationMessageEmpToDirecteur',
-                                method: 'POST',
-                                data:{
-                                    _token: '{{ csrf_token() }}',
-                                    sender_id: sender_id,
-                                    receiver_id: receiver_id,
-                                    nom_emp:nom_emp,
-                                    prenom_emp:prenom_emp,
-                                    id_emp:id_emp,
-                                    id_directeur:id_directeur,
-                                    nom_directeur:nom_directeur,
-                                    prenom_directeur:prenom_directeur,
-                                    etat_directeur:id_etat_personne
-                                },
-                                success: function(response) {
-                                    console.log('Notification envoyee');
-                                }
-                            });
-                        }
-                        else
-                        {
-                            $.ajax({
-                                url:'/createNotificationMessageEmpToEmp',
-                                method: 'POST',
-                                data:{
-                                    _token: '{{ csrf_token() }}',
-                                    sender_id: sender_id,
-                                    receiver_id: receiver_id,
-                                    nom_emp:nom_emp,
-                                    prenom_emp:prenom_emp,
-                                    id_emp:id_emp,
-                                    etat_personne:id_etat_personne
-                                },
-                                success: function(response) {
-                                    console.log('Notification envoyee');
-                                }
-                            });
-                        }
+                        sendNotification();
+                        // if (id_etat_personne == 7)
+                        // {
+                        //     $.ajax({
+                        //         url:'/createNotificationMessageEmpToDirecteur',
+                        //         method: 'POST',
+                        //         data:{
+                        //             _token: '{{ csrf_token() }}',
+                        //             sender_id: sender_id,
+                        //             receiver_id: receiver_id,
+                        //             nom_emp:nom_emp,
+                        //             prenom_emp:prenom_emp,
+                        //             id_emp:id_emp,
+                        //             id_directeur:id_directeur,
+                        //             nom_directeur:nom_directeur,
+                        //             prenom_directeur:prenom_directeur,
+                        //             etat_directeur:id_etat_personne
+                        //         },
+                        //         success: function(response) {
+                        //             console.log('Notification envoyee');
+                        //         }
+                        //     });
+                        // }
+                        // else
+                        // {
+                        //     $.ajax({
+                        //         url:'/createNotificationMessageEmpToEmp',
+                        //         method: 'POST',
+                        //         data:{
+                        //             _token: '{{ csrf_token() }}',
+                        //             sender_id: sender_id,
+                        //             receiver_id: receiver_id,
+                        //             nom_emp:nom_emp,
+                        //             prenom_emp:prenom_emp,
+                        //             id_emp:id_emp,
+                        //             etat_personne:id_etat_personne
+                        //         },
+                        //         success: function(response) {
+                        //             console.log('Notification envoyee');
+                        //         }
+                        //     });
+                        // }
 
 
                     }
