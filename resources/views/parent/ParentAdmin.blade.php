@@ -13,6 +13,94 @@
   <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
 
   <style>
+        /* //------------------------------------------------------------------ */
+        /* Style du panneau de notifications */
+ .notifications-panel {
+    position: fixed;
+    top: 0;
+    right: -320px; /* Caché hors écran */
+    width: 300px;
+    height: 100%;
+    overflow-y: auto; /* Activer le défilement vertical */
+    background-color: white;
+    border-left: 1px solid #ddd;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1100; /* Plus élevé pour être devant le aside */
+    transition: right 0.4s ease; /* Transition pour le slide */
+}
+
+  /* Apparition du panneau */
+  .notifications-panel.show {
+    right: 0;
+  }
+
+  .notifications-panel h5 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .notif-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .notif-item i {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  .notif-item small {
+    font-size: 12px;
+    color: gray;
+  }
+
+  #clearAll {
+    margin-top: 20px;
+    background-color: #001365;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* Overlay sombre */
+  #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* Doit être sous le panneau de notifications */
+    display: none; /* Caché initialement */
+}
+
+  #overlay.show {
+    display: block; /* Affiche l'overlay */
+  }
+
+  .notif-item.read {
+    opacity: 0.6; /* Rend les notifications lues plus transparentes */
+    color: gray;
+}
+
+.notif-item.unread {
+    font-weight: bold;
+    color: black;
+}
+
+  .notifications-content {
+    overflow-y: auto;
+    max-height: calc(80vh - 60px); /* Ajustement en fonction de la taille du titre */
+    padding-bottom: 20px;
+  }
+    /* //------------------------------------------------------------------ */
     html, body {
       height: 100%;
       margin: 0;
@@ -150,6 +238,21 @@ aside.top-navbar {
   <div class="page-wrapper main-container" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
   data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
 
+    <div class="notifications-panel" id="notificationsPanel">
+        <h5>Notifications</h5>
+        <div class="notifications-content">
+            <div class="notif-item">
+                    <i class="ti ti-bell"></i>
+                    <span>
+                    <a href=""class="notification-link" data-id="">
+
+                    </a>
+                    </span>
+                    <small></small>
+            </div>
+        </div>
+        <button id="clearAll" class="btn btn-primary">Sortir</button>
+    </div>
 
     <aside class="top-navbar">
         <div class="brand-logo d-flex align-items-center">
@@ -213,12 +316,18 @@ aside.top-navbar {
       <!--  Header Start -->
       <header class="app-header">
         <nav class="navbar navbar-expand-lg navbar-light">
-          <ul class="navbar-nav">
-            <li class="nav-item d-block d-xl-none">
-              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-              </a>
-            </li>
-          </ul>
+            <ul class="navbar-nav">
+                <!-- Overlay sombre (initialement caché) -->
+                <div id="overlay" class="hidden"></div>
+
+                <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
+                        <i class="ti ti-bell-ringing"></i>
+                        <!-- L'élément avec la classe notification-count s'affiche uniquement si unreadCount > 0 -->
+                        <span class="notification-count" style="color: red" id="notificationCount" hidden></span>
+                    </a>
+                </li>
+            </ul>
           <!-- Profile Image and Logout Button aligned to the right -->
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
@@ -269,7 +378,20 @@ aside.top-navbar {
   <script src="{{asset('../assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
   <script src="{{asset('../assets/libs/simplebar/dist/simplebar.js')}}"></script>
   <script src="{{asset('../assets/js/dashboard.js')}}"></script>
+  <script>
+    $(document).ready(function() {
+        $('#notifBell').on('click', function() {
+            $('#notificationsPanel').toggleClass('show');
+            $('#overlay').toggleClass('show');
+            $('.notification-count').remove();
+        });
 
+        $('#clearAll, #overlay').on('click', function() {
+            $('#notificationsPanel').removeClass('show');
+            $('#overlay').removeClass('show');
+        });
+    });
+  </script>
   <footer style="background-color: #001f54; color: white; padding: 20px 0;">
     <div class="container">
       <div class="row">

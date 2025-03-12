@@ -338,14 +338,6 @@ aside.top-navbar {
                 <!-- Overlay sombre (initialement caché) -->
                 <div id="overlay" class="hidden"></div>
 
-                {{-- <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
-                    <i class="ti ti-bell-ringing"></i>
-                     @if($unreadCount > 0)
-                        <span class="notification-count" style="color: red">{{ $unreadCount }}</span>
-                    @endif
-                </li> --}}
-
                 <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
                         <i class="ti ti-bell-ringing"></i>
@@ -514,23 +506,6 @@ aside.top-navbar {
     // Ajoute la notification au début de la liste
     notificationPanel.prepend(newNotification);
 }
-
-
-    // function showNotification(notification) {
-    //         //console.log("📩 Affichage de la notification :", notification);
-
-    //         const notificationList = document.getElementById("notifications");
-    //         const newNotification = document.createElement("li");
-
-    //         // Vérifie le bon champ pour récupérer le sender
-    //         const sender = notification.sender || "Inconnu";
-
-    //         newNotification.innerText = `📢 De ${sender} : ${notification.content}`;
-
-    //         // Ajouter la notification au début de la liste (au lieu de la fin)
-    //         notificationList.insertBefore(newNotification, notificationList.firstChild);
-    //         //notificationList.appendChild(newNotification);
-    // }
 
 
     async function getEmployeeById(id_emp)
