@@ -152,18 +152,19 @@ function sendNotification()
     const prenom_emp = {!! json_encode($prenom_emp) !!};
     const id_emp = {{$id_emp}};
     //nom direteur
-    const nom_directeur = {!! json_encode($nom) !!};
-    const prenom_directeur = {!! json_encode($prenom) !!};
+    const nom_personne = {!! json_encode($nom) !!};
+    const prenom_personne = {!! json_encode($prenom) !!};
 
     //etat directeur
     const id_etat_personne = {{$id_etat_personne}};
     //id_directeur
-    const id_directeur = {{$id}};
+    const id_personne = {{$id}};
 
-    console.log(id_directeur);
+    console.log(id_personne);
 
 
-    let content = "Vous a envoyez un message";
+    let content = prenom_emp + " Vous a envoyez un message";
+    console.log(content);
 
     // Obtenir la date actuelle
     let currentDate = new Date();
@@ -171,19 +172,38 @@ function sendNotification()
     // Convertir la date actuelle en chaîne de caractères
     let dateString = currentDate.toString();
 
+    if (id_etat_personne == 7) {
+
+        let url = `http://127.0.0.1:8000/directeur/viewMessageSendOrReciveDirecteur?nom_emp=${nom_emp}&prenom_emp=${prenom_emp}&id_emp=${id_emp}&id_directeur=${id_personne}&nom_dir=${nom_personne}&prenom_dir=${prenom_personne}&etat_dir=${id_etat_personne}`
+        fetch('http://localhost:8080/api/notifications/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(
+                {   sender: id_emp,
+                    receiver: id_personne,
+                    content: content ,
+                    dateNotification:dateString,
+                    url:url
+                })
+        });
+    } else
+    {
+        let url = `http://127.0.0.1:8000/employer/viewMessageSendOrReciveEmp?nom=${nom_personne}&prenom=${prenom_personne}&id=${id_personne}&etat=${id_etat_personne}`
+        fetch('http://localhost:8080/api/notifications/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(
+                {   sender: id_emp,
+                    receiver: id_personne,
+                    content: content ,
+                    dateNotification:dateString,
+                    url:url
+                })
+        });
+    }
+
     //let url = `http://127.0.0.1:8000/viewMessageSendOrReciveDirecteur?nom=${nom_directeur}&prenom=${username}&id=${id}&etat=${etat}`
-    let url = `http://127.0.0.1:8000/directeur/viewMessageSendOrReciveDirecteur?nom_emp=${nom_emp}&prenom_emp=${prenom_emp}&id_emp=${id_emp}&id_directeur=${id_directeur}&nom_dir=${nom_directeur}&prenom_dir=${prenom_directeur}&etat_dir=${id_etat_personne}`
-    fetch('http://localhost:8080/api/notifications/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(
-            {   sender: prenom_emp,
-                receiver: prenom_directeur,
-                content: content ,
-                dateNotification:dateString,
-                url:url
-            })
-    });
+
 
 }
 

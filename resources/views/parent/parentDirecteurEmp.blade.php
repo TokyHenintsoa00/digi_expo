@@ -338,6 +338,14 @@ aside.top-navbar {
                 <!-- Overlay sombre (initialement caché) -->
                 <div id="overlay" class="hidden"></div>
 
+                {{-- <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
+                    <i class="ti ti-bell-ringing"></i>
+                     @if($unreadCount > 0)
+                        <span class="notification-count" style="color: red">{{ $unreadCount }}</span>
+                    @endif
+                </li> --}}
+
                 <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link nav-icon-hover" id="notifBell">
                         <i class="ti ti-bell-ringing"></i>
@@ -491,7 +499,7 @@ aside.top-navbar {
     link.classList.add("notification-link");
     link.dataset.id = notification.id || ""; // Ajoute un ID si disponible
     link.dataset.url = notification.url || ""; // Ajoute l'URL comme attribut data-url
-    link.innerText = `📢 ${notification.sender || "Inconnu"} : ${notification.content}`;
+    link.innerText = `📢 ${notification.content}`;
 
     // Date ou heure de la notification
     const time = document.createElement("small");
@@ -506,6 +514,23 @@ aside.top-navbar {
     // Ajoute la notification au début de la liste
     notificationPanel.prepend(newNotification);
 }
+
+
+    // function showNotification(notification) {
+    //         //console.log("📩 Affichage de la notification :", notification);
+
+    //         const notificationList = document.getElementById("notifications");
+    //         const newNotification = document.createElement("li");
+
+    //         // Vérifie le bon champ pour récupérer le sender
+    //         const sender = notification.sender || "Inconnu";
+
+    //         newNotification.innerText = `📢 De ${sender} : ${notification.content}`;
+
+    //         // Ajouter la notification au début de la liste (au lieu de la fin)
+    //         notificationList.insertBefore(newNotification, notificationList.firstChild);
+    //         //notificationList.appendChild(newNotification);
+    // }
 
 
     async function getEmployeeById(id_emp)
@@ -558,7 +583,6 @@ aside.top-navbar {
     async function connectWebSocket()
     {
         const id_emp = {{ Session::get('id_emp') }}; // Assure-toi que cette ligne est bien interprétée côté Laravel
-
         if (!id_emp) {
             console.error("ID employé non défini !");
             return;
@@ -572,7 +596,7 @@ aside.top-navbar {
 
             }
 
-            const prenom_directeur = employee.prenom_emp; // Suppose que le prénom se trouve sous "prenom"
+            //const id_emp = employee.id_emp; // Suppose que le prénom se trouve sous "prenom"
 
             const socket = new SockJS('http://localhost:8080/ws');
             const stompClient = Stomp.over(socket);
@@ -581,13 +605,14 @@ aside.top-navbar {
             {
                 //console.log('Connecté : ' + frame);
 
-                stompClient.subscribe(`/topic/notifications/`+prenom_directeur, function (message) {
+                //notification
+                stompClient.subscribe(`/topic/notifications/`+id_emp, function (message) {
                     console.log("Notification reçue :", message.body);
                     showNotification(JSON.parse(message.body));
                 });
 
-
-                stompClient.subscribe(`/topic/unreadCount/` + prenom_directeur, function (message)
+                //nombre de notification
+                stompClient.subscribe(`/topic/unreadCount/` + id_emp, function (message)
                 {
                     console.log("Nombre de notifications non lues reçu :", message.body);
 
@@ -602,18 +627,20 @@ aside.top-navbar {
                         notificationCountElement.hidden = true;  // Cacher l'élément si pas de notifications non lues
                     }
                 });
-
+                //message
                 stompClient.subscribe(`/topic/messaging/`+id_emp,function (message)
                 {
                     showMessage(JSON.parse(message.body));
                 });
 
+
+
             });
 
-            updateUnreadNotifications(prenom_directeur);
+            updateUnreadNotifications(id_emp);
             //load notifcation
 
-            loadNotifications(prenom_directeur);
+            loadNotifications(id_emp);
 
             $(document).on('click', '.notification-link', function (e)
             {

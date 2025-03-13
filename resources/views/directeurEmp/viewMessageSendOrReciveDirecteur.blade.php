@@ -90,6 +90,7 @@ function sendMessage()
         })
     });
 }
+let lastMessageTime = null; // Stocke l'heure du dernier message affiché
 
 function showMessage(message)
 {
@@ -151,7 +152,11 @@ function sendNotification()
     //id directeur
     const id = {{ Session::get('id_emp') }};
 
-    let content = "Vous a envoyez un message";
+    //id emp
+    const id_emp = {!! json_encode($id_emp) !!};
+
+    let content = username + " Vous a envoyez un message";
+    console.log(content);
 
     // Obtenir la date actuelle
     let currentDate = new Date();
@@ -165,8 +170,8 @@ function sendNotification()
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(
-            {   sender: username,
-                receiver: receiver,
+            {   sender: id,
+                receiver: id_emp,
                 content: content ,
                 dateNotification:dateString,
                 url:url

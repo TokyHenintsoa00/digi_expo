@@ -378,7 +378,138 @@ aside.top-navbar {
   <script src="{{asset('../assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
   <script src="{{asset('../assets/libs/simplebar/dist/simplebar.js')}}"></script>
   <script src="{{asset('../assets/js/dashboard.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
   <script>
+
+function markNotificationAsRead(notification)
+    {
+        fetch(`http://localhost:8080/api/notifications/updateRead/${notification}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    }
+
+
+
+    //count notif avec etat 6
+    function updateUnreadNotifications(receiver)
+    {
+        fetch(`http://localhost:8080/api/notifications/unread/count/${receiver}`)
+            .then(response => response.json()) // On suppose que l'API renvoie un nombre directement
+            .then(data => {
+                const unreadCount = data; // Si l'API renvoie directement un chiffre
+                const notificationCountElement = document.getElementById('notificationCount');
+
+                if (unreadCount > 0) {
+                    // Mettre à jour l'élément pour afficher le nombre de notifications non lues
+                    notificationCountElement.textContent = unreadCount;
+                    notificationCountElement.hidden = false; // Affiche l'élément
+                } else {
+                    notificationCountElement.hidden = true; // Cache l'élément si aucune notification non lue
+                }
+            })
+            .catch(error => console.error('Erreur lors de la récupération des notifications:', error));
+    }
+    //load notif avec etat 6
+    function loadNotifications(username) {
+        fetch(`http://localhost:8080/api/notifications/${username}`)
+            .then(response => response.json())
+            .then(notifications => {
+                //parcourir tous ca et afficher en appeller la fontion showNotification
+                notifications.forEach(showNotification);
+            })
+            .catch(error => console.error('Erreur chargement des notifications:', error));
+    }
+    //show notif
+
+    function showNotification(notification)
+    {
+        const notificationPanel = document.querySelector(".notifications-content"); // Trouve le conteneur des notifications
+
+        // Crée un nouvel élément pour la notification
+        const newNotification = document.createElement("div");
+        newNotification.classList.add("notif-item"); // Garde la même classe pour le style
+
+        // Icône de notification
+        const icon = document.createElement("i");
+        icon.classList.add("ti", "ti-bell"); // Ajoute l'icône de la cloche
+
+        // Conteneur du texte de la notification
+        const textContainer = document.createElement("span");
+
+        // Lien vers la notification (si nécessaire)
+        const link = document.createElement("a");
+        link.href = `${notification.url}`; // Mets ici le lien si nécessaire
+        link.classList.add("notification-link");
+        link.dataset.id = notification.id || ""; // Ajoute un ID si disponible
+        link.dataset.url = notification.url || ""; // Ajoute l'URL comme attribut data-url
+        link.innerText = `${notification.content}`;
+
+        // Date ou heure de la notification
+        const time = document.createElement("small");
+        time.innerText = notification.timestamp || ""; // Ajoute la date si elle est dispo
+
+        // Assemble les éléments
+        textContainer.appendChild(link);
+        newNotification.appendChild(icon);
+        newNotification.appendChild(textContainer);
+        newNotification.appendChild(time);
+
+        // Ajoute la notification au début de la liste
+        notificationPanel.prepend(newNotification);
+    }
+
+    function connectWebSocket()
+    {
+        const etat_admin = 6;
+
+        updateUnreadNotifications(etat_admin);
+        loadNotifications(etat_admin);
+        try {
+
+            const socket = new SockJS('http://localhost:8080/ws');
+            const stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function (frame){
+
+                stompClient.subscribe(`/topic/notifToAdminByDirecteur/`+etat_admin,function (message)
+                {
+                    showNotification(JSON.parse(message.body));
+                });
+
+                stompClient.subscribe(`/topic/unreadCount/` + etat_admin, function (message)
+                {
+                    console.log("Nombre de notifications non lues reçu :", message.body);
+
+                    let unreadCount = parseInt(message.body);  // Convertir en entier
+
+                    // Mettre à jour l'affichage du nombre de notifications non lues
+                    let notificationCountElement = document.getElementById("notificationCount");
+                    if (unreadCount >= 0) {
+                        notificationCountElement.innerText = unreadCount;  // Afficher le nombre
+                        notificationCountElement.hidden = false;  // Afficher l'élément
+                    } else {
+                        notificationCountElement.hidden = true;  // Cacher l'élément si pas de notifications non lues
+                    }
+                });
+
+            });
+        } catch (error) {
+            console.error("Erreur lors de la connexion WebSocket :", error);
+        }
+    }
+
+    window.onload = function ()
+    {
+        connectWebSocket();
+    };
+
+    //-----------------------------------------------------------------------------
     $(document).ready(function() {
         $('#notifBell').on('click', function() {
             $('#notificationsPanel').toggleClass('show');
@@ -386,6 +517,18 @@ aside.top-navbar {
             $('.notification-count').remove();
         });
 
+        $(document).on('click', '.notification-link', function (e)
+            {
+                e.preventDefault(); // Empêche la redirection immédiate
+                let notificationId = $(this).data('id');
+                markNotificationAsRead(notificationId);
+                let notificationUrl = $(this).data('url');
+                $.get(notificationUrl, function() {
+                $(e.target).closest('.notif-item').addClass('read').removeClass('unread'); // Style comme lue
+                    window.location.href = notificationUrl;
+                });
+
+            });
         $('#clearAll, #overlay').on('click', function() {
             $('#notificationsPanel').removeClass('show');
             $('#overlay').removeClass('show');

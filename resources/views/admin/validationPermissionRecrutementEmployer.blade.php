@@ -53,7 +53,7 @@
                             <input type="hidden" name="nom_stand" value="{{$list_recrutement->nom_stand}}">
                             <input type="hidden" name="id_permission_recrutement_emp" value="{{$list_recrutement->id_permission_recrutement_emp}}">
                             <input type="hidden" name="id_expediteur" value="{{$list_recrutement->id_expediteur}}">
-
+                            <input type="hidden" name="expediteur" value="{{$list_permission->id_expediteur}}">
                             <input type="submit" value="Valider" class="btn btn-success m-1">
                         </form>
                     </td>
@@ -74,5 +74,21 @@
         </tbody>
     </table>
 </div>
-
+<script>
+    async function getEmployeeById(id_emp)
+    {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/emp/${id_emp}`);
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données');
+            }
+            const data = await response.json();
+            //console.log('Données de l\'employé :', data);
+            return data;
+        } catch (error) {
+            console.error('Erreur :', error);
+            return null;
+        }
+    }
+</script>
 @endsection

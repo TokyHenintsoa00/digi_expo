@@ -22,7 +22,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="/getInsertPermissionStandEmp" method="POST" enctype="multipart/form-data">
+                    <form id="permissionForm" action="/getInsertPermissionStandEmp" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); sendNotificationDirecteurToAdmin();">
                         @csrf
                         <div class="row"> <!-- Row for both forms -->
                             <!-- Formulaire du stand -->
@@ -103,5 +103,33 @@
         </div>
     </div>
 </div>
-
+<script>
+    function sendNotificationDirecteurToAdmin()
+    {
+        const sender = 0;
+        const receiver = 6;
+        const content = "Vous avez recu une nouvelle permission d'exposition"
+        // Obtenir la date actuelle
+        let currentDate = new Date();
+        // Convertir la date actuelle en chaîne de caractères
+        let dateString = currentDate.toString();
+        let url = `http://127.0.0.1:8000/admin/viewValidationPermissionStand`;
+        fetch('http://localhost:8080/api/notifications/directeurSendAdmin/sendNotification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            {   sender: sender,
+                receiver: receiver,
+                content: content ,
+                dateNotification:dateString,
+                url:url
+            })
+    }).then(() => {
+            document.getElementById('permissionForm').submit();
+        }).catch(error => {
+            console.error("Erreur lors de l'envoi de la notification:", error);
+            document.getElementById('permissionForm').submit();
+        });
+    }
+</script>
 @endsection

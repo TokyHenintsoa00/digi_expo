@@ -20,7 +20,7 @@
                        {!! session('success') !!}
                    </div>
                    @endif
-                <form action="{{route('recrutementEmp')}}" method="POST">
+                   <form id="permissionForm" action="{{route('recrutementEmp')}}" method="POST" onsubmit="event.preventDefault(); sendNotificationRecrutement();">
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-6 mb-3">
@@ -55,4 +55,34 @@
         </div> <!-- /. card -->
     </div> <!-- /. col -->
 </div> <!-- /. end-section -->
+
+<script>
+    function sendNotificationRecrutement()
+    {
+        const sender = 7;
+        const receiver = 6;
+        const content = "Vous avez recu une nouvelle permission de recrutement"
+        // Obtenir la date actuelle
+        let currentDate = new Date();
+        // Convertir la date actuelle en chaîne de caractères
+        let dateString = currentDate.toString();
+        let url = `http://127.0.0.1:8000/admin/viewValidationPermissionStand`;
+        fetch('http://localhost:8080/api/notifications/directeur/permissionRecrutement/sendNotification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            {   sender: sender,
+                receiver: receiver,
+                content: content ,
+                dateNotification:dateString,
+                url:url
+            })
+        }).then(() => {
+            document.getElementById('permissionForm').submit();
+        }).catch(error => {
+            console.error("Erreur lors de l'envoi de la notification:", error);
+            document.getElementById('permissionForm').submit();
+        });
+    }
+</script>
 @endsection

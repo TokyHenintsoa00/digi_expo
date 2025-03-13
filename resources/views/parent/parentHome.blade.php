@@ -269,6 +269,36 @@
   <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
   <script src="../assets/js/dashboard.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+  <script>
+    function connectWebSocket()
+    {
+        const etat_admin = 0;
+        try {
+
+            const socket = new SockJS('http://localhost:8080/ws');
+            const stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function (frame){
+
+                stompClient.subscribe(`/topic/notifToAdminByDirecteur/`+etat_admin,function (message)
+                {
+
+                });
+
+            });
+        } catch (error) {
+            console.error("Erreur lors de la connexion WebSocket :", error);
+        }
+    }
+
+    window.onload = function ()
+    {
+        connectWebSocket();
+    };
+  </script>
   <footer style="background-color: #001f54; color: white; padding: 20px 0; width: 100%; margin: 0;">
     <div class="container" style="max-width: 100%; padding: 0 15px;">
       <div class="text-center" style="font-size: 14px;">

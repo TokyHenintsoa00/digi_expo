@@ -416,6 +416,7 @@ aside.top-navbar {
 
     function markNotificationAsRead(notification)
     {
+        //ID NOTIF
         fetch(`http://localhost:8080/api/notifications/updateRead/${notification}`,
         {
             method: "PUT",
@@ -460,7 +461,7 @@ aside.top-navbar {
     link.classList.add("notification-link");
     link.dataset.id = notification.id || ""; // Ajoute un ID si disponible
     link.dataset.url = notification.url || ""; // Ajoute l'URL comme attribut data-url
-    link.innerText = `📢 ${notification.sender || "Inconnu"} : ${notification.content}`;
+    link.innerText = `📢 ${notification.content}`;
 
     // Date ou heure de la notification
     const time = document.createElement("small");
@@ -502,27 +503,20 @@ aside.top-navbar {
         }
         try {
 
-            const employee = await getEmployeeById(id_emp);
 
-            if (employee == null) {
-                console.log("null emp");
-
-            }
-
-            const prenom_emp = employee.prenom_emp; // Suppose que le prénom se trouve sous "prenom"
 
             const socket = new SockJS('http://localhost:8080/ws');
             const stompClient = Stomp.over(socket);
 
             stompClient.connect({}, function (frame){
                 //console.log('Connecté : ' + frame);
-                stompClient.subscribe(`/topic/notifications/`+prenom_emp, function (message) {
+                stompClient.subscribe(`/topic/notifications/`+id_emp, function (message) {
                     console.log("Notification reçue :", message.body);
                     showNotification(JSON.parse(message.body));
                 });
 
 
-                stompClient.subscribe(`/topic/unreadCount/` + prenom_emp, function (message)
+                stompClient.subscribe(`/topic/unreadCount/` + id_emp, function (message)
                 {
                     console.log("Nombre de notifications non lues reçu :", message.body);
 
@@ -544,8 +538,8 @@ aside.top-navbar {
                 });
 
 
-                updateUnreadNotifications(prenom_emp);
-                loadNotifications(prenom_emp);
+                updateUnreadNotifications(id_emp);
+                loadNotifications(id_emp);
 
                 $(document).on('click', '.notification-link', function (e)
                 {
@@ -604,10 +598,10 @@ window.onload =  async function ()
 
     //   });
 
-    //   $('#clearAll, #overlay').on('click', function() {
-    //     $('#notificationsPanel').removeClass('show');
-    //     $('#overlay').removeClass('show');
-    //   });
+      $('#clearAll, #overlay').on('click', function() {
+        $('#notificationsPanel').removeClass('show');
+        $('#overlay').removeClass('show');
+      });
 
 
     });
