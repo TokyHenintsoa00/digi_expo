@@ -43,7 +43,7 @@
                         @endif
                     </td>
                     <td>
-                        <form action="{{route('validationRecrutement')}}" method="POST">
+                        <form id="validationForm" action="{{route('validationRecrutement')}}" method="POST" onsubmit="event.preventDefault(); sendNotification();">
                             @csrf
                             <input type="hidden" name="nom_emp" value="{{$list_recrutement->nom_emp}}">
                             <input type="hidden" name="prenom_emp" value="{{$list_recrutement->prenom_emp}}">
@@ -52,8 +52,8 @@
                             <input type="hidden" name="id_stand" value="{{$list_recrutement->id_stand}}">
                             <input type="hidden" name="nom_stand" value="{{$list_recrutement->nom_stand}}">
                             <input type="hidden" name="id_permission_recrutement_emp" value="{{$list_recrutement->id_permission_recrutement_emp}}">
-                            <input type="hidden" name="id_expediteur" value="{{$list_recrutement->id_expediteur}}">
-                            <input type="hidden" name="expediteur" value="{{$list_permission->id_expediteur}}">
+                            <input type="hidden" id="id_expediteur" name="id_expediteur" value="{{$list_recrutement->id_expediteur}}">
+                            <input type="hidden" name="expediteur" value="{{$list_recrutement->id_expediteur}}">
                             <input type="submit" value="Valider" class="btn btn-success m-1">
                         </form>
                     </td>
@@ -75,20 +75,35 @@
     </table>
 </div>
 <script>
-    async function getEmployeeById(id_emp)
+    function sendNotification()
     {
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/emp/${id_emp}`);
-            if (!response.ok) {
-                throw new Error('Erreur lors de la récupération des données');
-            }
-            const data = await response.json();
-            //console.log('Données de l\'employé :', data);
-            return data;
-        } catch (error) {
-            console.error('Erreur :', error);
-            return null;
-        }
+        const sender = 6;
+        const receiver = document.getElementById("id_expediteur").value;
+        const content = "Votre permission de recrutement a ete approuver";
+
+        let currentDate = new Date();
+        // Convertir la date actuelle en chaîne de caractères
+        let dateString = currentDate.toString();
+
+        const url = `http://127.0.0.1:8000/directeur/viewListEmpAndNombreEmpParStand`;
+
+        fetch('http://localhost:8080/api/notifications/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            {   sender: sender,
+                receiver: receiver,
+                content: content ,
+                dateNotification:dateString,
+                url:url
+            })
+    }).then(() => {
+            document.getElementById('validationForm').submit();
+        }).catch(error => {
+            console.error("Erreur lors de l'envoi de la notification:", error);
+            document.getElementById('validationForm').submit();
+        });
+
     }
 </script>
 @endsection
