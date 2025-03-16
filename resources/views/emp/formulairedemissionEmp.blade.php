@@ -75,7 +75,38 @@
 <script src="{{asset('assets/js/jquery.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+
 <script>
+
+    function sendNotifcationToDirecteurForDemission()
+    {
+        const id_directeur = {{$id_directeur}};
+
+        const id_emp = {{Session::get('id_emp')}};
+
+        const content = "Vous avez une nouvelle permission de demission";
+
+        const url  = `http://127.0.0.1:8000/directeur/viewDemissionEmployer`;
+
+        // Obtenir la date actuelle
+        let currentDate = new Date();
+
+        // Convertir la date actuelle en chaîne de caractères
+        let dateString = currentDate.toString();
+
+        fetch('http://localhost:8080/api/notifications/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(
+                {   sender: id_emp,
+                    receiver: id_directeur,
+                    content: content ,
+                    dateNotification:dateString,
+                    url:url
+                })
+        });
+    }
+
     $(document).ready(function(){
         let justification;
         $('.demission-btn').on('click',function(e){

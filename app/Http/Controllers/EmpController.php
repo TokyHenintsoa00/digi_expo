@@ -313,7 +313,14 @@ class EmpController extends Controller
 
     public function viewPermissionDemissionEmp()
     {
-        return view('emp.formulairedemissionEmp');
+        $id_emp = Session::get('id_emp');
+
+        $getEmpModel = new EmpModel();
+        $getFunction = $getEmpModel->getVireMmembreStandV1ByIdEmp($id_emp);
+
+        $id_directeur = $getFunction[0]->id_directeur;
+
+        return view('emp.formulairedemissionEmp',compact('id_directeur'));
     }
 
     public function permissionDemission(Request $request)

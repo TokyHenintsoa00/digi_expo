@@ -310,6 +310,12 @@ class StandModel extends Model
         return $result;
     }
 
+    public function getVireMmembreStandV1ByIdEmp($id_emp)
+    {
+        $result = DB::select("SELECT * FROM v_membre_stand_v1 where id_emp = ?",[$id_emp]);
+        return $result;
+    }
+
     public function getViewMembreStandV1ByIidStandV1($id_stand)
     {
         $result = DB::select("SELECT * FROM v_membre_stand_v1 WHERE id_stand = ? and id_etat_personne IN(7,2)",[$id_stand]);
