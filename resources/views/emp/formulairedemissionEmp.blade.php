@@ -118,6 +118,8 @@
         });
 
         $('#confirmLicensierBtn').on('click', function() {
+
+            sendNotifcationToDirecteurForDemission();
             $.ajax({
                 url: "{{route('permissionDemission')}}",
                 method: 'POST',

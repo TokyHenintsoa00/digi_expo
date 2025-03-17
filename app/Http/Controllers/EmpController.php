@@ -315,8 +315,8 @@ class EmpController extends Controller
     {
         $id_emp = Session::get('id_emp');
 
-        $getEmpModel = new EmpModel();
-        $getFunction = $getEmpModel->getVireMmembreStandV1ByIdEmp($id_emp);
+        $getStandModel = new StandModel();
+        $getFunction = $getStandModel->getViewMmebreStandV1ByIdEmp($id_emp);
 
         $id_directeur = $getFunction[0]->id_directeur;
 
