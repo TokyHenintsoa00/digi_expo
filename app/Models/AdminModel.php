@@ -39,13 +39,15 @@ class AdminModel extends Model
 
     public function signInAdminByFormulaire($email, $pwd,$remember)
     {
-
-        $admin = $getAuthAdminFirst = $this->getAuthAdminFirst($email);
+        //$admin = $getAuthAdminFirst = $this->getAuthAdminFirst($email);
+        $admin = DB::table('admin')->where('email', $email)->where('pwd_admin', $pwd)->first();
 
         if($admin == null)
         {
-            return redirect()->back()->withErrors(['error' => 'Mail invalide.'])->withInput();
+            return redirect()->back()->withErrors(['error' => 'Erreur verifier votre email ou votre mots de passe'])->withInput();
         }
+
+        // $admin = $admin[0];
 
         //si le mdp n'est pas hache(Tsy crypter ilay mdp)
         if(Hash::needsRehash($admin->pwd_admin))

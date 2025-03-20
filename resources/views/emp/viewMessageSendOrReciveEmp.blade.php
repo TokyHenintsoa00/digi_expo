@@ -118,7 +118,7 @@ function showMessage(message)
 
     // Vérifier si on doit afficher la date
     let shouldShowDate = lastMessageTime === null || messageTime.toDateString() !== lastMessageTime.toDateString();
-    let shouldShowTime = lastMessageTime === null || (messageTime - lastMessageTime) >= (15 * 60 * 1000); // 30 min d'écart
+    let shouldShowTime = lastMessageTime === null || (messageTime - lastMessageTime) >= (30 * 60 * 1000); // 30 min d'écart
 
     // Ajouter la date si nécessaire
     if (shouldShowDate) {
@@ -188,7 +188,7 @@ function sendNotification()
         });
     } else
     {
-        let url = `http://127.0.0.1:8000/employer/viewMessageSendOrReciveEmp?nom=${nom_personne}&prenom=${prenom_personne}&id=${id_personne}&etat=${id_etat_personne}`
+        let url = `http://127.0.0.1:8000/employer/viewMessageSendOrReciveEmp?nom=${nom_emp}&prenom=${prenom_emp}&id=${id_emp}&etat=${id_etat_personne}`
         fetch('http://localhost:8080/api/notifications/send', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

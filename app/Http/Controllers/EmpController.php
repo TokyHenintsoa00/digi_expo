@@ -44,41 +44,79 @@ class EmpController extends Controller
     $getSignEmp = new EmpModel();
     $verifyEtat = $getSignEmp->getAuthEmp($email,$matricule_emp);
 
-    if ($verifyEtat !=null) {
-            # code...
-            $cookieName = 'id_emp_' . $verifyEtat[0]->id_emp;
+    //if remember click
+    if($remember == TRUE)
+    {
+        // echo "clik";
+        if ($verifyEtat !=null)
+        {
+            Session::put('id_emp', $verifyEtat[0]->id_emp);
+            // $cookieName = 'id_emp_' . $verifyEtat[0]->id_emp;
+            // $cookie = Cookie::make($cookieName, $authEmp[0]->id_emp, 60 * 24 * 7); // 7 jours
+            //Cookie::queue("remember_emp",$verifyEtat[0]->id_emp, 60 * 24 *7);
 
-        $result = $getSignEmp->authentificationEmp($email,$matricule_emp,$remember);
-
-        if ($verifyEtat !=null) {
-
-            if ($verifyEtat[0]->id_etat !=8 && $verifyEtat[0]->id_etat !=9 && $verifyEtat[0]->id_etat !=10) {
-                if ($result[0]->id_etat == 7) {
-                    return redirect()->route('viewDirecteurEmpPage');
+                if ($verifyEtat[0]->id_etat !=8 && $verifyEtat[0]->id_etat !=9 && $verifyEtat[0]->id_etat !=10)
+                {
+                    if ($verifyEtat[0]->id_etat == 7) {
+                        return redirect()->route('viewDirecteurEmpPage');
+                    }
+                    else{
+                        return redirect()->route('viewEmpPage');
+                    }
                 }
-                else{
-                    return redirect()->route('viewEmpPage');
+                else {
+                    $error = 'Erreur vous avez ete licensier ou bien demessionner';
+                    return redirect()->back()->withErrors(['error' => $error])->withInput();
                 }
-            }
-            else {
-                $error = 'Erreur vous avez ete licensier ou bien demessionner';
-                return redirect()->back()->withErrors(['error' => $error])->withInput();
-
-            }
-
         } else {
             # code...
             $error = 'Invalide verifier votre email ou votre numero matricule';
             return redirect()->back()->withErrors(['error' => $error])->withInput();
-
         }
     }
-    else {
-        # code...
-         # code...
-         $error = 'Invalide verifier votre email ou votre numero matricule';
-         return redirect()->back()->withErrors(['error' => $error])->withInput();
+    //if remember don't click
+    else
+    {
+
+
     }
+
+    // if ($verifyEtat !=null) {
+
+    //         # code...
+    //         $cookieName = 'id_emp_' . $verifyEtat[0]->id_emp;
+
+    //     $result = $getSignEmp->authentificationEmp($email,$matricule_emp,$remember);
+
+    //     if ($verifyEtat !=null) {
+
+    //         if ($verifyEtat[0]->id_etat !=8 && $verifyEtat[0]->id_etat !=9 && $verifyEtat[0]->id_etat !=10) {
+    //             if ($result[0]->id_etat == 7) {
+    //                 return redirect()->route('viewDirecteurEmpPage');
+    //             }
+    //             else{
+    //                 return redirect()->route('viewEmpPage');
+    //             }
+    //         }
+    //         else {
+    //             $error = 'Erreur vous avez ete licensier ou bien demessionner';
+    //             return redirect()->back()->withErrors(['error' => $error])->withInput();
+
+    //         }
+
+    //     } else {
+    //         # code...
+    //         $error = 'Invalide verifier votre email ou votre numero matricule';
+    //         return redirect()->back()->withErrors(['error' => $error])->withInput();
+
+    //     }
+    // }
+    // else {
+    //     # code...
+    //      # code...
+    //      $error = 'Invalide verifier votre email ou votre numero matricule';
+    //      return redirect()->back()->withErrors(['error' => $error])->withInput();
+    // }
 
 
     $etat = $verifyEtat[0]->id_etat;
@@ -89,68 +127,68 @@ class EmpController extends Controller
  }
 
 
-  //function authentification de l'employer
-  public function signInEmpV1(Request $request)
-  {
-      $email = $request->email;
-      $matricule_emp = $request->matricule_emp;
-      $remember = $request->has('remember');
+//   //function authentification de l'employer
+//   public function signInEmpV1(Request $request)
+//   {
+//       $email = $request->email;
+//       $matricule_emp = $request->matricule_emp;
+//       $remember = $request->has('remember');
 
-     $getSignEmp = new EmpModel();
-     $verifyEtat = $getSignEmp->getAuthEmp($email,$matricule_emp);
+//      $getSignEmp = new EmpModel();
+//      $verifyEtat = $getSignEmp->getAuthEmp($email,$matricule_emp);
 
-     if ($verifyEtat !=null) {
-        $credentials = [
-            'email' => $verifyEtat[0]->email, // Assurez-vous que la propriété existe
-            'matricule_emp' => $verifyEtat[0]->matricule_emp,
-        ];
+//      if ($verifyEtat !=null) {
+//         $credentials = [
+//             'email' => $verifyEtat[0]->email, // Assurez-vous que la propriété existe
+//             'matricule_emp' => $verifyEtat[0]->matricule_emp,
+//         ];
 
-        if(EmpModel::attempt($credentials, $remember))
-        {
-            # code...
+//         if(EmpModel::attempt($credentials, $remember))
+//         {
+//             # code...
 
-            $cookieName = 'id_emp_' . $verifyEtat[0]->id_emp;
+//             $cookieName = 'id_emp_' . $verifyEtat[0]->id_emp;
 
-            $result = $getSignEmp->authentificationEmpV1($email,$matricule_emp,$remember);
+//             $result = $getSignEmp->authentificationEmpV1($email,$matricule_emp,$remember);
 
-            if ($verifyEtat !=null) {
+//             if ($verifyEtat !=null) {
 
-                if ($verifyEtat[0]->id_etat !=8 && $verifyEtat[0]->id_etat !=9) {
-                    if ($result[0]->id_etat == 7) {
-                        return redirect()->route('viewDirecteurEmpPage');
-                    }
-                    else{
-                        return redirect()->route('viewEmpPage');
-                    }
-                }
-                else {
-                    $error = 'Erreur vous avez ete licensier ou bien demessionner';
-                    return redirect()->back()->withErrors(['error' => $error])->withInput();
+//                 if ($verifyEtat[0]->id_etat !=8 && $verifyEtat[0]->id_etat !=9) {
+//                     if ($result[0]->id_etat == 7) {
+//                         return redirect()->route('viewDirecteurEmpPage');
+//                     }
+//                     else{
+//                         return redirect()->route('viewEmpPage');
+//                     }
+//                 }
+//                 else {
+//                     $error = 'Erreur vous avez ete licensier ou bien demessionner';
+//                     return redirect()->back()->withErrors(['error' => $error])->withInput();
 
-                }
+//                 }
 
-            } else {
-                # code...
-                $error = 'Invalide verifier votre email ou votre numero matricule';
-                return redirect()->back()->withErrors(['error' => $error])->withInput();
+//             } else {
+//                 # code...
+//                 $error = 'Invalide verifier votre email ou votre numero matricule';
+//                 return redirect()->back()->withErrors(['error' => $error])->withInput();
 
-            }
-        }
+//             }
+//         }
 
-     }
-     else {
-         # code...
-          # code...
-          $error = 'Invalide verifier votre email ou votre numero matricule';
-          return redirect()->back()->withErrors(['error' => $error])->withInput();
-     }
+//      }
+//      else {
+//          # code...
+//           # code...
+//           $error = 'Invalide verifier votre email ou votre numero matricule';
+//           return redirect()->back()->withErrors(['error' => $error])->withInput();
+//      }
 
-     $etat = $verifyEtat[0]->id_etat;
-     dd($etat);
+//      $etat = $verifyEtat[0]->id_etat;
+//      dd($etat);
 
-     // dd($cookieName,$result[0]->id_emp);
+//      // dd($cookieName,$result[0]->id_emp);
 
-  }
+//   }
 
 
 
@@ -337,12 +375,7 @@ class EmpController extends Controller
         $getEmpModel->permissionDemissionEmployer($justification_demission,$id_emp,$id_directeur,$id_stand);
 
 
-        Notification::create([
-            'user_id' => $id_directeur,
-            'title' => 'Validation de demission',
-            'message' => 'Un des votre employer a fait une demande de demission. Cliquez ici pour plus de détails.',
-            'link' => route('viewDemissionEmployer')
-        ]);
+
     }
 
     public function viewMessageEmp()

@@ -36,7 +36,7 @@ class DirecteurEmpController extends Controller
 
 
         $standMembre = new StandModel();
-        $getStandMembre = $standMembre->getAllStandEmpByIdEmp($cookie_Emp);
+        $getStandMembre = $standMembre->getAllStandEmpByIdEmp($session_id_emp);
         return view('directeurEmp.standDirecteur',compact('getStandMembre'));
     }
 
@@ -726,7 +726,7 @@ class DirecteurEmpController extends Controller
         $id_directeur = $request->id_directeur;
         $etat_directeur = $request->etat_dir;
 
-        
+
 
         //dd($etat_directeur,$prenom_directeur);
         return view('directeurEmp.viewMessageSendOrReciveDirecteur',compact('nom_emp','prenom_emp','id_emp',

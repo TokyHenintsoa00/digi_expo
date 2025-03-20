@@ -107,7 +107,9 @@ class AdminController extends Controller
 
         $getSignInAdmin = new AdminModel();
         $result = $getSignInAdmin->signInAdminByFormulaire($email,$pwd,$remember);
-        $verify = $getSignInAdmin->getAuthAdminFirst($email);
+        $verify = $getSignInAdmin->signInAdmin($email,$pwd);
+
+        // dd($result[0]->id);
 
         if ($verify == null)
         {
@@ -115,8 +117,10 @@ class AdminController extends Controller
             return redirect()->back()->withErrors(['error' => 'Invalide verifier votre email ou votre mots de passe'])->withInput();
         }
 
-        if ($result != null) {
-            $request->session()->regenerate();
+        if ($result !=null)
+        {
+            echo "mety";
+            //dd($result->id);
             // Stocker l'id_admin dans la session
             Session::put('id', $result->id);
             return redirect()->route('viewCreationSalonAdmin'); // Redirection vers la page admin

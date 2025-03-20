@@ -107,7 +107,7 @@ function showMessage(message)
 
     // Vérifier si on doit afficher la date
     let shouldShowDate = lastMessageTime === null || messageTime.toDateString() !== lastMessageTime.toDateString();
-    let shouldShowTime = lastMessageTime === null || (messageTime - lastMessageTime) >= (15 * 60 * 1000); // 30 min d'écart
+    let shouldShowTime = lastMessageTime === null || (messageTime - lastMessageTime) >= (30 * 60 * 1000); // 30 min d'écart
 
     // Ajouter la date si nécessaire
     if (shouldShowDate) {
