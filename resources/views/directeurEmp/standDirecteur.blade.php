@@ -20,7 +20,8 @@
                 <th>Nom de stand</th>
                 <th>Description</th>
                 <th>Etat</th>
-                <th>Info</th>
+                <th>Infos</th>
+
 
             </tr>
         </thead>
@@ -63,6 +64,31 @@
                                     <input type="submit" value="Supprimer" class="btn btn-outline-dark m-1">
                                 </form>
                             </td>
+                        @elseif ($list_stand_membre->id_sallon < $idMax)
+                            <div class="d-flex align-items-center gap-2">
+                                <p class="text-warning fw-semibold">Stand non disponible</p>
+                            </div>
+                            <td>
+                                <form action="{{route('viewInformationExposition')}}" method="get">
+                                    <input type="hidden" name="id_stand" value="{{$list_stand_membre->id_stand}}">
+
+                                    <input type="submit" value="Voir les information" class="btn btn-outline-dark m-1">
+                                </form>
+
+                            </td>
+
+                            <td>
+
+                                <form action="{{route('supprimerStand')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id_stand" value="{{$list_stand_membre->id_stand}}">
+                                    <input type="submit" value="Supprimer" class="btn btn-outline-dark m-1">
+                                </form>
+                            </td>
+
+                            <td>
+                                <p>{{$list_stand_membre->nom_du_sallon}}</p>
+                            </td>
                         @else
                             <div class="d-flex align-items-center gap-2">
                                 <p class="text-success fw-semibold">Publié</p>
@@ -75,6 +101,7 @@
                                 </form>
 
                             </td>
+
                             <td>
 
                                 <form action="{{route('supprimerStand')}}" method="POST">
@@ -82,6 +109,10 @@
                                     <input type="hidden" name="id_stand" value="{{$list_stand_membre->id_stand}}">
                                     <input type="submit" value="Supprimer" class="btn btn-outline-dark m-1">
                                 </form>
+                            </td>
+
+                            <td>
+                               {{$list_stand_membre->nom_du_sallon}}
                             </td>
 
                         @endif

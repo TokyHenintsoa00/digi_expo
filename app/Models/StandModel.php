@@ -243,7 +243,10 @@ class StandModel extends Model
     //ilay ampiasana am ilay resaka publier publier
     public function getAllStandEmpByIdEmp($id_directeur)
     {
-        $result = db::select("SELECT distinct(id_stand),date_de_creation_stand,nom_stand,id_directeur,description_stand,img_stand,id_etat,nom_directeur,prenom_directeur from v_membre_stand where id_directeur = ? and id_etat IN(3,4)",[$id_directeur]);
+        $result = db::select("SELECT distinct(id_stand),date_de_creation_stand,nom_stand,id_directeur,
+                    description_stand,img_stand,id_etat,nom_directeur,prenom_directeur,nom_du_sallon,id_sallon
+                    from v_membre_stand where id_directeur = ?
+                    and id_etat IN(3,4)",[$id_directeur]);
         return $result;
     }
 

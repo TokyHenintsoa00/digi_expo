@@ -31,13 +31,16 @@ class DirecteurEmpController extends Controller
         $session_id_emp = Session::get('id_emp');
         //dd($session_id_emp);
 
-            $cookieName = 'id_emp_' . $session_id_emp; // Assurez-vous que $session_id_emp est défini
-            $cookie_Emp = Cookie::get($cookieName);
+        $cookieName = 'id_emp_' . $session_id_emp; // Assurez-vous que $session_id_emp est défini
+        $cookie_Emp = Cookie::get($cookieName);
 
+        $getSalonModel = new ReceptionModel();
+        $getMaxSalon = $getSalonModel->maxSalon();
+        $idMax = $getMaxSalon[0]->id_sallon;
 
         $standMembre = new StandModel();
         $getStandMembre = $standMembre->getAllStandEmpByIdEmp($session_id_emp);
-        return view('directeurEmp.standDirecteur',compact('getStandMembre'));
+        return view('directeurEmp.standDirecteur',compact('getStandMembre','idMax'));
     }
 
     public function publication(Request $request)

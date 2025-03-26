@@ -23,9 +23,10 @@ on faculte_Stand.id_faculte_stand=permission_stand.id_faculte_stand;
 CREATE OR REPLACE VIEW v_membre_stand as
 select membre_stand.*,nom_stand,description_Stand,img_Stand,stand.id_etat,directeur.nom_emp
 as nom_directeur, directeur.prenom_emp as prenom_directeur,emp.nom_emp,emp.prenom_emp,emp.id_etat as id_etat_emp,
-stand.date_de_creation_stand,emp.date_membre
+stand.date_de_creation_stand,emp.date_membre,nom_du_sallon,salon.id_sallon
 from membre_Stand
 join stand on stand.id_stand=membre_stand.id_stand
+join salon on salon.id_sallon = stand.id_sallon
 join emp as directeur on directeur.id_emp = membre_stand.id_directeur
 left join emp as emp on emp.id_emp = membre_stand.id_emp;
 
