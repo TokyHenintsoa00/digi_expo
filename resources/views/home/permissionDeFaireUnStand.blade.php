@@ -154,7 +154,8 @@
                                         <input type="email" class="form-control" id="emailEmploye" aria-describedby="emailHelp" name="email_employe" required>
                                     </div>
 
-                                    <div class="mb-3">
+
+                                    {{-- <div class="mb-3">
                                         <label class="form-label">Disposition des stands</label>
                                         <div class="stand-container" id="standContainer"></div>
                                     </div>
@@ -169,15 +170,15 @@
                                                 <div class="stand occupied">{{$list_place_stand->nom_place}}</div>
                                             @endif
                                         @endforeach
-                                    </div>
+                                    </div> --}}
 
-                                    <input type="hidden" id="selectedStand" name="place_stand" required>
+                                    {{-- <input type="hidden" id="selectedStand" name="place_stand" required>
 
                                     <div class="legend">
                                         <div><div class="legend-box available"></div> Disponible</div>
                                         <div><div class="legend-box occupied"></div> Occupé</div>
                                         <div><div class="legend-box reserved"></div> En attente de validation</div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <input type="submit" value="Soumettre" class="btn btn-primary">
@@ -187,7 +188,7 @@
         </div>
     </div>
 </div>
-<script>
+{{-- <script>
     document.addEventListener("DOMContentLoaded", function () {
         let stands = document.querySelectorAll(".stand");
         let selectedStandInput = document.getElementById("selectedStand");
@@ -200,7 +201,7 @@
             });
         });
     });
-</script>
+</script> --}}
 <script>
     function sendNotificationDirecteurToAdmin()
     {
