@@ -736,5 +736,18 @@ class StandModel extends Model
 
         return $result;
     }
+
+    public function getPlaceStand()
+    {
+        return DB::table('place')
+            ->get();
+    }
+
+    public function findEtatPlace($nom_place)
+    {
+        $result = DB::select("SELECT etat_place FROM place where id_place = ?",[$nom_place]);
+
+        return $result;
+    }
 }
 

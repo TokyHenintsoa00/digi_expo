@@ -127,21 +127,51 @@
 
 
                     </div>
+                    <div id="dynamicInputsContainer" ></div>
 
-                        <div id="dynamicInputsContainer" ></div>
+                    <h2>Plan des Places</h2>
+    <div class="grid" id="plan"></div>
 
+    <script>
+        const places = [
+            { id: 1, status: 'available' }, { id: 2, status: 'occupied' },
+            { id: 3, status: 'available' }, { id: 4, status: 'available' },
+            { id: 5, status: 'occupied' }, { id: 6, status: 'available' },
+            { id: 7, status: 'available' }, { id: 8, status: 'occupied' },
+            { id: 9, status: 'available' }, { id: 10, status: 'available' }
+        ];
 
+        const planContainer = document.getElementById('plan');
 
+        function renderPlaces() {
+            planContainer.innerHTML = '';
+            places.forEach(place => {
+                const div = document.createElement('div');
+                div.classList.add('place', place.status);
+                div.innerText = `P${place.id}`;
+                div.onclick = () => toggleStatus(place);
+                planContainer.appendChild(div);
+            });
+        }
 
+        function toggleStatus(place) {
+            if (place.status === 'available') {
+                place.status = 'occupied';
+            } else {
+                place.status = 'available';
+            }
+            renderPlaces();
+        }
 
-
-
+        renderPlaces();
+    </script>
 
                     <div class="row">
                         <div class="col-md-12 text-end">
                             <input type="submit" class="btn btn-primary" value="Ajouter"></input>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -176,36 +206,6 @@
             container.appendChild(row);
         }
     }
-
-    //map
-    //-------------------------------------------------------------------------------
-    // const map = L.map('map').setView([-18.8792, 47.5079], 12);
-
-    // const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    //     attribution: '&copy; <a href="https://www.esri.com/">Esri</a>',
-    //     maxZoom: 19,
-    // });
-
-    // const labelsLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
-    //     attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
-    //     maxZoom: 19,
-    // });
-
-    // satelliteLayer.addTo(map);
-    // labelsLayer.addTo(map);
-
-    // let marker;
-    // map.on('click', function (e) {
-    //     const { lat, lng } = e.latlng;
-
-    //     if (marker) {
-    //         map.removeLayer(marker);
-    //     }
-
-    //     marker = L.marker(e.latlng).addTo(map);
-    //     document.getElementById('latitude').value = lat;
-    //     document.getElementById('longitude').value = lng;
-    // });
 
      // Initialisation de la carte avec OpenLayers
      const map = new ol.Map({

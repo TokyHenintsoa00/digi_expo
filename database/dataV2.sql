@@ -98,6 +98,12 @@ CREATE TABLE permission_recrutement_emp
    id_etat integer REFERENCES etat(id_etat)
 );
 
+CREATE TABLE place
+(
+    id_place serial primary key,
+    nom_place varchar(200),
+    etat_place integer references etat(id_etat)
+);
 
 CREATE TABLE stand
 (

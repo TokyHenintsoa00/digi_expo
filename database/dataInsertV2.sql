@@ -25,7 +25,10 @@ insert into etat(etat) values
 ('employer_licensier'),
 ('employer_demissionner'),
 ('directeur_licensier'),
-('Supprimer');
+('Supprimer'),
+('occupe'),
+('reserve'),
+('libre');
 
 --insert admin
 INSERT INTO admin(nom, prenom, email, pwd_admin, id_etat, created_at, updated_at)
@@ -168,3 +171,28 @@ INSERT INTO temoignage (id_stand, id_directeur, date_temoignage, liens_video, ti
 (1, 1, '2025-03-22 08:30:00', 'https://pro.zoom.us/j/3210987654', 'Temoignage 8 : Avis des visiteurs',1),
 (1, 1, '2025-03-25 15:00:00', 'https://pro.zoom.us/j/2109876543', 'Temoignage 9 : Cloture de l evenement',1),
 (1, 1, '2025-03-27 18:45:00', 'https://pro.zoom.us/j/1098765432', 'Temoignage 10 : Bilan et remerciements',1);
+
+insert into place(nom_place,etat_place) values
+    ('A1',14),
+    ('A2',14),
+    ('A3',14),
+    ('A4',14),
+    ('A5',14),
+    ('B1',14),
+    ('B2',14),
+    ('B3',14),
+    ('B4',14),
+    ('B5',14),
+    ('C1',14),
+    ('C2',14),
+    ('C3',14),
+    ('C4',14),
+    ('C5',14),
+    ('D1',14),
+    ('D2',14),
+    ('D3',14),
+    ('D4',14),
+    ('D5',14);
+
+
+
