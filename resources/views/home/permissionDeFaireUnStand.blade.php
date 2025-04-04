@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disposition en Grid</title>
     <style>
-        .grid-container, .grid-container2 {
+        .grid-container-gauche{
             display: grid;
             grid-template-columns: repeat(11, 50px);
             grid-template-rows: repeat(8, 50px);
@@ -15,7 +15,39 @@
             align-items: center;
             margin-top: -5%;
             padding: 100px;
-            margin-left: -35%;
+            margin-left: 2%;
+            width: 50%;
+        }
+
+        .grid-container2{
+            display: grid;
+            grid-template-columns: repeat(11, 50px);
+            grid-template-rows: repeat(8, 50px);
+            gap: 2px;
+            justify-content: center;
+            align-items: center;
+            margin-top: -8%;
+            padding: 100px;
+            margin-left: 2%;
+            width: 50%;
+            height: 50px;
+
+        }
+
+        .grid-container3{
+            display: grid;
+            grid-template-columns: repeat(11, 50px);
+            grid-template-rows: repeat(8, 50px);
+            gap:
+            2px;
+            justify-content: center;
+            align-items: center;
+            margin-top: -40%;
+            padding:
+            100px;
+            margin-left: 32%;
+            width: 50%;
+            height: 2px;
         }
 
         .stand, .sponsor {
@@ -49,42 +81,39 @@
             margin: 2% auto;
         }
 
-        .container {
+        .container-grid-droite{
             display: flex;
             align-items: flex-start;
-            margin-left: 50%;
-            margin-top: -57%;
+            margin-left: 53%;
+            margin-top: -9.5%;
         }
 
-        .side-panel {
-            display: flex;
-            flex-direction: column;
-            background-color: #10a579;
-        }
 
-        .side-panel div {
-            background-color: #10a579;
-            border: 1px solid white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 64px;
-            height: 50px;
-        }
-
-        .main-area, .main-area1 {
+        .main-area {
             width: 130px;
-            height: 400px;
-            border: 1px solid black;
-            margin-top: 30px;
-        }
+            height: 441px;
+            border:
+            1px solid black;
+            margin-top: 78px;
 
-        .main-area1 { margin-left: 50px; }
+        }
+        .main-area1 {
+             margin-left: 50px;
+             width: 130px;
+            height: 441px;
+            border:
+            1px solid black;
+            margin-top: 78px;
+            display: flex;
+    justify-content: center; /* centre horizontalement */
+    align-items: center;     /* centre verticalement */
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <div class="main-areas">Entrer</div>
-    <div class="grid-container">
+    <div class="grid-container-gauche">
        <!-- Première ligne de stands -->
        <div class="stand" style="grid-column: 1; grid-row: 2;"></div>
        <div class="stand"style="grid-column: 2; grid-row: 1;"></div>
@@ -181,24 +210,25 @@
        <div class="stand" style="grid-column: 11; grid-row: 8;">DAE</div>
 
     </div>
-     <div class="container">
-         <div class="side-panel">
-             <div>Sponsor</div>
-             <div>Medc</div>
-             <div>Mudc</div>
-             <div>Poly</div>
-             <div>E6S</div>
-             <div>BAU/CR<br>EF</div>
-             <div>IESSI</div>
-             <div>ESAV</div>
-             <div>STICOM</div>
-         </div>
-         <div class="main-area"></div>
-         <div class="main-area1">Presidence</div>
+    <div class="grid-container3">
+        <div class="stand" style="grid-column: 2; grid-row: 1;"></div>
+        <div class="stand" style="grid-column: 2; grid-row: 2;"></div>
+        <div class="stand" style="grid-column: 2; grid-row: 3;"></div>
+        <div class="stand" style="grid-column: 2; grid-row: 4;"></div>
+        <div class="stand" style="grid-column: 2; grid-row: 5;"></div>
+        <div class="stand" style="grid-column: 2; grid-row: 6;"></div>
+        <div class="stand" style="grid-column: 2; grid-row: 7;"></div>
+        <div class="stand" style="grid-column: 2; grid-row: 8;"></div>
+        <div class="stand" style="grid-column: 2; grid-row: 9;"></div>
 
-     </div>
+    </div>
+    <div class="container-grid-droite">
+        <div class="main-area"></div>
+         <div class="main-area1">Presidence</div>
+    </div>
  </body>
  </html>
+
 
 
  --}}
@@ -206,108 +236,110 @@
 
  @extends('parent.parentHome')
  @section('permissionDeFaireUnStandSection')
+ <style>
+    .grid-container-gauche{
+        display: grid;
+        grid-template-columns: repeat(11, 50px);
+        grid-template-rows: repeat(8, 50px);
+        gap: 2px;
+        justify-content: center;
+        align-items: center;
+        margin-top: -5%;
+        padding: 100px;
+        margin-left: 2%;
+        width: 50%;
+    }
 
- {{-- <style>
-     .expo-container {
-         display: flex;
-         flex-wrap: wrap;
-         gap: 15px;
-         justify-content: center;
-         margin-top: 20px;
-     }
-     .stand {
-         width: 120px;
-         height: 120px;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         border-radius: 10px;
-         font-weight: bold;
-         cursor: pointer;
-         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-         transition: transform 0.2s, box-shadow 0.2s;
-     }
-     .stand:hover {
-         transform: scale(1.1);
-         box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
-     }
-     .available {
-         background-color: #4CAF50;
-         color: white;
-     }
-     .occupied {
-         background-color: #E74C3C;
-         color: white;
-     }
-     .reserved {
-         background-color: #F39C12;
-         color: white;
-     }
-
-     .legend {
-         display: flex;
-         align-items: center;
-         gap: 15px;
-         margin-top: 15px;
-     }
-
-     .legend div {
-         display: flex;
-         align-items: center;
-         gap: 5px;
-     }
-
-     .legend-box {
-         width: 20px;
-         height: 20px;
-         border-radius: 4px;
-     }
-
-     .selected {
-         transform: scale(1.1);
-         box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
-     }
-
-     .grid-container {
-             display: grid;
-             grid-template-columns: repeat(11, 60px);
-             grid-template-rows: repeat(8, 60px);
-             gap: 2px;
-             justify-content: center;
-             align-items: center;
-             margin: auto;
-             padding: 200px;
-         }
-         .stand {
-             background-color: #23b02b;
-             border: 1px solid black;
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             width: 60px;
-             height: 60px;
-         }
-         .sponsor {
-             background-color: #d8c7e8;
-             font-weight: bold;
-             border: 1px solid black;
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             width: 60px;
-             height: 60px;
-         }
-         .haut {
-             grid-column: 3 / span 3;
-             grid-row: 4;
-             text-align: center;
-             font-weight: bold;
-             border: 1px solid black;
-             padding: 10px;
-         }
- </style> --}}
+    .grid-container2{
+        display: grid;
+        grid-template-columns: repeat(11, 50px);
+        grid-template-rows: repeat(8, 50px);
+        gap: 2px;
+        justify-content: center;
+        align-items: center;
+        margin-top: -8%;
+        padding: 100px;
+        margin-left: 2%;
+        width: 50%;
 
 
+    }
+
+    .grid-container3{
+        display: grid;
+        grid-template-columns: repeat(11, 50px);
+        grid-template-rows: repeat(8, 50px);
+        gap:2px;
+        justify-content: center;
+        align-items: center;
+        margin-top: -85%;
+        padding:100px;
+        margin-left: 42%;
+        width: 50%;
+        height: 2px;
+    }
+
+    .stand, .sponsor {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        font-size: 12px;
+    }
+
+    .stand { background-color: #10a579; }
+    .sponsor { background-color: #10a579; font-weight: bold; }
+
+    .haut {
+        grid-column: 3 / span 3;
+        grid-row: 4;
+        text-align: center;
+        font-weight: bold;
+        border: 1px solid black;
+        padding: 5px;
+    }
+
+    .main-areas {
+        width: 250px;
+        height: 20px;
+        border: 1px solid black;
+        text-align: center;
+        line-height: 20px;
+        font-weight: bold;
+        /* margin: 2% auto; */
+        margin-left: 44%;
+    }
+
+    .container-grid-droite{
+        display: flex;
+        align-items: flex-start;
+        margin-left: 53%;
+        margin-top: -83.5%;
+    }
+
+
+    .main-area {
+        width: 130px;
+        height: 441px;
+        border:
+        1px solid black;
+        margin-top: 78px;
+
+    }
+    .main-area1 {
+         margin-left: 50px;
+         width: 130px;
+        height: 441px;
+        border:
+        1px solid black;
+        margin-top: 78px;
+        display: flex;
+justify-content: center; /* centre horizontalement */
+align-items: center;     /* centre verticalement */
+        font-weight: bold;
+    }
+</style>
  <div class="container-fluid">
      <div class="card">
          <div class="card-body">
@@ -397,11 +429,123 @@
                                          <label for="emailEmploye" class="form-label">Email</label>
                                          <input type="email" class="form-control" id="emailEmploye" aria-describedby="emailHelp" name="email_employe" required>
                                      </div>
+                                 </div>
+                                 <h1>Choississez votre place</h1>
+                                 <div class="main-areas">Entrer</div>
+                                 <div class="grid-container-gauche">
+                                    <!-- Première ligne de stands -->
+                                    <div class="stand" style="grid-column: 1; grid-row: 2;"></div>
+                                    <div class="stand"style="grid-column: 2; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 3; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 4; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 5; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 6; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 7; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 8; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 9; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 10; grid-row: 1;"></div>
 
 
+                                    <!-- Stands verticaux gauche -->
+                                    <div class="stand" style="grid-column: 1; grid-row: 1;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 2;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 3;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 4;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 5;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 6;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 7"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 8"></div>
 
+
+                                    <!-- Dernière ligne de stands -->
+                                    <div class="stand" style="grid-column: 2; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 3; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 4; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 5; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 6; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 7; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 8; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 9; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 10; grid-row: 8;"></div>
+
+                                    <!-- Stands sponsors à droite -->
+                                    <div class="sponsor" style="grid-column: 11; grid-row: -10;">Sponsor</div>
+                                    <div class="sponsor" style="grid-column: 11; grid-row: 1;">FOSP</div>
+                                    <div class="sponsor" style="grid-column: 11; grid-row: 2;">CAM</div>
+                                    <div class="sponsor" style="grid-column: 11; grid-row: 3;">ENS</div>
+                                    <div class="sponsor" style="grid-column: 11; grid-row: 4;">AGRO</div>
+                                    <div class="sponsor" style="grid-column: 11; grid-row: 5;">DAE</div>
+                                    <div class="sponsor" style="grid-column: 11; grid-row: 6;">DAE</div>
+                                    <div class="sponsor" style="grid-column: 11; grid-row: 7;">DAE</div>
+                                    <div class="sponsor" style="grid-column: 11; grid-row: 8;">DAE</div>
+
+                                     <!-- Étiquette centrale -->
+                                     <div class="haut">HAUT</div>
+                                 </div>
+
+                                 <div class="grid-container2">
+                                     <div class="stand" style="grid-column: 1; grid-row: 2;"></div>
+                                    <div class="stand"style="grid-column: 2; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 3; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 4; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 5; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 6; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 7; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 8; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 9; grid-row: 1;"></div>
+                                    <div class="stand"style="grid-column: 10; grid-row: 1;"></div>
+
+
+                                    <!-- Stands verticaux gauche -->
+                                    <div class="stand" style="grid-column: 1; grid-row: 1;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 2;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 3;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 4;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 5;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 6;"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 7"></div>
+                                    <div class="stand" style="grid-column: 1; grid-row: 8"></div>
+
+
+                                    <!-- Dernière ligne de stands -->
+                                    <div class="stand" style="grid-column: 2; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 3; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 4; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 5; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 6; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 7; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 8; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 9; grid-row: 8;"></div>
+                                    <div class="stand" style="grid-column: 10; grid-row: 8;"></div>
+
+                                    <!-- Stands sponsors à droite -->
+                                    <div class="stand" style="grid-column: 11; grid-row: 1;">FOSP</div>
+                                    <div class="stand" style="grid-column: 11; grid-row: 2;">CAM</div>
+                                    <div class="stand" style="grid-column: 11; grid-row: 3;">ENS</div>
+                                    <div class="stand" style="grid-column: 11; grid-row: 4;">AGRO</div>
+                                    <div class="stand" style="grid-column: 11; grid-row: 5;">DAE</div>
+                                    <div class="stand" style="grid-column: 11; grid-row: 6;">DAE</div>
+                                    <div class="stand" style="grid-column: 11; grid-row: 7;">DAE</div>
+                                    <div class="stand" style="grid-column: 11; grid-row: 8;">DAE</div>
 
                                  </div>
+                                 <div class="grid-container3">
+                                     <div class="stand" style="grid-column: 2; grid-row: 1;"></div>
+                                     <div class="stand" style="grid-column: 2; grid-row: 2;"></div>
+                                     <div class="stand" style="grid-column: 2; grid-row: 3;"></div>
+                                     <div class="stand" style="grid-column: 2; grid-row: 4;"></div>
+                                     <div class="stand" style="grid-column: 2; grid-row: 5;"></div>
+                                     <div class="stand" style="grid-column: 2; grid-row: 6;"></div>
+                                     <div class="stand" style="grid-column: 2; grid-row: 7;"></div>
+                                     <div class="stand" style="grid-column: 2; grid-row: 8;"></div>
+                                     <div class="stand" style="grid-column: 2; grid-row: 9;"></div>
+
+                                 </div>
+                                 <div class="container-grid-droite">
+                                     <div class="main-area"></div>
+                                      <div class="main-area1">Presidence</div>
+                                 </div>
+
                              </div>
                              <input type="submit" value="Soumettre" class="btn btn-primary">
                          </form>
