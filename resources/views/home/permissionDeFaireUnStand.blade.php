@@ -1,80 +1,79 @@
 @extends('parent.parentHome')
 @section('permissionDeFaireUnStandSection')
 <style>
- .stand {
-   width: 70px;
-   height: 70px;
-   border: 1px solid #0e4e20;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 12px;
-   background-color: #15a141;
-   color: white;
-   border-radius: 8px;
-   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-   transition: transform 0.2s, background-color 0.3s;
-   cursor: pointer;
- }
+.stand {
+  width: 70px;
+  height: 70px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background-color: #2ecc71;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
 
- .stand:hover {
-   transform: scale(1.05);
-   background-color: #128a39;
- }
+.stand:hover {
+  transform: translateY(-3px) scale(1.05);
+  background-color: #218838;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
 
- .demo {
-   background-color: #1c9643;
- }
+.demo {
+  background-color: #2ecc71;
+}
 
- .demo:hover {
-   background-color: #157a35;
- }
+.demo:hover {
+  background-color: #218838;
+}
 
- .block {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
- }
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
- .row-custom {
-   display: flex;
- }
+.row-custom {
+  display: flex;
+  gap: 12px;
+}
 
- .rectangle,
- .rectangle1 {
-   border: 1px solid #333;
-   width: 152px;
-   height: 635px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   background-color: #fff;
-   font-weight: bold;
-   border-radius: 12px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
- }
+.rectangle,
+.rectangle1 {
+  border: none;
+  width: 152px;
+  height: 635px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e6e6e6;
+  font-weight: bold;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
 
- .space {
-   height: 10px;
- }
+.space {
+  height: 16px;
+}
 
- .title {
-   text-align: center;
-   margin-bottom: 10px;
-   font-weight: bold;
-   font-size: 18px;
-   color: #333;
- }
+.title {
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #2c3e50;
+}
 
- .container-fluid {
-   padding-top: 20px;
-   padding-bottom: 40px;
- }
+.container-fluid {
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
 
- .selected {
-        transform: scale(1.1);
-        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
-    }
+
 </style>
 <div class="container-fluid">
     <div class="card">
