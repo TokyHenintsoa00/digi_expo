@@ -2,8 +2,8 @@
 @section('permissionDeFaireUnStandSection')
 <style>
 .stand {
-  width: 70px;
-  height: 70px;
+  width: 4.375rem;
+  height: 4.375rem;
   border: none;
   display: flex;
   align-items: center;
@@ -75,6 +75,7 @@
 
 
 </style>
+
 <div class="container-fluid">
     <div class="card">
         <div class="card-body">
@@ -166,6 +167,7 @@
                                     </div>
                                </div>
 
+                              
                                <div class="container-fluid">
                                    <div class="row" style="margin-left: 60px">
                                      <!-- Bloc HAUT -->
