@@ -1,79 +1,40 @@
 @extends('parent.parentHome')
 @section('permissionDeFaireUnStandSection')
 <style>
-.stand {
-  width: 4.375rem;
-  height: 4.375rem;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  background-color: #2ecc71;
-  color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(90, 60px);
+      grid-template-rows: repeat(15, 60px);
+      gap: 2px;
+    }
 
-.stand:hover {
-  transform: translateY(-3px) scale(1.05);
-  background-color: #218838;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
+    .cell {
+      background-color: #36c254;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.7em;
+      font-weight: bold;
+      text-align: center;
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
 
-.demo {
-  background-color: #2ecc71;
-}
+    .fond {
+        grid-column:3 / span 3;
+        grid-row:3 / span 1;
+        background-color: white;
+        border:2px solid black;
+        font-size: 2em;
+    }
 
-.demo:hover {
-  background-color: #218838;
-}
-
-.block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.row-custom {
-  display: flex;
-  gap: 12px;
-}
-
-.rectangle,
-.rectangle1 {
-  border: none;
-  width: 152px;
-  height: 635px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e6e6e6;
-  font-weight: bold;
-  border-radius: 16px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
-}
-
-.space {
-  height: 16px;
-}
-
-.title {
-  text-align: center;
-  margin-bottom: 12px;
-  font-weight: 600;
-  font-size: 20px;
-  color: #2c3e50;
-}
-
-.container-fluid {
-  padding-top: 24px;
-  padding-bottom: 48px;
-}
-
-
+    .enter{
+        grid-column: 10 / span 2;
+        grid-row: 1 / span 1;
+        background-color: white;
+        border: 2px solid black;
+        font-size: 1em;
+    }
 </style>
 
 <div class="container-fluid">
@@ -165,173 +126,93 @@
                                         <label for="emailEmploye" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="emailEmploye" aria-describedby="emailHelp" name="email_employe" required>
                                     </div>
-                               </div>
+                                </div>
 
-                              
-                               <div class="container-fluid">
-                                   <div class="row" style="margin-left: 60px">
-                                     <!-- Bloc HAUT -->
-                                      <div class="col-auto align-self-end">
-                                       <!-- Ligne du haut -->
-                                       <div class="d-flex">
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                       </div>
-                                       <!-- Ligne de gauche -->
-                                       <div class="d-flex">
-                                         <div class="block">
-                                           <div class="stand"></div>
-                                           <div class="stand"></div>
-                                           <div class="stand"></div>
-                                           <div class="stand"></div>
-                                           <div class="stand"></div>
-                                           <div class="stand"></div>
-                                         </div>
-                                         <div class="mx-2 d-flex align-items-center justify-content-center" style="width: 280px; height: 80px; border: 1px solid black; margin-top:50px">
-                                           HAUT
-                                         </div>
-                                       </div>
-                                       <!-- Ligne du bas -->
-                                       <div class="d-flex">
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                         <div class="stand"></div>
-                                       </div>
-                                     </div>
+                                <div class="grid">
+                                    <div class=" cell enter">Entrer</div>
+                                    <!-- ligne vertical gauche du premier plan -->
+                                    <div class="cell" style="grid-column: 2; grid-row: 4;">IESSI</div>
+                                    <div class="cell" style="grid-column: 2; grid-row: 5;">IESSI</div>
+                                    <div class="cell" style="grid-column: 2; grid-row: 6;">IESSI</div>
+                                    <div class="cell" style="grid-column: 2; grid-row: 7;">IESSI</div>
+                                    <div class="cell" style="grid-column: 2; grid-row: 8;">IESSI</div>
+                                    <div class="cell" style="grid-column: 2; grid-row: 9;">IESSI</div>
+                                    <div class="cell" style="grid-column: 2; grid-row: 10;">IESSI</div>
+                                    <div class="cell" style="grid-column: 2; grid-row: 11;">IESSI</div>
+                                    <!-------------------------------------------->
 
-                                     <!-- Bloc démonstration et stands verticaux -->
-                                     <div class="col-auto align-self-end ms-n5 ms-lg-n6" style="margin-left: -25px;">
-                                       <div class="title">ENTRÉE</div>
-                                       <div class="row-custom">
-                                         <!-- Colonne gauche démonstration -->
-                                         <div class="block" style="margin-left:-15px">
-                                           <div class="stand demo">Sponsor</div>
-                                           <div class="stand demo">FOSP</div>
-                                           <div class="stand demo">CAM</div>
-                                           <div class="stand demo">ENS</div>
-                                           <div class="stand demo">AGRO</div>
-                                           <div class="stand demo">DAE</div>
-                                           <div class="stand demo">DAE</div>
-                                           <div class="stand demo">DAE</div>
-                                           <div class="stand demo">DAE</div>
-                                         </div>
-                                         <div style="width: 10px;"></div>
-                                         <!-- Colonne droite démonstration -->
-                                         <div class="block">
-                                           <div class="stand demo">Sponsor</div>
-                                           <div class="stand demo">Medc</div>
-                                           <div class="stand demo">Mùdc</div>
-                                           <div class="stand demo">Poly</div>
-                                           <div class="stand demo">EGS</div>
-                                           <div class="stand demo">BAU/CR EF</div>
-                                           <div class="stand demo">IESSI</div>
-                                           <div class="stand demo">ESAV</div>
-                                           <div class="stand demo">STICOM</div>
-                                         </div>
-                                       </div>
-                                     </div>
-                                     <!-- Présidence -->
-                                     <div class="col-auto">
-                                      <div class="d-flex flex-row flex-nowrap" style="margin-top: 32px;">
+                                    <!-- ligne horizontal bas du premier plan -->
+                                    <div class="cell" style="grid-column: 3; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 4; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 5; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 6; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 7; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 8; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 9; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 11; grid-row: 11"></div>
+                                    <div class="cell" style="grid-column: 12; grid-row: 11"></div>
+                                    <!------------------------------------------->
 
-                                          <div class="rectangle me-2"
-                                              style="height: 490px; margin-top: 145px; margin-left: -24px; flex-shrink: 0; min-width: 60px;">
-                                          </div>
-
-                                          <div class="rectangle"
-                                              style="height: 490px; margin-top: 145px; margin-left: 24px; flex-shrink: 0; min-width: 100px;">
-                                              Présidence
-                                          </div>
-
-                                      </div>
-
-                                  </div>
-                               </div>
+                                    <!-----------------Ligne verticale droite du premier plan -------------------------->
+                                    <div class="cell" style="grid-column: 12; grid-row: 10"></div>
+                                    <div class="cell" style="grid-column: 12; grid-row: 9"></div>
+                                    <div class="cell" style="grid-column: 12; grid-row: 8"></div>
+                                    <div class="cell" style="grid-column: 12; grid-row: 7"></div>
+                                    <div class="cell" style="grid-column: 12; grid-row: 6"></div>
+                                    <div class="cell" style="grid-column: 12; grid-row: 5"></div>
+                                    <div class="cell" style="grid-column: 12; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 12; grid-row: 3"></div>
+                                    <!------------------------------------------->
 
 
-                                   <div class="d-flex" style="margin-top: 90px; margin-left:75px">
-                                      <div class="stand"></div>
+                                    <!-- Ligne horizontal haut du premier plan -->
+                                    <div class="cell" style="grid-column: 11; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 9; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 8; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 7; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 6; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 5; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 4; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 3; grid-row: 4"></div>
+                                    <!------------------------------------------->
 
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
+                                </div>
 
-
-
-                                    </div>
-
-
-                                    <div class="d-flex">
-                                      <div class="block" style="margin-left:74.4px">
-                                        <div class="stand"></div>
-                                        <div class="stand"></div>
-                                        <div class="stand"></div>
-                                        <div class="stand"></div>
-                                        <div class="stand"></div>
-                                        <div class="stand"></div>
-                                        <div class="stand"></div>
-                                        <div class="stand"></div>
-                                      </div>
-                                    </div>
+                                <!--
+                                <div class="grid">
 
 
-                                    <div class="d-flex" style="margin-left:144px; margin-top:-70px" >
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
-                                      <div class="stand"></div>
+                                    {{-- grid pour les ligne du bas pour le premier plan --}}
+                                    <div class="cell" style="grid-column: 3; grid-row: 9;"></div>
+                                    <div class="cell" style="grid-column: 4; grid-row: 9;"></div>
+                                    <div class="cell" style="grid-column: 5; grid-row: 9;"></div>
+                                    <div class="cell" style="grid-column: 6; grid-row: 9;"></div>
+                                    <div class="cell" style="grid-column: 7; grid-row: 9;"></div>
+                                    <div class="cell" style="grid-column: 8; grid-row: 9;"></div>
+                                    <div class="cell" style="grid-column: 9; grid-row: 9;"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 9;"></div>
+                                    {{------------------------------------------------------}}
 
-                                    </div>
+                                    {{--Grid pour les ligne a droite du premier plan--}}
+                                    <div class="cell" style="grid-column: 10; grid-row: 8"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 7"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 6"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 5"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 4"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 3"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 2"></div>
+                                    <div class="cell" style="grid-column: 10; grid-row: 1"></div>
+                                    {{------------------------------------------------}}
 
-                                    <div class="d-flex flex-column" style="margin-left: 775px; margin-top:-630px">
-                                      <div class="stand">Sponsor</div>
-                                      <div class="stand">FOSP</div>
-                                      <div class="stand">CAM</div>
-                                      <div class="stand">ENS</div>
-                                      <div class="stand">AGRO</div>
-                                      <div class="stand">DAE</div>
-                                      <div class="stand">DAE</div>
-                                      <div class="stand">DAE</div>
+                                    {{--grid pour les ligne du haut du premier pplan--}}
+                                    <div class="cell" style="grid-column: 9; grid-row: 2;"></div>
 
-                                   </div>
-                                     <input type="hidden" id="selectedStand" name="place_stand" required>
-
-                               </div>
-
+                                </div>
+                                -->
                             </div>
-                            <br>
-                            <br>
 
-                            <br>
-                            <br>
-                            <br>
                             <input type="submit" value="Soumettre" class="btn btn-primary">
                         </form>
                 </div>
