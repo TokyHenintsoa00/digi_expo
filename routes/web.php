@@ -33,6 +33,7 @@ Route::get('/videoDirect',[HomepageController::class,'viewVideoDirect']);
 Route::get('/viewDemandeAide',[HomepageController::class,'viewDemandeAide']);
 Route::get('/viewpermissionDeFaireUnStand',[HomepageController::class,'viewPermissionDeFaireUnStand'])->name('viewpermissionDeFaireUnStand');
 Route::post('/getInsertPermissionStandEmp',[HomePageController::class,'getInsertPermissionStandEmp'])->name('getInsertPermissionStandEmp');
+Route::get('/getViewSelectPlace',[HomePageController::class,'viewSelectPlaceStand']);
 Route::post('/storeVideo', [HomePageController::class, 'storeVideo'])->name('storeVideo');
 Route::get('/viewGestionContenueHome', [HomePageController::class, 'viewGestionContenueHome'])->name('viewGestionContenueHome');
 Route::get('/contenueStand', [HomePageController::class, 'getContenueStand'])->name('getContenueStand');
@@ -43,6 +44,7 @@ Route::get('/viewVideoConferenceHome', [HomePageController::class, 'viewVideoCon
 Route::get('/listTemoignage', [HomePageController::class, 'listTemoignage'])->name('listTemoignage');
 Route::get('/mongodb/insert', [TestMongodbController::class, 'insertData']);
 Route::get('/mongodb/messages', [TestMongodbController::class, 'getMessages']);
+
 //-----------------MESSAGE---------------------------------------------------------------------------------------------
 
 Route::post('/send-message', [ChatController::class, 'sendMessage']);

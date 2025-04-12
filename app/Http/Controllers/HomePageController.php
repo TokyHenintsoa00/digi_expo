@@ -127,10 +127,6 @@ class HomePageController extends Controller
         return view('home.permissionDeFaireUnStand',compact('categorie'));
     }
 
-    public function viewSelectPlaceStand()
-    {
-        return view('home.SelectPlace');
-    }
 
     //appelle de la fonction insertPermissionStandEmp
     public function getInsertPermissionStandEmp(Request $request)
@@ -185,6 +181,11 @@ class HomePageController extends Controller
         $getInsertPermission->insertPermissionStandV1($nom_stand,$id_categorie,$nom_categorie_stand,$description_stand,
         $nom_employe,$prenom_employe,$date_naissance,$email_employe,$img_stand_name,$date_debut,$date_fin,$id_max_id_sallon);
         return redirect()->route('viewpermissionDeFaireUnStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
+    }
+
+    public function viewSelectPlaceStand()
+    {
+        return view('home.SelectPlace');
     }
 
 

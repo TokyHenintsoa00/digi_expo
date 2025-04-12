@@ -258,6 +258,7 @@
                 @yield('contenueVideoSection')
                 @yield('linkVideoSection')
                 @yield('listTemoignageSection')
+                @yield('selectPlaceSection')
 
             </div>
         </div>

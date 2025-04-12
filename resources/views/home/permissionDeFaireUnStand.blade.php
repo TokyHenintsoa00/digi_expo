@@ -1,41 +1,5 @@
 @extends('parent.parentHome')
 @section('permissionDeFaireUnStandSection')
-<style>
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(90, 60px);
-      grid-template-rows: repeat(15, 60px);
-      gap: 2px;
-    }
-
-    .cell {
-      background-color: #36c254;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 0.7em;
-      font-weight: bold;
-      text-align: center;
-      padding: 5px;
-      border: 1px solid #ccc;
-    }
-
-    .fond {
-        grid-column:3 / span 3;
-        grid-row:3 / span 1;
-        background-color: white;
-        border:2px solid black;
-        font-size: 2em;
-    }
-
-    .enter{
-        grid-column: 10 / span 2;
-        grid-row: 1 / span 1;
-        background-color: white;
-        border: 2px solid black;
-        font-size: 1em;
-    }
-</style>
 
 <div class="container-fluid">
     <div class="card">
@@ -196,6 +160,7 @@
         // Convertir la date actuelle en chaîne de caractères
         let dateString = currentDate.toString();
         let url = `http://127.0.0.1:8000/admin/viewValidationPermissionStand`;
+
         fetch('http://localhost:8080/api/notifications/directeurSendAdmin/sendNotification', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -206,7 +171,7 @@
                 dateNotification:dateString,
                 url:url
             })
-    }).then(() => {
+        }).then(() => {
             document.getElementById('permissionForm').submit();
         }).catch(error => {
             console.error("Erreur lors de l'envoi de la notification:", error);
