@@ -218,18 +218,18 @@
 /* Responsive */
 @media (max-width: 768px) {
   .grid {
-    grid-template-columns: repeat(45, 40px); /* réduit le nombre de colonnes visibles */
-    grid-template-rows: repeat(15, 40px); /* réduit la hauteur des cases */
+    grid-template-columns: repeat(45, 60px); /* réduit le nombre de colonnes visibles */
+    grid-template-rows: repeat(90, 60px); /* réduit la hauteur des cases */
   }
 
   .cell {
     font-size: 0.5em;
-    min-width: 40px;
-    min-height: 40px;
+    min-width: 60px;
+    min-height: 60px;
     padding: 2px;
   }
 
-  .fond, .enter {
+    .enter {
     font-size: 0.8em;
   }
 }
@@ -287,6 +287,20 @@
                 <div class="cell" style="grid-column: 5; grid-row: 4"></div>
                 <div class="cell" style="grid-column: 4; grid-row: 4"></div>
                 <div class="cell" style="grid-column: 3; grid-row: 4"></div>
+
+                <!-- Ligne verticale haut du deuxieme plan -->
+                <div class="cell" style="grid-column: 2; grid-row: 13"></div>
+                <div class="cell" style="grid-column: 2; grid-row: 14"></div>
+                <div class="cell" style="grid-column: 2; grid-row: 15"></div>
+                <div class="cell" style="grid-column: 2; grid-row: 16"></div>
+                <div class="cell" style="grid-column: 2; grid-row: 17"></div>
+                <div class="cell" style="grid-column: 2; grid-row: 18"></div>
+                <div class="cell" style="grid-column: 2; grid-row: 19"></div>
+                <div class="cell" style="grid-column: 2; grid-row: 20"></div>
+                <!------------------------------------------>
+
+                <!-- Ligne horizontal bas deuxieme plan  -->
+
           </div>
         </div>
       </div>
