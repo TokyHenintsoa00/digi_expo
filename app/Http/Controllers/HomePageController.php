@@ -122,10 +122,14 @@ class HomePageController extends Controller
         $getCategorieModel = new CategorieModel();
         $categorie = $getCategorieModel->getAllCategorie();
 
-        $getStandModel = new StandModel();
-        $placeStand = $getStandModel->getPlaceStand();
 
-        return view('home.permissionDeFaireUnStand',compact('categorie','placeStand'));
+
+        return view('home.permissionDeFaireUnStand',compact('categorie'));
+    }
+
+    public function viewSelectPlaceStand()
+    {
+        return view('home.SelectPlace');
     }
 
     //appelle de la fonction insertPermissionStandEmp
@@ -135,13 +139,13 @@ class HomePageController extends Controller
         $getReceptionModel = new ReceptionModel();
 
         //---------------etat place stand----------------------
-        $place_stand = $request->place_stand;
+        // $place_stand = $request->place_stand;
 
-        $getFindPlace = $getInsertPermission->findEtatPlace($place_stand);
-        
+        // $getFindPlace = $getInsertPermission->findEtatPlace($place_stand);
 
 
-        $getEtatPlace = $getInsertPermission->findEtatPLace();
+
+        // $getEtatPlace = $getInsertPermission->findEtatPLace();
 
         //--------------STAND----------------
         $nom_stand = $request->nom_stand;
