@@ -192,17 +192,19 @@
 }
 
 .cell {
+    font-family: 'Poppins', sans-serif;
   background-color: #36c254;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.7em;
+  font-size: 0.8em;
   font-weight: bold;
   text-align: center;
   padding: 5px;
   border: 1px solid #ccc;
   min-width: 60px;
   min-height: 60px;
+  color: white;
 }
 
 .enter {
@@ -214,6 +216,7 @@
   border: 2px solid black;
   font-size: 1em;
   background-color: transparent;
+  color: black;
 }
 /* Responsive */
 @media (max-width: 768px) {
@@ -287,6 +290,7 @@
                 <div class="cell" style="grid-column: 5; grid-row: 4"></div>
                 <div class="cell" style="grid-column: 4; grid-row: 4"></div>
                 <div class="cell" style="grid-column: 3; grid-row: 4"></div>
+                <!--------------------------------------------->
 
                 <!-- Ligne verticale haut du deuxieme plan -->
                 <div class="cell" style="grid-column: 2; grid-row: 13"></div>
@@ -300,7 +304,21 @@
                 <!------------------------------------------>
 
                 <!-- Ligne horizontal bas deuxieme plan  -->
+                <div class="cell" style="grid-column: 3; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 4; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 5; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 6; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 7; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 8; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 9; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 10; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 11; grid-row: 20"></div>
+                <div class="cell" style="grid-column: 12; grid-row: 20"></div>
+                <!--------------------------------------------->
 
+                <!-- LIGNE VERTICAL DROITE DEUXIEME PLAN -->
+                <div class="cell" style="grid-column: 12; grid-row: 20"></div>
+                
           </div>
         </div>
       </div>
