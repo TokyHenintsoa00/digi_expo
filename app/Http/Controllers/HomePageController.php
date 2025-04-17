@@ -183,28 +183,47 @@ class HomePageController extends Controller
         return redirect()->route('viewpermissionDeFaireUnStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
     }
 
+    public function getInsertPermissionStandEmpV1()
+    {
+        $getInsertPermission = new StandModel();
+        $getReceptionModel = new ReceptionModel();
+
+        
+    }
+
     public function viewSelectPlaceStand()
     {
         $getStandModel = new StandModel();
-
         //----ligne vertical gauche premier plan
         $placeTopLeftFistPlan = $getStandModel->getPlaceWherePlaceLeftToFirstPlan();
         //-------------------------------------
-
         //----Ligne horizontal bas premier plan
         $placeDownFirstPlan = $getStandModel->getPlaceWherePlaceDownFirstPlan();
         //------------------------------------
-
         //----ligne verticall droite premier plan
         $placeRightFirstPlan = $getStandModel->getPlaceWherePlaceRightFirstPlan();
         //----------------------------------------
-
         //------ligne horizontal haut di premier plan
         $placeUpFirstPlan = $getStandModel->getPlaceWherePlaceUpFirstPlan();
         //-------------------------------------------
+        //-------ligne vertical gahce 2eme plan
+        $placeGaucheVerticalSecondPlan = $getStandModel->getPlaceStandWherePlaceLeftSecondPlan();
+        //--------------------------------------
+        //-------ligne horizontal bas deuxieme plan
+        $placeStandWherePlaceDownSecondPlan = $getStandModel->getPlaceStandWherePlaceDownSecondPlan();
+        //------------------------------------------
+        //ligne vertical droite deuxieme plan
+        $placeStandWherePlaceRightSecondPlan = $getStandModel->getPlaceStandWherePlaceRightSecondPlan();
+        //-----------------------------------
+        //LIGNE HORIZONTAL HAUT DEUXIEME PLAN
+        $placeWherePlaceUpSecondPlan = $getStandModel->getPlaceWherePlaceUpSecondPlan();
+        //=----------------------------------
+        //LIGNE VERTICAL TROISIEME PLAN
+        $placeStandWherePlaceRightThirdPlan = $getStandModel->getPlaceStandWherePlaceRightThirdPlan();
 
         return view('home.SelectPlace',compact('placeTopLeftFistPlan','placeDownFirstPlan','placeRightFirstPlan',
-        'placeUpFirstPlan'));
+        'placeUpFirstPlan','placeGaucheVerticalSecondPlan','placeStandWherePlaceDownSecondPlan',
+        'placeStandWherePlaceRightSecondPlan','placeWherePlaceUpSecondPlan','placeStandWherePlaceRightThirdPlan'));
     }
 
 

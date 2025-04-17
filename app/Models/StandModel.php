@@ -784,6 +784,44 @@ class StandModel extends Model
     }
 
 
-    //ligne
+    //ligne verticale gauche deuxieme plan
+    public function getPlaceStandWherePlaceLeftSecondPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [37, 44])
+        ->get();
+    }
+
+    //ligne horizontal bas deuxieme plan
+    public function getPlaceStandWherePlaceDownSecondPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [45, 53])
+        ->get();
+    }
+
+    //ligne vertical droite deuxieme plan
+    public function getPlaceStandWherePlaceRightSecondPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [54, 61])
+        ->get();
+    }
+    //<!-- LIGNE HORIZONTAL HAUT DEUXIEME PLAN -->
+    public function getPlaceWherePlaceUpSecondPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [62, 70])
+        ->get();
+    }
+
+    // <!-- LIGNE VERTICAL TROISIEME PLAN -->
+    public function getPlaceStandWherePlaceRightThirdPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [71, 79])
+        ->get();
+    }
+
 }
 

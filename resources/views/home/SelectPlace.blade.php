@@ -4,7 +4,7 @@
    .grid {
   display: grid;
   grid-template-columns: repeat(90, 60px);
-  grid-template-rows: repeat(23, 60px);
+  grid-template-rows: repeat(21, 60px);
   gap: 2px;
   /* overflow-x: auto; */
    /* Ajoute un scroll horizontal sur mobile */
@@ -84,7 +84,7 @@
 @media (max-width: 1000px) {
   .grid {
     grid-template-columns: repeat(21, 60px); /* réduit le nombre de colonnes visibles */
-    grid-template-rows: repeat(23, 60px); /* réduit la hauteur des cases */
+    grid-template-rows: repeat(21, 60px); /* réduit la hauteur des cases */
     overflow-x: auto;
   }
 
@@ -109,180 +109,124 @@
     $row3 = 10;
 
     $row4 = 11;
-@endphp
 
+    $row5 = 13;
+
+    $row6 = 3;
+
+    $row7 = 20;
+
+    $row8 = 3;
+
+    $row9 = 3;
+
+@endphp
 <div class="container-fluid">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Choisir votre place </h5>
-        <div style="overflow-x: auto;">
+        <h5 class="card-title fw-semibold mb-4">Choisir votre place</h5>
+        <form action="#" method="GET">
+          <input type="hidden" name="place_id" id="selectedPlaceId">
+          <div style="overflow-x: auto;">
             <div class="grid">
-                <div class="enter">Entrer</div>
-                <!-- ligne vertical gauche du premier plan -->
-                {{-- <div class="cell" style="grid-column: 2; grid-row: 4;">IESSI</div>
-                <div class="cell" style="grid-column: 2; grid-row: 5;">IESSI</div>
-                <div class="cell" style="grid-column: 2; grid-row: 6;">IESSI</div>
-                <div class="cell" style="grid-column: 2; grid-row: 7;">IESSI</div>
-                <div class="cell" style="grid-column: 2; grid-row: 8;">IESSI</div>
-                <div class="cell" style="grid-column: 2; grid-row: 9;">IESSI</div>
-                <div class="cell" style="grid-column: 2; grid-row: 10;">IESSI</div>
-                <div class="cell" style="grid-column: 2; grid-row: 11;">IESSI</div> --}}
+              <div class="enter">Entrer</div>
 
-                @foreach($placeTopLeftFistPlan as $place)
-                    @if($row1 > 11) @break @endif
-                    <div class="cell" style="grid-column: 2; grid-row: {{ $row1 }};">
-                        {{ $place->nom_place }}
-                    </div>
-                    @php
-                        $row1++;
-                    @endphp
-                @endforeach
+              <!-- Ligne verticale gauche du premier plan -->
+              @foreach($placeTopLeftFistPlan as $place)
+                @if($row1 > 11) @break @endif
+                <div class="cell" style="grid-column: 2; grid-row: {{ $row1 }};" data-id="{{ $place->id_place }}">
+                  {{ $place->nom_place }}
+                </div>
+                @php $row1++; @endphp
+              @endforeach
 
-                <!-- ligne horizontal bas du premier plan -->
-                    {{-- <div class="cell" style="grid-column: 3; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 4; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 5; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 6; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 7; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 8; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 9; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 10; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 11; grid-row: 11"></div>
-                    <div class="cell" style="grid-column: 12; grid-row: 11"></div> --}}
+              <!-- Ligne horizontale bas du premier plan -->
+              @foreach ($placeDownFirstPlan as $plan)
+                @if ($row2 > 12) @break @endif
+                <div class="cell" style="grid-column: {{ $row2 }}; grid-row: 11" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
+                @php $row2++; @endphp
+              @endforeach
 
-                    @foreach ($placeDownFirstPlan as $plan)
-                        @if ($row2 > 12) @break @endif
-                        <div class="cell" style="grid-column: {{ $row2 }}; grid-row: 11">
-                            {{$plan->nom_place}}
-                        </div>
-                        @php
-                            $row2++;
-                        @endphp
-                    @endforeach
+              <!-- Ligne verticale droite du premier plan -->
+              @foreach ($placeRightFirstPlan as $plan)
+                @if ($row3 < 3) @break @endif
+                <div class="cell" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
+                @php $row3--; @endphp
+              @endforeach
 
+              <!-- Ligne horizontale haut du premier plan -->
+              @foreach ($placeUpFirstPlan as $plan)
+                @if ($row4 < 3) @break @endif
+                <div class="cell" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
+                @php $row4--; @endphp
+              @endforeach
 
-                <!------------------------------------------->
+              <!-- Ligne verticale gauche du deuxième plan -->
+              @foreach ($placeGaucheVerticalSecondPlan as $plan)
+                @if ($row5 > 20) @break @endif
+                <div class="cell" style="grid-column: 2; grid-row: {{ $row5 }}" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
+                @php $row5++; @endphp
+              @endforeach
 
-                <!-----------------Ligne verticale droite du premier plan -------------------------->
-            {{--    <div class="cell" style="grid-column: 12; grid-row: 10"></div>
-                    <div class="cell" style="grid-column: 12; grid-row: 9"></div>
-                    <div class="cell" style="grid-column: 12; grid-row: 8"></div>
-                    <div class="cell" style="grid-column: 12; grid-row: 7"></div>
-                    <div class="cell" style="grid-column: 12; grid-row: 6"></div>
-                    <div class="cell" style="grid-column: 12; grid-row: 5"></div>
-                    <div class="cell" style="grid-column: 12; grid-row: 4"></div>
-                    <div class="cell" style="grid-column: 12; grid-row: 3"></div> --}}
-                        @foreach ($placeRightFirstPlan as $plan)
-                            @if ($row3 < 3)
-                                @break
-                            @endif
-                            <div class="cell" style="grid-column: 12; grid-row:{{ $row3 }}">
-                                {{$plan->nom_place}}
-                            </div>
-                            @php
-                                $row3--;
-                            @endphp
-                        @endforeach
+              <!-- Ligne horizontale bas deuxième plan -->
+              @foreach ($placeStandWherePlaceDownSecondPlan as $plan)
+                @if ($row6 > 12) @break @endif
+                <div class="cell" style="grid-column: {{ $row6 }}; grid-row: 20" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
+                @php $row6++; @endphp
+              @endforeach
 
-                <!------------------------------------------->
+              <!-- Ligne verticale droite deuxième plan -->
+              @foreach ($placeStandWherePlaceRightSecondPlan as $plan)
+                @if ($row7 < 13) @break @endif
+                <div class="cell" style="grid-column: 12; grid-row: {{ $row7 }}" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
+                @php $row7--; @endphp
+              @endforeach
 
+              <!-- Ligne horizontale haut deuxième plan -->
+              @foreach ($placeWherePlaceUpSecondPlan as $plan)
+                @if ($row8 > 11) @break @endif
+                <div class="cell" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
+                @php $row8++; @endphp
+              @endforeach
 
-                <!-- Ligne horizontal haut du premier plan -->
-                {{-- <div class="cell" style="grid-column: 11; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 10; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 9; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 8; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 7; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 6; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 5; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 4; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 3; grid-row: 4"></div> --}}
+              <!-- Ligne verticale troisième plan -->
+              @foreach ($placeStandWherePlaceRightThirdPlan as $plan)
+                @if ($row9 > 11) @break @endif
+                <div class="cell" style="grid-column: 14; grid-row: {{ $row9 }}" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
+                @php $row9++; @endphp
+              @endforeach
 
-                @foreach ($placeUpFirstPlan as $plan)
-                        @if ($row4 < 3)
-                            @break
-                        @endif
-                        <div class="cell" style="grid-column: {{ $row4 }}; grid-row: 4">
-                            {{$plan->nom_place}}
-                        </div>
+              <!-- Cases spéciales -->
+              <div class="case1"></div>
+              <div class="case2">Presidence</div>
 
-                        @php
-                                $row4--;
-                            @endphp
-                @endforeach
-
-                <!--------------------------------------------->
-
-                <!-- Ligne verticale gauche du deuxieme plan -->
-                <div class="cell" style="grid-column: 2; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 2; grid-row: 14"></div>
-                <div class="cell" style="grid-column: 2; grid-row: 15"></div>
-                <div class="cell" style="grid-column: 2; grid-row: 16"></div>
-                <div class="cell" style="grid-column: 2; grid-row: 17"></div>
-                <div class="cell" style="grid-column: 2; grid-row: 18"></div>
-                <div class="cell" style="grid-column: 2; grid-row: 19"></div>
-                <div class="cell" style="grid-column: 2; grid-row: 20"></div>
-                <!------------------------------------------>
-
-                <!-- Ligne horizontal bas deuxieme plan  -->
-                <div class="cell" style="grid-column: 3; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 4; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 5; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 6; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 7; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 8; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 9; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 10; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 11; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 12; grid-row: 20"></div>
-                <!--------------------------------------------->
-
-                <!-- LIGNE VERTICAL DROITE DEUXIEME PLAN -->
-                <div class="cell" style="grid-column: 12; grid-row: 20"></div>
-                <div class="cell" style="grid-column: 12; grid-row: 19"></div>
-                <div class="cell" style="grid-column: 12; grid-row: 18"></div>
-                <div class="cell" style="grid-column: 12; grid-row: 17"></div>
-                <div class="cell" style="grid-column: 12; grid-row: 16"></div>
-                <div class="cell" style="grid-column: 12; grid-row: 15"></div>
-                <div class="cell" style="grid-column: 12; grid-row: 14"></div>
-                <div class="cell" style="grid-column: 12; grid-row: 13"></div>
-                <!----------------------------------------->
-
-                <!-- LIGNE HORIZONTAL HAUT DEUXIEME PLAN -->
-                <div class="cell" style="grid-column: 3; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 4; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 5; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 6; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 7; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 8; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 9; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 10; grid-row: 13"></div>
-                <div class="cell" style="grid-column: 11; grid-row: 13"></div>
-                <!----------------------------------------->
-
-                <!-- LIGNE VERTICAL TROISIEME PLAN -->
-                <div class="cell" style="grid-column: 14; grid-row: 3"></div>
-                <div class="cell" style="grid-column: 14; grid-row: 4"></div>
-                <div class="cell" style="grid-column: 14; grid-row: 5"></div>
-                <div class="cell" style="grid-column: 14; grid-row: 6"></div>
-                <div class="cell" style="grid-column: 14; grid-row: 7"></div>
-                <div class="cell" style="grid-column: 14; grid-row: 8"></div>
-                <div class="cell" style="grid-column: 14; grid-row: 9"></div>
-                <div class="cell" style="grid-column: 14; grid-row: 10"></div>
-                <div class="cell" style="grid-column: 14; grid-row: 11"></div>
-                <!----------------------------------->
-
-                <div class="case1"></div>
-                <div class="case2">Presidence</div>
+            </div>
           </div>
-        </div>
+          <button type="submit" class="btn btn-primary mt-3">Valider votre choix</button>
+        </form>
       </div>
     </div>
   </div>
 
   <script>
     const cells = document.querySelectorAll('.cell');
-
+    const selectedPlaceInput = document.getElementById('selectedPlaceId');
     cells.forEach(cell => {
       cell.addEventListener('click', () => {
         // Supprimer la classe active de toutes les cellules
@@ -290,8 +234,12 @@
 
         // Ajouter la classe active uniquement à la cellule cliquée
         cell.classList.add('active');
+
+        const placeId = cell.dataset.id;
+        selectedPlaceInput.value = placeId;
       });
     });
   </script>
+
 
 @endsection
