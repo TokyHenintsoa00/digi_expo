@@ -749,5 +749,41 @@ class StandModel extends Model
 
     //     return $result;
     // }
+
+
+    //ligne vertical gauche du premier plan
+    public function getPlaceWherePlaceLeftToFirstPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [1, 8])
+        ->get();
+    }
+
+    //ligne horizontal bas du premier plan
+    public function getPlaceWherePlaceDownFirstPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [9, 18])
+        ->get();
+    }
+
+    //ligne verticale droite du premier plan
+    public function getPlaceWherePlaceRightFirstPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [19, 26])
+        ->get();
+    }
+
+    //ligne horizontal du premier plan
+    public function getPlaceWherePlaceUpFirstPlan()
+    {
+        return DB::table('place')
+        ->whereBetween('id_place', [27, 36])
+        ->get();
+    }
+
+
+    //ligne
 }
 

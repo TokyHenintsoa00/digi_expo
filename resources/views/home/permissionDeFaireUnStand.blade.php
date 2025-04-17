@@ -92,42 +92,7 @@
                                     </div>
                                 </div>
 
-                                <!--
-                                <div class="grid">
-
-
-                                    {{-- grid pour les ligne du bas pour le premier plan --}}
-                                    <div class="cell" style="grid-column: 3; grid-row: 9;"></div>
-                                    <div class="cell" style="grid-column: 4; grid-row: 9;"></div>
-                                    <div class="cell" style="grid-column: 5; grid-row: 9;"></div>
-                                    <div class="cell" style="grid-column: 6; grid-row: 9;"></div>
-                                    <div class="cell" style="grid-column: 7; grid-row: 9;"></div>
-                                    <div class="cell" style="grid-column: 8; grid-row: 9;"></div>
-                                    <div class="cell" style="grid-column: 9; grid-row: 9;"></div>
-                                    <div class="cell" style="grid-column: 10; grid-row: 9;"></div>
-                                    {{------------------------------------------------------}}
-
-                                    {{--Grid pour les ligne a droite du premier plan--}}
-                                    <div class="cell" style="grid-column: 10; grid-row: 8"></div>
-                                    <div class="cell" style="grid-column: 10; grid-row: 7"></div>
-                                    <div class="cell" style="grid-column: 10; grid-row: 6"></div>
-                                    <div class="cell" style="grid-column: 10; grid-row: 5"></div>
-                                    <div class="cell" style="grid-column: 10; grid-row: 4"></div>
-                                    <div class="cell" style="grid-column: 10; grid-row: 3"></div>
-                                    <div class="cell" style="grid-column: 10; grid-row: 2"></div>
-                                    <div class="cell" style="grid-column: 10; grid-row: 1"></div>
-                                    {{------------------------------------------------}}
-
-                                    {{--grid pour les ligne du haut du premier pplan--}}
-                                    <div class="cell" style="grid-column: 9; grid-row: 2;"></div>
-
-                                </div>
-                                -->
                             </div>
-
-
-
-
                             <input type="submit" value="Soumettre" class="btn btn-primary">
                         </form>
                 </div>
@@ -135,20 +100,6 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let stands = document.querySelectorAll(".stand");
-        let selectedStandInput = document.getElementById("selectedStand");
-
-        stands.forEach(stand => {
-            stand.addEventListener("click", function () {
-                stands.forEach(s => s.classList.remove("selected"));
-                this.classList.add("selected");
-                selectedStandInput.value = this.textContent;
-            });
-        });
-    });
-</script>
 <script>
     function sendNotificationDirecteurToAdmin()
     {

@@ -24,11 +24,7 @@ CREATE TABLE salon
 );
 
 
---tokyh
 
-create table popo(
-    id serial primary key
-);
 
 CREATE TABLE etat
 (
@@ -274,13 +270,30 @@ CREATE TABLE search(
 
 CREATE TABLE video_conference_client
 (
-
     id_video_conference_client serial primary key,
     id_stand integer references stand(id_stand),
     date_debut_conference_client timestamp(0),
     liens_video text,
     id_salon integer references salon(id_salon)
 );
+
+
+CREATE TABLE place
+(
+    id_place serial primary key,
+    nom_place varchar(50),
+    id_etat integer references etat(id_etat)
+);
+
+CREATE TABLE place_stand
+(
+    id_place_stand serial,
+    id_place integer references place(id_place),
+    id_stand integer references stand(id_stand),
+    id_salon integer references salon(id_sallon)
+);
+
+
 
 
 -- SELECT distinct(id_stand),id_directeur,nom_stand,description_Stand,

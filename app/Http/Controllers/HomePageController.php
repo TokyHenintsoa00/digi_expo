@@ -185,7 +185,26 @@ class HomePageController extends Controller
 
     public function viewSelectPlaceStand()
     {
-        return view('home.SelectPlace');
+        $getStandModel = new StandModel();
+
+        //----ligne vertical gauche premier plan
+        $placeTopLeftFistPlan = $getStandModel->getPlaceWherePlaceLeftToFirstPlan();
+        //-------------------------------------
+
+        //----Ligne horizontal bas premier plan
+        $placeDownFirstPlan = $getStandModel->getPlaceWherePlaceDownFirstPlan();
+        //------------------------------------
+
+        //----ligne verticall droite premier plan
+        $placeRightFirstPlan = $getStandModel->getPlaceWherePlaceRightFirstPlan();
+        //----------------------------------------
+
+        //------ligne horizontal haut di premier plan
+        $placeUpFirstPlan = $getStandModel->getPlaceWherePlaceUpFirstPlan();
+        //-------------------------------------------
+
+        return view('home.SelectPlace',compact('placeTopLeftFistPlan','placeDownFirstPlan','placeRightFirstPlan',
+        'placeUpFirstPlan'));
     }
 
 
