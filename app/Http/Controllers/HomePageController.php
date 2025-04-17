@@ -183,12 +183,12 @@ class HomePageController extends Controller
         return redirect()->route('viewpermissionDeFaireUnStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
     }
 
-    public function getInsertPermissionStandEmpV1()
+    public function getInsertPermissionStandEmpV1(Request $request)
     {
         $getInsertPermission = new StandModel();
         $getReceptionModel = new ReceptionModel();
 
-        
+
     }
 
     public function viewSelectPlaceStand()
