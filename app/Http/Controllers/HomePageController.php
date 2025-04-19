@@ -188,11 +188,70 @@ class HomePageController extends Controller
         $getInsertPermission = new StandModel();
         $getReceptionModel = new ReceptionModel();
 
+        //--------------STAND----------------
+        $nom_stand = $request->nom_stand;
+        $id_categorie = $request->id_categorie;
+        $description_stand = $request->description_stand;
+        $nom_categorie_stand = $request->nom_categorie_stand;
+        $date_debut = $request->date_debut;
+        $date_fin = $request->date_fin;
 
+        $img_stand = $request->file('img_stand');
+        $img_stand_name = $img_stand->getClientOriginalName();
+        $img_stand->move(public_path('assets'),$img_stand_name);
+
+
+        $getSalonWhere = $getReceptionModel->getSalonWhere();
+        $id_max_id_salon = $getSalonWhere[0]->id_sallon;
+
+        //--------------Emp----------------------
+        $nom_employe = $request->nom_employe;
+        $prenom_employe = $request->prenom_employe;
+        $date_naissance = $request->date_naissance;
+        $email_employe = $request->email_employe;
+        //------------------------------------------
+
+        $getSalon = $getReceptionModel->getSalonWhere();
+        // $date_fin_du_salon = $getSalon[0]->date_fin;
+
+        //verification de date
+        if($getSalon == null || $getSalon[0]->date_fin < $date_fin || $getSalon[0]->date_fin == null || $getSalon[0]->date_fin == 0)
+        {
+            return redirect()->back()->withErrors(['error' => 'Vous ne pouvez pas creer une exposition pour le moment'])->withInput();
+        }
+        return redirect()->route('viewSelectPlaceStand')->with([
+            'nom_stand' => $nom_stand,
+            'id_categorie' => $id_categorie,
+            'description_stand' => $description_stand,
+            'nom_categorie_stand' => $nom_categorie_stand,
+            'date_debut' => $date_debut,
+            'date_fin' => $date_fin,
+            'img_stand_name' => $img_stand_name,
+            'id_max_id_salon' => $id_max_id_salon,
+            'nom_employe' => $nom_employe,
+            'prenom_employe' => $prenom_employe,
+            'date_naissance' => $date_naissance,
+            'email_employe' => $email_employe,
+        ]);
     }
 
     public function viewSelectPlaceStand()
     {
+        $standData = [
+            'nom_stand' => session('nom_stand'),
+            'id_categorie' => session('id_categorie'),
+            'description_stand' => session('description_stand'),
+            'nom_categorie_stand' => session('nom_categorie_stand'),
+            'date_debut' => session('date_debut'),
+            'date_fin' => session('date_fin'),
+            'img_stand_name' => session('img_stand_name'),
+            'id_max_id_salon' => session('id_max_id_salon'),
+            'nom_employe' => session('nom_employe'),
+            'prenom_employe' => session('prenom_employe'),
+            'date_naissance' => session('date_naissance'),
+            'email_employe' => session('email_employe'),
+        ];
+
         $getStandModel = new StandModel();
         //----ligne vertical gauche premier plan
         $placeTopLeftFistPlan = $getStandModel->getPlaceWherePlaceLeftToFirstPlan();
@@ -223,7 +282,14 @@ class HomePageController extends Controller
 
         return view('home.SelectPlace',compact('placeTopLeftFistPlan','placeDownFirstPlan','placeRightFirstPlan',
         'placeUpFirstPlan','placeGaucheVerticalSecondPlan','placeStandWherePlaceDownSecondPlan',
-        'placeStandWherePlaceRightSecondPlan','placeWherePlaceUpSecondPlan','placeStandWherePlaceRightThirdPlan'));
+        'placeStandWherePlaceRightSecondPlan','placeWherePlaceUpSecondPlan','placeStandWherePlaceRightThirdPlan'),$standData);
+    }
+
+
+    //information formulaire + enplacement de la place
+    public function infoForPremissionStand()
+    {
+        
     }
 
 

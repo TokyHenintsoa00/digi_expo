@@ -125,7 +125,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title fw-semibold mb-4">Choisir votre place</h5>
-        <form action="#" method="GET">
+        <form action="" method="POST" onsubmit="event.preventDefault(); sendNotificationDirecteurToAdmin();>
           <input type="hidden" name="place_id" id="selectedPlaceId">
           <div style="overflow-x: auto;">
             <div class="grid">
@@ -218,6 +218,18 @@
 
             </div>
           </div>
+          <input type="hidden" name="nom_stand" value="{{ session('nom_stand') }}">
+          <input type="hidden" name="id_categorie" value="{{ session('id_categorie') }}">
+          <input type="hidden" name="description_stand" value="{{ session('description_stand') }}">
+          <input type="hidden" name="nom_categorie_stand" value="{{ session('nom_categorie_stand')}}">
+          <input type="hidden" name="date_debut" value="{{ session('date_debut')}}">
+          <input type="hidden" name="date_fin" value="{{ session('date_fin')}}">
+          <input type="hidden" name="img_stand_name" value="{{ session('img_stand_name')}}">
+          <input type="hidden" name="id_max_salon" value="{{ session('id_max_id_salon')}}">
+          <input type="hidden" name="nom_employe" value="{{ session('nom_employe')}}">
+          <input type="hidden" name="prenom_employe" value="{{ session('prenom_employe')}}">
+          <input type="hidden" name="date_naissance" value="{{ session('date_naissance')}}">
+          <input type="hidden" name="email_employe" value="{{ session('email_employe')}}">
           <button type="submit" class="btn btn-primary mt-3">Valider votre choix</button>
         </form>
       </div>

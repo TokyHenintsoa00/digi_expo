@@ -21,7 +21,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form id="permissionForm" action="/getInsertPermissionStandEmp" method="POST" enctype="multipart/form-data" onsubmit="event.preventDefault(); sendNotificationDirecteurToAdmin();">
+                    <form id="permissionForm" action="/getInsertPermissionStandEmpV1" method="POST" enctype="multipart/form-data">
                         {{-- <form id="permissionForm" action="#" method="GET" enctype="multipart/form-data" onsubmit="event.preventDefault(); sendNotificationDirecteurToAdmin();"> --}}
 
                             @csrf
@@ -93,14 +93,14 @@
                                 </div>
 
                             </div>
-                            <input type="submit" value="Soumettre" class="btn btn-primary">
+                            <input type="submit" value="Choisir la place" class="btn btn-primary">
                         </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
+{{-- <script>
     function sendNotificationDirecteurToAdmin()
     {
         const sender = 0;
@@ -129,5 +129,5 @@
             document.getElementById('permissionForm').submit();
         });
     }
-</script>
+</script> --}}
 @endsection
