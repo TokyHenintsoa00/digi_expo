@@ -34,6 +34,7 @@ Route::get('/viewDemandeAide',[HomepageController::class,'viewDemandeAide']);
 Route::get('/viewpermissionDeFaireUnStand',[HomepageController::class,'viewPermissionDeFaireUnStand'])->name('viewpermissionDeFaireUnStand');
 Route::post('/getInsertPermissionStandEmp',[HomePageController::class,'getInsertPermissionStandEmp'])->name('getInsertPermissionStandEmp');
 Route::post('/getInsertPermissionStandEmpV1',[HomePageController::class,'getInsertPermissionStandEmpV1'])->name('getInsertPermissionStandEmpV1');
+Route::post('/insertPemissionExposition',[HomePageController::class,'insertPemissionExposition'])->name('insertPemissionExposition');
 Route::get('/getViewSelectPlace',[HomePageController::class,'viewSelectPlaceStand'])->name('viewSelectPlaceStand');
 Route::post('/storeVideo', [HomePageController::class, 'storeVideo'])->name('storeVideo');
 Route::get('/viewGestionContenueHome', [HomePageController::class, 'viewGestionContenueHome'])->name('viewGestionContenueHome');

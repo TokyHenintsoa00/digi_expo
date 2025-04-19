@@ -89,7 +89,7 @@
   }
 
   .cell {
-    font-size: 0.5em;
+    font-size: 0.9em;
     min-width: 60px;
     min-height: 60px;
     padding: 2px;
@@ -100,6 +100,19 @@
   }
 
 }
+
+.cell.bg-danger:hover,
+.cell.bg-warning:hover {
+  pointer-events: none;       /* Ignore les événements souris */
+  transform: none !important; /* Empêche les effets de zoom/scale */
+  box-shadow: none !important;
+  background-color: inherit;  /* Pas de changement de couleur */
+  filter: none !important;
+  cursor: not-allowed;
+  border: none;
+}
+
+
 </style>
 @php
     $row1 = 4;
@@ -125,7 +138,8 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title fw-semibold mb-4">Choisir votre place</h5>
-        <form action="" method="POST" onsubmit="event.preventDefault(); sendNotificationDirecteurToAdmin();>
+        <form action="/insertPemissionExposition" id="permissionForm" method="POST" onsubmit="event.preventDefault(); sendNotificationDirecteurToAdmin();">
+            @csrf
           <input type="hidden" name="place_id" id="selectedPlaceId">
           <div style="overflow-x: auto;">
             <div class="grid">
@@ -133,43 +147,109 @@
 
               <!-- Ligne verticale gauche du premier plan -->
               @foreach($placeTopLeftFistPlan as $place)
-                @if($row1 > 11) @break @endif
-                <div class="cell" style="grid-column: 2; grid-row: {{ $row1 }};" data-id="{{ $place->id_place }}">
-                  {{ $place->nom_place }}
-                </div>
+                @if($row1 > 11)
+                    @break
+                @endif
+                @switch($place->id_etat)
+                    @case(13)
+                        <div class="cell bg-warning" style="grid-column: 2; grid-row: {{ $row1 }};" data-id="{{ $place->id_place }}">
+                            {{ $place->nom_place }}
+                        </div>
+                    @break
+
+                    @case(12)
+                        <div class="cell bg-danger" style="grid-column: 2; grid-row: {{ $row1 }};" data-id="{{ $place->id_place }}">
+                            {{ $place->nom_place }}
+                        </div>
+                    @break
+
+                    @default
+                    <div class="cell" style="grid-column: 2; grid-row: {{ $row1 }};" data-id="{{ $place->id_place }}">
+                        {{ $place->nom_place }}
+                    </div>
+
+                @endswitch
                 @php $row1++; @endphp
               @endforeach
 
               <!-- Ligne horizontale bas du premier plan -->
               @foreach ($placeDownFirstPlan as $plan)
                 @if ($row2 > 12) @break @endif
-                <div class="cell" style="grid-column: {{ $row2 }}; grid-row: 11" data-id="{{ $plan->id_place }}">
-                  {{ $plan->nom_place }}
-                </div>
+                @switch($plan->id_etat)
+                    @case(13)
+                    <div class="cell bg-warning" style="grid-column: {{ $row2 }}; grid-row: 11" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+
+                    @case(12)
+                    <div class="cell bg-danger" style="grid-column: {{ $row2 }}; grid-row: 11" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+
+                    @default
+                    <div class="cell" style="grid-column: {{ $row2 }}; grid-row: 11" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                @endswitch
+
                 @php $row2++; @endphp
               @endforeach
 
               <!-- Ligne verticale droite du premier plan -->
               @foreach ($placeRightFirstPlan as $plan)
                 @if ($row3 < 3) @break @endif
-                <div class="cell" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
-                  {{ $plan->nom_place }}
+                {{-- @if ($plan->id_etat == 13)
+                <div class="cell bg-warning" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
                 </div>
+                @elseif ($plan->id_etat == 12)
+                <div class="cell bg-danger" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
+                </div>
+                @else
+                    <div class="cell" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                @endif --}}
+
+                @switch()
+                    @case()
+
+                        @break
+
+                    @default
+
+                @endswitch
+
                 @php $row3--; @endphp
               @endforeach
 
               <!-- Ligne horizontale haut du premier plan -->
               @foreach ($placeUpFirstPlan as $plan)
                 @if ($row4 < 3) @break @endif
+                @if ($plan->id_etat == 13)
+                <div class="cell bg-warning" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
+                  </div>
+                @elseif ($plan->id_etat == 12)
+                <div class="cell bg-danger" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
+                  </div>
+                @else
                 <div class="cell" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
-                  {{ $plan->nom_place }}
-                </div>
+                    {{ $plan->nom_place }}
+                  </div>
+                @endif
+
                 @php $row4--; @endphp
               @endforeach
 
               <!-- Ligne verticale gauche du deuxième plan -->
               @foreach ($placeGaucheVerticalSecondPlan as $plan)
                 @if ($row5 > 20) @break @endif
+
                 <div class="cell" style="grid-column: 2; grid-row: {{ $row5 }}" data-id="{{ $plan->id_place }}">
                   {{ $plan->nom_place }}
                 </div>
@@ -241,6 +321,12 @@
     const selectedPlaceInput = document.getElementById('selectedPlaceId');
     cells.forEach(cell => {
       cell.addEventListener('click', () => {
+
+        if (cell.classList.contains('bg-danger') || cell.classList.contains('bg-warning')) {
+
+            return; // Ne rien faire si la cellule est rouge ou jaune
+        }
+
         // Supprimer la classe active de toutes les cellules
         cells.forEach(c => c.classList.remove('active'));
 
@@ -251,6 +337,37 @@
         selectedPlaceInput.value = placeId;
       });
     });
+
+
+    function sendNotificationDirecteurToAdmin()
+    {
+        const sender = 0;
+        const receiver = 6;
+        const content = "Vous avez recu une nouvelle permission d'exposition"
+        // Obtenir la date actuelle
+        let currentDate = new Date();
+        // Convertir la date actuelle en chaîne de caractères
+        let dateString = currentDate.toString();
+        let url = `http://127.0.0.1:8000/admin/viewValidationPermissionStand`;
+
+        fetch('http://localhost:8080/api/notifications/directeurSendAdmin/sendNotification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+            {   sender: sender,
+                receiver: receiver,
+                content: content ,
+                dateNotification:dateString,
+                url:url
+            })
+        }).then(() => {
+            document.getElementById('permissionForm').submit();
+        }).catch(error => {
+            console.error("Erreur lors de l'envoi de la notification:", error);
+            document.getElementById('permissionForm').submit();
+        });
+    }
+
   </script>
 
 

@@ -47,15 +47,16 @@ class StandModel extends Model
             }
         }
 
+        // avec le id salon que le version original n'as pas
         public function insertPermissionStandV1($nom_stand,$id_categorie,$nom_categorie_stand,$description_stand,
-        $nom_employe,$prenom_employe,$date_naissace,$email_employe,$img_permission_stand,$date_debut,$date_fin,$id_salon)
+        $nom_employe,$prenom_employe,$date_naissace,$email_employe,$img_permission_stand,$date_debut,$date_fin,$id_salon,$place_id)
         {
             DB::beginTransaction();
             try
             {
                 DB::insert('INSERT INTO permission_stand(nom_stand,id_categorie,nom_categorie_stand,description_stand,
-                nom_emp,prenom_emp,date_naissance,email,img_stand,id_etat,date_debut_stand,date_fin_stand,id_sallon)VALUES(?,?,?,?,?,?,?,?,?,1,?,?,?)',[$nom_stand,$id_categorie,$nom_categorie_stand,
-                $description_stand,$nom_employe,$prenom_employe,$date_naissace,$email_employe,$img_permission_stand,$date_debut,$date_fin,$id_salon]);
+                nom_emp,prenom_emp,date_naissance,email,img_stand,id_etat,date_debut_stand,date_fin_stand,id_sallon,id_place)VALUES(?,?,?,?,?,?,?,?,?,1,?,?,?,?)',[$nom_stand,$id_categorie,$nom_categorie_stand,
+                $description_stand,$nom_employe,$prenom_employe,$date_naissace,$email_employe,$img_permission_stand,$date_debut,$date_fin,$id_salon,$place_id]);
                 DB::commit();
 
 
@@ -821,6 +822,33 @@ class StandModel extends Model
         return DB::table('place')
         ->whereBetween('id_place', [71, 79])
         ->get();
+    }
+
+
+    // insert place stand
+    public function insertPlace($id_place,$id_Stand,$id_Salon)
+    {
+        return DB::table('place_stand')->insert([
+            'id_place' => id_place, // à adapter dynamiquement si nécessaire
+            'id_stand' => $id_stand,
+            'id_salon' => id_place // pareil ici, à ajuster selon ton besoin
+        ]);
+    }
+
+    public function updateEtatPlaceToOccuper($id_place)
+    {
+        $place_occupe = 12;
+        return DB::table('place')
+            ->where('id_place', $id_place)
+            ->update(['id_etat' => $place_occupe]);
+    }
+
+    public function updateEtatPlaceToReserver($id_place)
+    {
+        $place_reserver = 13;
+        return DB::table('place')
+            ->where('id_place', $id_place)
+            ->update(['id_etat' => $place_reserver]);
     }
 
 }

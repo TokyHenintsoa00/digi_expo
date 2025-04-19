@@ -287,9 +287,41 @@ class HomePageController extends Controller
 
 
     //information formulaire + enplacement de la place
-    public function infoForPremissionStand()
+    public function insertPemissionExposition(Request $request)
     {
-        
+
+        $getStandModel = new StandModel();
+
+        //---- INFORMATION DANS LE FORMULAIRE -------
+        $nom_stand = $request->nom_stand;
+        $id_categorie = $request->id_categorie;
+        $description_stand = $request->description_stand;
+        $nom_categorie_stand = $request->nom_categorie_stand;
+        $date_debut = $request->date_debut;
+        $date_fin = $request->date_fin;
+        $img_stand_name = $request->img_stand_name;
+        $id_max_id_salon = $request->id_max_id_salon;
+        $nom_employe = $request->nom_employe;
+        $prenom_employe = $request->prenom_employe;
+        $date_naissance = $request->date_naissance;
+        $email_employe = $request->email_employe;
+        //-----------------------------------------
+
+        //------ id de place ----------
+        $place_id = $request->place_id;
+        //-----------------------------
+
+        $getStandModel->insertPermissionStandV1($nom_stand,$id_categorie,
+        $nom_categorie_stand,$description_stand,$nom_employe,$prenom_employe,
+        $date_naissance,$email_employe,$img_stand_name,
+        $date_debut,$date_fin,$id_max_id_salon,$place_id);
+
+        //reservation de place
+        $getStandModel->updateEtatPlaceToReserver($place_id);
+
+        return redirect()->route('viewpermissionDeFaireUnStand')
+        ->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail
+        une fois que l\'administrateur aura validé votre demande.');
     }
 
 

@@ -22,7 +22,7 @@
                 <th>Nom de la categorie</th>
                 <th>Description de stand</th>
                 <th>Expediteur</th>
-                <th>Action</th> <!-- Ajout d'une colonne pour l'action -->
+                <th>Place</th> <!-- Ajout d'une colonne pour l'action -->
             </tr>
         </thead>
         <tbody>
@@ -33,6 +33,7 @@
                     <td>{{$list_permission->nom_categorie_stand}}</td>
                     <td>{{$list_permission->description_stand}}</td>
                     <td>{{$list_permission->nom_emp}} {{$list_permission->prenom_emp}}</td>
+                    <td>{{$list_permission->nom_place}}</td>
                     <td class="d-flex align-items-center"> <!-- Alignement du bouton avec le texte -->
                         <form action="{{route('validePermissionByAdmin')}}" method="POST">
 

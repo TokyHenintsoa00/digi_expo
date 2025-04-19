@@ -1,9 +1,11 @@
 CREATE OR REPLACE VIEW v_permission_stand as
-SELECT ps.*,nom_categorie
+SELECT ps.*,nom_categorie,nom_place
 FROM permission_stand ps
 LEFT JOIN stand s ON ps.id_permission_stand = s.id_stand
 join categorie
 on categorie.id_categorie=ps.id_categorie
+join place
+on place.id_place=ps.id_place
 WHERE ps.id_etat = 1;
 
 

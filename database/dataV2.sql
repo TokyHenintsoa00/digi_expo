@@ -80,7 +80,8 @@ CREATE TABLE permission_stand
     email varchar(50),
     img_stand text,
     id_etat integer REFERENCES etat(id_etat),
-    id_sallon integer references salon(id_sallon)
+    id_sallon integer references salon(id_sallon),
+    id_place integer references place(id_place)
 );
 
 CREATE TABLE permission_recrutement_emp
