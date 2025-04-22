@@ -298,12 +298,12 @@ aside.top-navbar {
                         <span>Statistique et <br>dashboard</span>
                     </a>
                 </li>
-                {{-- <li class="navbar-item">
+                <li class="navbar-item">
                     <a class="navbar-link" href="{{route('viewCalendrierSuiviAdmin')}}">
                         <i class="ti ti-calendar"></i>
                         <span>Calendrier de suivi</span>
                     </a>
-                </li> --}}
+                </li>
 
             </ul>
 

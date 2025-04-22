@@ -200,7 +200,7 @@
               <!-- Ligne verticale droite du premier plan -->
               @foreach ($placeRightFirstPlan as $plan)
                 @if ($row3 < 3) @break @endif
-                {{-- @if ($plan->id_etat == 13)
+                @if ($plan->id_etat == 13)
                 <div class="cell bg-warning" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
                     {{ $plan->nom_place }}
                 </div>
@@ -212,16 +212,9 @@
                     <div class="cell" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
                         {{ $plan->nom_place }}
                     </div>
-                @endif --}}
+                @endif
 
-                @switch()
-                    @case()
 
-                        @break
-
-                    @default
-
-                @endswitch
 
                 @php $row3--; @endphp
               @endforeach
