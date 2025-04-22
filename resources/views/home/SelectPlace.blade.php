@@ -110,6 +110,7 @@
   filter: none !important;
   cursor: not-allowed;
   border: none;
+
 }
 
 
@@ -200,21 +201,25 @@
               <!-- Ligne verticale droite du premier plan -->
               @foreach ($placeRightFirstPlan as $plan)
                 @if ($row3 < 3) @break @endif
-                @if ($plan->id_etat == 13)
-                <div class="cell bg-warning" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
-                    {{ $plan->nom_place }}
-                </div>
-                @elseif ($plan->id_etat == 12)
-                <div class="cell bg-danger" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
-                    {{ $plan->nom_place }}
-                </div>
-                @else
+
+                @switch($plan->id_etat)
+                    @case(13)
+                    <div class="cell bg-warning" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+
+                    @case(12)
+                    <div class="cell bg-danger" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+
+                    @default
                     <div class="cell" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
                         {{ $plan->nom_place }}
                     </div>
-                @endif
-
-
+                @endswitch
 
                 @php $row3--; @endphp
               @endforeach
@@ -222,20 +227,25 @@
               <!-- Ligne horizontale haut du premier plan -->
               @foreach ($placeUpFirstPlan as $plan)
                 @if ($row4 < 3) @break @endif
-                @if ($plan->id_etat == 13)
-                <div class="cell bg-warning" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
-                    {{ $plan->nom_place }}
-                  </div>
-                @elseif ($plan->id_etat == 12)
-                <div class="cell bg-danger" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
-                    {{ $plan->nom_place }}
-                  </div>
-                @else
-                <div class="cell" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
-                    {{ $plan->nom_place }}
-                  </div>
-                @endif
+                @switch($plan->id_etat)
+                    @case(13)
+                    <div class="cell bg-warning" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
 
+                    @case(12)
+                    <div class="cell bg-danger" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+
+                    @default
+                    <div class="cell" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+
+                @endswitch
                 @php $row4--; @endphp
               @endforeach
 
@@ -243,45 +253,124 @@
               @foreach ($placeGaucheVerticalSecondPlan as $plan)
                 @if ($row5 > 20) @break @endif
 
-                <div class="cell" style="grid-column: 2; grid-row: {{ $row5 }}" data-id="{{ $plan->id_place }}">
-                  {{ $plan->nom_place }}
-                </div>
+                  @switch($plan->id_etat)
+                      @case(13)
+                        <div class="cell bg-warning" style="grid-column: 2; grid-row: {{ $row5 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                        </div>
+                        @break
+
+                        @case(12)
+                        <div class="cell bg-danger" style="grid-column: 2; grid-row: {{ $row5 }}" data-id="{{ $plan->id_place }}">
+                            {{ $plan->nom_place }}
+                        </div>
+                        @break
+                      @default
+                      <div class="cell" style="grid-column: 2; grid-row: {{ $row5 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                      </div>
+                  @endswitch
                 @php $row5++; @endphp
               @endforeach
 
               <!-- Ligne horizontale bas deuxième plan -->
               @foreach ($placeStandWherePlaceDownSecondPlan as $plan)
                 @if ($row6 > 12) @break @endif
-                <div class="cell" style="grid-column: {{ $row6 }}; grid-row: 20" data-id="{{ $plan->id_place }}">
-                  {{ $plan->nom_place }}
-                </div>
+
+                @switch($plan->id_etat)
+                    @case(13)
+                    <div class="cell bg-warning" style="grid-column: {{ $row6 }}; grid-row: 20" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+
+                    @case(12)
+                    <div class="cell bg-danger" style="grid-column: {{ $row6 }}; grid-row: 20" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                      </div>
+                    @break
+
+                    @default
+                    <div class="cell" style="grid-column: {{ $row6 }}; grid-row: 20" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+
+                @endswitch
                 @php $row6++; @endphp
               @endforeach
 
               <!-- Ligne verticale droite deuxième plan -->
               @foreach ($placeStandWherePlaceRightSecondPlan as $plan)
                 @if ($row7 < 13) @break @endif
-                <div class="cell" style="grid-column: 12; grid-row: {{ $row7 }}" data-id="{{ $plan->id_place }}">
-                  {{ $plan->nom_place }}
-                </div>
+
+                @switch($plan->id_etat)
+                    @case(13)
+                    <div class="cell bg-warning" style="grid-column: 12; grid-row: {{ $row7 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+
+                    @case(12)
+                    <div class="cell bg-danger" style="grid-column: 12; grid-row: {{ $row7 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+
+                    @break
+
+                    @default
+                    <div class="cell" style="grid-column: 12; grid-row: {{ $row7 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                @endswitch
                 @php $row7--; @endphp
               @endforeach
 
               <!-- Ligne horizontale haut deuxième plan -->
               @foreach ($placeWherePlaceUpSecondPlan as $plan)
                 @if ($row8 > 11) @break @endif
-                <div class="cell" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
-                  {{ $plan->nom_place }}
-                </div>
+                @switch($plan->id_etat)
+                    @case(13)
+                    <div class="cell bg-warning" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                      </div>
+                    @break
+
+                    @case(12)
+                    <div class="cell bg-danger" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                      </div>
+                    @break
+
+                    @default
+                    <div class="cell" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                @endswitch
+
                 @php $row8++; @endphp
               @endforeach
 
               <!-- Ligne verticale troisième plan -->
               @foreach ($placeStandWherePlaceRightThirdPlan as $plan)
                 @if ($row9 > 11) @break @endif
-                <div class="cell" style="grid-column: 14; grid-row: {{ $row9 }}" data-id="{{ $plan->id_place }}">
-                  {{ $plan->nom_place }}
-                </div>
+                @switch($plan->id_etat)
+                    @case(13)
+                    <div class="cell bg-warning" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+                    @case(12)
+                    <div class="cell bg-danger" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                    @break
+
+                    @default
+                    <div class="cell" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                @endswitch
+
                 @php $row9++; @endphp
               @endforeach
 
