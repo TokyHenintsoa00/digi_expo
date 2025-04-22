@@ -128,44 +128,6 @@
 
                     </div>
                     <div id="dynamicInputsContainer" ></div>
-
-                    <h2>Plan des Places</h2>
-    <div class="grid" id="plan"></div>
-
-    <script>
-        const places = [
-            { id: 1, status: 'available' }, { id: 2, status: 'occupied' },
-            { id: 3, status: 'available' }, { id: 4, status: 'available' },
-            { id: 5, status: 'occupied' }, { id: 6, status: 'available' },
-            { id: 7, status: 'available' }, { id: 8, status: 'occupied' },
-            { id: 9, status: 'available' }, { id: 10, status: 'available' }
-        ];
-
-        const planContainer = document.getElementById('plan');
-
-        function renderPlaces() {
-            planContainer.innerHTML = '';
-            places.forEach(place => {
-                const div = document.createElement('div');
-                div.classList.add('place', place.status);
-                div.innerText = `P${place.id}`;
-                div.onclick = () => toggleStatus(place);
-                planContainer.appendChild(div);
-            });
-        }
-
-        function toggleStatus(place) {
-            if (place.status === 'available') {
-                place.status = 'occupied';
-            } else {
-                place.status = 'available';
-            }
-            renderPlaces();
-        }
-
-        renderPlaces();
-    </script>
-
                     <div class="row">
                         <div class="col-md-12 text-end">
                             <input type="submit" class="btn btn-primary" value="Ajouter"></input>

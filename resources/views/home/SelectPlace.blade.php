@@ -221,6 +221,20 @@
                     </div>
                 @endswitch
 
+                {{-- @if ($plan->id_etat == 13)
+                <div class="cell bg-warning" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
+                </div>
+                @elseif ($plan->id_etat == 12)
+                <div class="cell bg-danger" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
+                </div>
+                @else
+                    <div class="cell" style="grid-column: 12; grid-row: {{ $row3 }}" data-id="{{ $plan->id_place }}">
+                        {{ $plan->nom_place }}
+                    </div>
+                @endif --}}
+
                 @php $row3--; @endphp
               @endforeach
 
@@ -246,6 +260,20 @@
                     </div>
 
                 @endswitch
+                {{-- @if ($plan->id_etat == 13)
+                <div class="cell bg-warning" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
+                  </div>
+                @elseif ($plan->id_etat == 12)
+                <div class="cell bg-danger" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
+                  </div>
+                @else
+                <div class="cell" style="grid-column: {{ $row4 }}; grid-row: 4" data-id="{{ $plan->id_place }}">
+                    {{ $plan->nom_place }}
+                  </div>
+                @endif --}}
+
                 @php $row4--; @endphp
               @endforeach
 
@@ -355,22 +383,25 @@
                 @if ($row9 > 11) @break @endif
                 @switch($plan->id_etat)
                     @case(13)
-                    <div class="cell bg-warning" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                    <div class="cell bg-warning" style="grid-column: 14; grid-row: {{ $row9 }}" data-id="{{ $plan->id_place }}">
                         {{ $plan->nom_place }}
-                    </div>
+                      </div>
                     @break
+
                     @case(12)
-                    <div class="cell bg-danger" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
+                    <div class="cell bg-danger" style="grid-column: 14; grid-row: {{ $row9 }}" data-id="{{ $plan->id_place }}">
                         {{ $plan->nom_place }}
-                    </div>
+                      </div>
                     @break
 
                     @default
                     <div class="cell" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
                         {{ $plan->nom_place }}
-                    </div>
+                      </div>
                 @endswitch
-
+                <div class="cell" style="grid-column: 14; grid-row: {{ $row9 }}" data-id="{{ $plan->id_place }}">
+                  {{ $plan->nom_place }}
+                </div>
                 @php $row9++; @endphp
               @endforeach
 

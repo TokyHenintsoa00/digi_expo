@@ -248,7 +248,7 @@ class AdminController extends Controller
     public function creationSalonV2(Request $request)
     {
         $getReceptionModel = new ReceptionModel();
-
+        $getStandModel = new StandModel();
 
         $nom_salon = $request->nom_salon;
         $nom_organisateur = $request->nom_organisateur;
@@ -284,48 +284,11 @@ class AdminController extends Controller
         //dd($date_fin_salon,$now);
 
 
-        // if((Carbon::parse($date_fin_salon))->isAfter(Carbon::parse($date_now)))
-        // {
-        //     return redirect()->back()->withErrors(['error' => 'Une salon est encore en cours'])->withInput();
-
-        // }
-
-        // elseif ($date_fin_salon = null) {
-        //     # code...
-        //     //insert salon
-        //     $getReceptionModel->insertSalon($nom_salon,$date_debut,$date_fin);
-
-        //     //insert organisateur
-        //     $getReceptionModel->insertOrganisateur($nom_organisateur);
-
-
-        //     //insert contact
-        //     $getId_organisateur = $getReceptionModel->getOrganisateur($nom_organisateur);
-        //     $id_organisateur = $getId_organisateur[0]->id_organisateur;
-        //     $contacts = $request->contact;
-
-        //     if (is_array($contacts)) {
-        //         foreach ($contacts as $key => $contactData) {
-        //             $nomcontact = $contactData['nom'];  // Access individual contact's 'nom' field
-        //             $contact = $contactData['contact']; // Access individual contact's 'contact' field
-        //             // Process contact information (e.g., validation, storage)
-        //             // echo "Contact Name: $nomcontact, Contact Info: $contact<br>"; // Example output
-        //             $getReceptionModel->insertContact($id_organisateur,$nomcontact,$contact);
-        //         }
-
-        //     $locationModel = new LocationModel();
-        //     $location = $locationModel->insertLocation($name,$longitude,$latitude);
-
-        //     return redirect()->route('viewCreationSalonAdmin')->with('success', 'Creation de salon effectuée avec succes');
-
-        //     } else {
-        //         // Handle the case where $contacts is not an array (e.g., error message)
-        //         echo "Error: Contact information not provided in the expected format.";
-        //     }
-        // }
-        if($date_fin_salon == null)
+        if((Carbon::parse($date_now))->isAfter(Carbon::parse($date_fin_salon)))
         {
 
+            $getStandModel->updateResetPlace();
+
             $getReceptionModel->insertSalon($nom_salon,$date_debut,$date_fin);
 
             //insert organisateur
@@ -357,43 +320,9 @@ class AdminController extends Controller
             }
         }
 
-        elseif ((Carbon::parse($date_fin_salon))->isAfter(Carbon::parse($date_now))) {
-            # code...
-            //insert salon
-            return redirect()->back()->withErrors(['error' => 'Une salon est encore en cours'])->withInput();
-        }
+
         else{
-
-            $getReceptionModel->insertSalon($nom_salon,$date_debut,$date_fin);
-
-            //insert organisateur
-            $getReceptionModel->insertOrganisateur($nom_organisateur);
-
-
-            //insert contact
-            $getId_organisateur = $getReceptionModel->getOrganisateur($nom_organisateur);
-            $id_organisateur = $getId_organisateur[0]->id_organisateur;
-            $contacts = $request->contact;
-
-            if (is_array($contacts)) {
-                foreach ($contacts as $key => $contactData) {
-                    $nomcontact = $contactData['nom'];  // Access individual contact's 'nom' field
-                    $contact = $contactData['contact']; // Access individual contact's 'contact' field
-                    // Process contact information (e.g., validation, storage)
-                    // echo "Contact Name: $nomcontact, Contact Info: $contact<br>"; // Example output
-                    $getReceptionModel->insertContact($id_organisateur,$nomcontact,$contact);
-                }
-
-            $locationModel = new LocationModel();
-            $location = $locationModel->insertLocation($name,$longitude,$latitude);
-
-            return redirect()->route('viewCreationSalonAdmin')->with('success', 'Creation de salon effectuée avec succes');
-
-            } else {
-                // Handle the case where $contacts is not an array (e.g., error message)
-                echo "Error: Contact information not provided in the expected format.";
-            }
-
+            return redirect()->back()->withErrors(['error' => 'Une salon est encore en cours'])->withInput();
         }
 
     }
@@ -532,6 +461,9 @@ class AdminController extends Controller
             //----------------Salon ---------------------------------------------
             $id_salon = $request->id_salon;
             // dd($id_salon);
+            //----------------place-------------------------------------------
+            $id_place = $request->id_place;
+            $nom_place = $request->nom_place;
             //------------------------------------------------------------
             $getStandModel = new StandModel();
             $getEmpModel = new EmpModel();
@@ -539,6 +471,7 @@ class AdminController extends Controller
 
             if($getAllEmp ==null)
             {
+                //insert stand+emp+update permission stand => 4
                 $validate = $getStandModel->validationPermissionStandV1($id_permission_stand,$nom_stand,$id_categorie,
                 $description_stand, $nom_emp,$prenom_emp,$date_naissance,$email,
                 $img_stand,$nom_categorie_stand,$date_debut_stand,$date_fin_stand,$id_salon);
@@ -548,6 +481,17 @@ class AdminController extends Controller
                 $membre_stand = $getStandModel->membreStand();
 
                 $matricule_emp =$getAllEmp[0]->matricule_emp;
+
+                //update place to occupe + add place_stand
+                    //get max id stand
+                    $getMaxIdStand = $getStandModel->findMaxStandById();
+
+                    //insert place stand
+                    $getStandModel->insertPlace($id_place,$getMaxIdStand,$id_salon);
+
+                    //update place to reserve
+                    $getStandModel->updateEtatPlaceToOccuper($id_place);
+
                 // Envoi de l'email avec une vue Blade
                 Mail::send('emails.sentMailAcceptStand', [
                 'nom_emp' => $nom_emp,

@@ -36,7 +36,7 @@
                     <td>{{$list_permission->nom_place}}</td>
                     <td class="d-flex align-items-center"> <!-- Alignement du bouton avec le texte -->
                         <form action="{{route('validePermissionByAdmin')}}" method="POST">
-
+                            {{-- <form action="#" method="get"> --}}
                             @csrf
                             <input type="hidden" name="id_permission_stand" value="{{$list_permission->id_permission_stand}}">
                             <input type="hidden" name="nom_stand" value="{{$list_permission->nom_stand}}">
@@ -52,6 +52,9 @@
                             <input type="hidden" name="email" value="{{$list_permission->email}}">
                             <input type="hidden" name="date_naissance" value="{{$list_permission->date_naissance}}">
                             <input type="hidden" name="image_stand" value="{{$list_permission->img_stand}}">
+
+                            <input type="hidden" name="id_place" value="{{$list_permission->id_place}}">
+                            <input type="hidden" name="nom_place" value="{{$list_permission->nom_place}}">
 
 
                             <input type="submit" value="Valider" class="btn btn-success m-1">

@@ -757,6 +757,7 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [1, 8])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
 
@@ -765,6 +766,7 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [9, 18])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
 
@@ -773,6 +775,7 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [19, 26])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
 
@@ -781,6 +784,7 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [27, 36])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
 
@@ -790,6 +794,7 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [37, 44])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
 
@@ -798,6 +803,7 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [45, 53])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
 
@@ -806,6 +812,7 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [54, 61])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
     //<!-- LIGNE HORIZONTAL HAUT DEUXIEME PLAN -->
@@ -813,6 +820,7 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [62, 70])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
 
@@ -821,26 +829,26 @@ class StandModel extends Model
     {
         return DB::table('place')
         ->whereBetween('id_place', [71, 79])
+        ->orderBy('id_place', 'asc')
         ->get();
     }
 
 
     // insert place stand
-    public function insertPlace($id_place,$id_Stand,$id_Salon)
+    public function insertPlace($id_place,$id_stand,$id_salon)
     {
         return DB::table('place_stand')->insert([
-            'id_place' => id_place, // à adapter dynamiquement si nécessaire
+            'id_place' => $id_place, // à adapter dynamiquement si nécessaire
             'id_stand' => $id_stand,
-            'id_salon' => id_place // pareil ici, à ajuster selon ton besoin
+            'id_salon' => $id_salon // pareil ici, à ajuster selon ton besoin
         ]);
     }
 
     public function updateEtatPlaceToOccuper($id_place)
     {
-        $place_occupe = 12;
         return DB::table('place')
             ->where('id_place', $id_place)
-            ->update(['id_etat' => $place_occupe]);
+            ->update(['id_etat' => 12]);
     }
 
     public function updateEtatPlaceToReserver($id_place)
@@ -848,6 +856,20 @@ class StandModel extends Model
         $place_reserver = 13;
         return DB::table('place')
             ->where('id_place', $id_place)
+            ->update(['id_etat' => $place_reserver]);
+    }
+
+    //max id stand
+    public function findMaxStandById()
+    {
+        return DB::table('stand')->max('id_stand');
+    }
+
+
+    //reset all place
+    public function updateResetPlace()
+    {
+        return DB::table('place')
             ->update(['id_etat' => $place_reserver]);
     }
 
