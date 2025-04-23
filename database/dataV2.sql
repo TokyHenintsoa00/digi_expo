@@ -24,8 +24,6 @@ CREATE TABLE salon
 );
 
 
-
-
 CREATE TABLE etat
 (
     id_etat serial primary key,
