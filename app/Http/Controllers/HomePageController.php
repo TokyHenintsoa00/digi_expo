@@ -85,17 +85,19 @@ class HomePageController extends Controller
 
         // $date_fin_salon = $reception[0]->date_fin;
 
+        $date_debut_salon = $reception[0]->date_debut;
         if ($reste_jour <=0 || $reception[0]->date_fin == null) {
             # code...
 
             $date_fin_salon = null;
-            return view('home.homePage',compact('stand','reception','location_name', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon'));
+            return view('home.homePage',compact('stand','reception','location_name', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon','date_debut_salon'));
 
         }
 
         //delcaration de la date de fin du salob
         $date_fin_salon = $reception[0]->date_fin;
-        return view('home.homePage',compact('stand','reception','location_name', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon'));
+
+        return view('home.homePage',compact('stand','reception','location_name', 'organisateur', 'contact_organisateur','locations','reste_jour','date_fin_salon','date_debut_salon'));
     }
 
     //view page video en direct

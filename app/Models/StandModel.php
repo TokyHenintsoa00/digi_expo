@@ -869,8 +869,9 @@ class StandModel extends Model
     //reset all place
     public function updateResetPlace()
     {
+
         return DB::table('place')
-            ->update(['id_etat' => $place_reserver]);
+            ->update(['id_etat' => 14]);
     }
 
 }

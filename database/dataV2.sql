@@ -233,15 +233,15 @@ CREATE TABLE mois (
 );
 
 -- sender_type', 'receiver_id', 'content'
-CREATE TABLE messages
-(
-    id serial primary key,
-    sender_id integer references emp(id_emp),
-    receiver_id integer references emp(id_emp),
-    content text,
-    created_at timestamp(0),
-    updated_at timestamp(0)
-);
+-- CREATE TABLE messages
+-- (
+--     id serial primary key,
+--     sender_id integer references emp(id_emp),
+--     receiver_id integer references emp(id_emp),
+--     content text,
+--     created_at timestamp(0),
+--     updated_at timestamp(0)
+-- );
 
 
 CREATE TABLE notification_message

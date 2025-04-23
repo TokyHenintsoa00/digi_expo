@@ -61,6 +61,10 @@
 
 
 </style>
+@php
+    use Carbon\Carbon;
+        $now = Carbon::now();
+@endphp
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <section class="organisateur-section py-5">
@@ -83,7 +87,7 @@
                     @endforeach
                 </ul>
                 <ul>
-                    <li>
+                    <li>    
                         <strong>Lieu : </strong>{{$location_name}}
                     </li>
                 </ul>
@@ -92,6 +96,8 @@
                 <h2 class="reste-jours">
                     @if ($reste_jour == 0 || $reste_jour <0  )
                         En attente d'une nouvelle salon
+                    @elseif ($now < $date_debut_salon)
+                        Salon d'exposition en attente d'ouverture
                     @else
                         {{ $reste_jour }} jours restant
                     @endif
@@ -119,9 +125,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @php
+                        {{-- @php
                             use Carbon\Carbon;
-                        @endphp
+                        @endphp --}}
                         <!-- First row of 3 cards -->
                         <div class="row">
 
