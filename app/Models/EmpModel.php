@@ -499,7 +499,7 @@ class EmpModel extends Model
             FROM emp
             JOIN etat ON etat.id_etat = emp.id_etat
             WHERE emp.prenom_emp ILIKE ?
-        ", ["$prenom_emp%"]);
+        ", ["%$prenom_emp%"]);
 
         DB::commit();
 
