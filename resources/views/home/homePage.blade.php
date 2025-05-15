@@ -70,7 +70,7 @@
 <section class="organisateur-section py-5">
     <div class="container">
         @if (!isset($reception[0]->nom_du_sallon))
-            <h2 class="mb-4 text-center">Nom de l'exposition : pas econre d'exposition</h2>
+            <h2 class="mb-4 text-center">Nom de l'exposition : pas encore d'exposition</h2>
         @else
             <h2 class="mb-4 text-center">Nom de l'exposition : {{$reception[0]->nom_du_sallon}}</h2>
         @endif
@@ -87,7 +87,7 @@
                     @endforeach
                 </ul>
                 <ul>
-                    <li>    
+                    <li>
                         <strong>Lieu : </strong>{{$location_name}}
                     </li>
                 </ul>
@@ -95,7 +95,7 @@
             <div>
                 <h2 class="reste-jours">
                     @if ($reste_jour == 0 || $reste_jour <0  )
-                        En attente d'une nouvelle salon
+                        En attente d'un nouveau salon
                     @elseif ($now < $date_debut_salon)
                         Salon d'exposition en attente d'ouverture
                     @else
@@ -114,7 +114,7 @@
 
 </section>
 <center>
-    <h1>Liste des stand d'expositions</h1>
+    <h1>Liste des stands d'expositions</h1>
 
 </center>
 
@@ -156,7 +156,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
                                                     <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                    <p>Ce stand n'est plus disponible</p>
+                                                    <p>Ce stand n'est plus accessible</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +168,7 @@
                                                 <div class="card-body">
                                                     <h4 class="card-title">{{$list_stand_success->nom_stand}}</h4>
                                                     <p class="card-text">{{$list_stand_success->description_stand}}</p>
-                                                    <p>Ce stand n'est plus disponible</p>
+                                                    <p>Ce stand n'est plus accessible</p>
                                                 </div>
                                             </div>
                                         </div>
