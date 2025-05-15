@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 class StandModel extends Model
 {
     use HasFactory;
@@ -874,5 +875,29 @@ class StandModel extends Model
             ->update(['id_etat' => 14]);
     }
 
+
+    //reset 1 place
+    public function updateOnePlace()
+    {
+         $place_libre = 14;
+        return DB::table('place')
+            ->where('id_place', $id_place)
+            ->update(['id_etat' => $place_reserver]);
+    }
+
+
+    public function updateExpiredPlaces()
+    {
+    $today = Carbon::today()->toDateString(); // Date du jour
+
+    return DB::table('place')
+        ->whereIn('id_place', function ($query) use ($today) {
+            $query->select('ps.id_place')
+                ->from('place_stand as ps')
+                ->join('stand as s', 'ps.id_stand', '=', 's.id_stand')
+                ->whereDate('s.date_fin_stand', '<', $today);
+        })
+        ->update(['id_etat' => 14]);
+    }
 }
 

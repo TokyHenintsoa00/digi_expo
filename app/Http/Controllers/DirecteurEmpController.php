@@ -132,6 +132,11 @@ class DirecteurEmpController extends Controller
         return redirect()->route('viewDemandeNouvelleStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
     }
 
+    public function selectPlaceForNewStand()
+    {
+        
+    }
+
 
     public function viewGestionPersonnel()
     {

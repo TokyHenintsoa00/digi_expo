@@ -221,6 +221,10 @@ class HomePageController extends Controller
         {
             return redirect()->back()->withErrors(['error' => 'Vous ne pouvez pas creer une exposition pour le moment'])->withInput();
         }
+
+        // verification etat de la place de stand
+
+
         return redirect()->route('viewSelectPlaceStand')->with([
             'nom_stand' => $nom_stand,
             'id_categorie' => $id_categorie,
@@ -239,6 +243,11 @@ class HomePageController extends Controller
 
     public function viewSelectPlaceStand()
     {
+
+        // $getStandModel = new StandModel();
+
+        // $getVerifyPlace = $getStandModel->updateExpiredPlaces();
+
         $standData = [
             'nom_stand' => session('nom_stand'),
             'id_categorie' => session('id_categorie'),
@@ -253,6 +262,8 @@ class HomePageController extends Controller
             'date_naissance' => session('date_naissance'),
             'email_employe' => session('email_employe'),
         ];
+
+
 
         $getStandModel = new StandModel();
         //----ligne vertical gauche premier plan

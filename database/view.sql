@@ -447,3 +447,7 @@ SELECT *
 FROM emp
 JOIN etat ON etat.id_etat = emp.id_etat
 WHERE emp.nom_emp ILIKE 'rama%';
+
+
+--view place stand
+SELECT * FROM
