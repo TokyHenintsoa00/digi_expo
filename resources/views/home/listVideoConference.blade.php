@@ -1,7 +1,7 @@
 @extends('parent.parentHome')
 @section('linkVideoSection')
 
-<h2>Liste des prochaine video conference</h2>
+<h2>Liste des prochaines vidéoconférences</h2>
 
 <div class="col-13">
 
@@ -19,10 +19,10 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Titre de video Conference</th>
-                <th>Type de conference </th>
-                <th>Categorie</th>
-                <th>Date de membre</th>
+                <th>Titre de la vidéoconférence</th>
+                <th>Type de conférence </th>
+                <th>Catégorie</th>
+                <th>Date prévue</th>
                 <th>Liens</th>
             </tr>
         </thead>
@@ -36,7 +36,7 @@
                     <td>{{ $videoConferences->date_heure_salle_conference }}</td>
                     <td>
                         @if ($videoConferences->liens_video == null)
-                            <span class="text-danger fw-semibold">Pas encore de liens de video</span>
+                            <span class="text-danger fw-semibold">Pas encore de lien vidéo</span>
                         @else
                             {{ $videoConferences->liens_video }}
                         @endif

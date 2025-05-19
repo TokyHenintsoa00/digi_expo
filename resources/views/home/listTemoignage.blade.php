@@ -1,9 +1,7 @@
 @extends('parent.parentHome')
 @section('listTemoignageSection')
 
-
-
-<h2>Liste des prochaine video conference</h2>
+<h2>Liste des prochains témoignages</h2>
 
 <div class="col-13">
 
@@ -21,9 +19,9 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Titre de video Conference</th>
+                <th>Titre du témoignage</th>
                 <th>Stand</th>
-                <th>Date de membre</th>
+                <th>Date du témoignage</th>
                 <th>Liens</th>
             </tr>
         </thead>
@@ -36,7 +34,7 @@
                     <td>{{ $getAllTemoignages->date_temoignage}}</td>
                     <td>
                         @if ($getAllTemoignages->liens_video == null)
-                            <span class="text-danger fw-semibold">Pas encore de liens de video</span>
+                            <span class="text-danger fw-semibold">Pas encore de lien vidéo</span>
                         @else
                             {{ $getAllTemoignages->liens_video }}
                         @endif

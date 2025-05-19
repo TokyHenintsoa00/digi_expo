@@ -29,14 +29,14 @@
                                 <!-- Formulaire du stand -->
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="nomStand" class="form-label">Nom de stand</label>
+                                        <label for="nomStand" class="form-label">Nom du stand</label>
                                         <input type="text" class="form-control" id="nomStand" aria-describedby="nomHelp" name="nom_stand" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="faculteSelect" class="form-label">Votre catégorie</label>
                                         <select class="form-select" id="faculteSelect" aria-label="Select faculté" name="id_categorie" required>
-                                            <option selected disabled>Choisissez votre faculté</option>
+                                            <option selected disabled>Choisissez votre catégorie</option>
                                             @foreach ($categorie as $list_categorie)
                                             <option value="{{$list_categorie->id_categorie}}">{{$list_categorie->nom_categorie}}</option>
                                             @endforeach
@@ -54,7 +54,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="emailEmploye" class="form-label">Date de debut de l'exposition</label>
+                                        <label for="emailEmploye" class="form-label">Date de début de l'exposition</label>
                                         <input type="date" class="form-control" id="emailEmploye" aria-describedby="emailHelp" name="date_debut" required>
                                     </div>
 
@@ -64,7 +64,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="nomStand" class="form-label">image du stand</label>
+                                        <label for="nomStand" class="form-label">Image du stand </label>
                                         <input type="file" class="form-control" id="img_stand" name="img_stand" accept="image/*" required>
                                     </div>
                                 </div>

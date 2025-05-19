@@ -203,13 +203,13 @@
                 <li class="navbar-item">
                     <a class="navbar-link" href="/videoDirect">
                         <i class="ti ti-video"></i>
-                        <span>Video conference avec <br>les hotesses</span>
+                        <span>Vidéo-conférence avec <br>les hôtesses</span>
                     </a>
                 </li>
                 <li class="navbar-item">
                     <a class="navbar-link" href="{{route('viewVideoConferenceHome')}}">
                         <i class="ti ti-video"></i>
-                        <span>Conference</span>
+                        <span> Salle de conférence</span>
                     </a>
                 </li>
                 <li class="navbar-item">
