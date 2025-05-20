@@ -89,3 +89,8 @@ INSERT INTO permission_stand (nom_stand, id_faculte_stand, description_stand, no
 ('Stand de directeur18', 1, 'Description du stand 18', 'nom18', 'prenom18', '1997-06-18', 'email18@example.com', 'image18.jpg', 1),
 ('Stand de directeur19', 1, 'Description du stand 19', 'nom19', 'prenom19', '1998-07-19', 'email19@example.com', 'image19.jpg', 1),
 ('Stand de directeur20', 1, 'Description du stand 20', 'nom20', 'prenom20', '1999-08-20', 'email20@example.com', 'image20.jpg', 1);
+
+
+
+SELECT id_sallon FROM membre_Stand
+join stand s on s.id_stand=membre_stand.id_stand;

@@ -209,7 +209,7 @@
                 <li class="navbar-item">
                     <a class="navbar-link" href="{{route('viewVideoConferenceHome')}}">
                         <i class="ti ti-video"></i>
-                        <span> Salle de conférence</span>
+                        <span> Conférence</span>
                     </a>
                 </li>
                 <li class="navbar-item">

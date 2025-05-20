@@ -332,6 +332,8 @@ class HomePageController extends Controller
         //reservation de place
         $getStandModel->updateEtatPlaceToReserver($place_id);
 
+        // dd($id_max_id_salon);
+
         return redirect()->route('viewpermissionDeFaireUnStand')
         ->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail
         une fois que l\'administrateur aura validé votre demande.');

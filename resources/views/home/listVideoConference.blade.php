@@ -1,7 +1,7 @@
 @extends('parent.parentHome')
 @section('linkVideoSection')
 
-<h2>Liste des prochaines vidéoconférences</h2>
+<h2>Liste des prochaines conférences</h2>
 
 <div class="col-13">
 

@@ -30,7 +30,8 @@ from membre_Stand
 join stand on stand.id_stand=membre_stand.id_stand
 join salon on salon.id_sallon = stand.id_sallon
 join emp as directeur on directeur.id_emp = membre_stand.id_directeur
-left join emp as emp on emp.id_emp = membre_stand.id_emp;
+left join emp as emp on emp.id_emp = membre_stand.id_emp
+where stand.id_etat !=11;
 
 --jerena an ilay list an ilay membre de stand any am admin
 CREATE OR REPLACE VIEW v_membre_stand_v1 as

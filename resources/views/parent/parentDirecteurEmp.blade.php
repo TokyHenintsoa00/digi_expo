@@ -306,12 +306,12 @@ aside.top-navbar {
                       <span>Témoignage</span>
                   </a>
               </li>
-              {{-- <li class="navbar-item">
+              <li class="navbar-item">
                   <a class="navbar-link" href="{{route('viewCalendrierSuivi')}}">
                       <i class="ti ti-calendar"></i>
                       <span>Calendrier</span>
                   </a>
-              </li> --}}
+              </li>
               <li class="navbar-item">
                   <a class="navbar-link" href="{{route('viewMessageDirecteur')}}">
                       <i class="ti ti-message"></i>

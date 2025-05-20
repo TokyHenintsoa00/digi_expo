@@ -215,3 +215,10 @@ INSERT INTO place_stand (id_place,id_stand,id_salon) VALUES
 
 SELECT * FROM place
 WHERE nom_place ILIKE 'A%';
+
+
+
+SELECT distinct(id_stand),date_de_creation_stand,nom_stand,id_directeur,
+description_stand,img_stand,id_etat,nom_directeur,prenom_directeur,nom_du_sallon,id_sallon
+from v_membre_stand where id_directeur = 13
+and id_etat IN(3,4)

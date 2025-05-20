@@ -395,13 +395,11 @@
                     @break
 
                     @default
-                    <div class="cell" style="grid-column: {{ $row8 }}; grid-row: 13" data-id="{{ $plan->id_place }}">
-                        {{ $plan->nom_place }}
-                      </div>
-                @endswitch
-                <div class="cell" style="grid-column: 14; grid-row: {{ $row9 }}" data-id="{{ $plan->id_place }}">
+                    <div class="cell" style="grid-column: 14; grid-row: {{ $row9 }}" data-id="{{ $plan->id_place }}">
                   {{ $plan->nom_place }}
                 </div>
+                @endswitch
+                
                 @php $row9++; @endphp
               @endforeach
 
@@ -418,7 +416,7 @@
           <input type="hidden" name="date_debut" value="{{ session('date_debut')}}">
           <input type="hidden" name="date_fin" value="{{ session('date_fin')}}">
           <input type="hidden" name="img_stand_name" value="{{ session('img_stand_name')}}">
-          <input type="hidden" name="id_max_salon" value="{{ session('id_max_id_salon')}}">
+          <input type="hidden" name="id_max_id_salon" value="{{ session('id_max_id_salon')}}">
           <input type="hidden" name="nom_employe" value="{{ session('nom_employe')}}">
           <input type="hidden" name="prenom_employe" value="{{ session('prenom_employe')}}">
           <input type="hidden" name="date_naissance" value="{{ session('date_naissance')}}">

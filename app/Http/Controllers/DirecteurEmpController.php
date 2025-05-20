@@ -29,7 +29,7 @@ class DirecteurEmpController extends Controller
     public function viewStandDirecteur()
     {
         $session_id_emp = Session::get('id_emp');
-        //dd($session_id_emp);
+        // dd($session_id_emp);
 
         $cookieName = 'id_emp_' . $session_id_emp; // Assurez-vous que $session_id_emp est défini
         $cookie_Emp = Cookie::get($cookieName);
@@ -134,7 +134,7 @@ class DirecteurEmpController extends Controller
 
     public function selectPlaceForNewStand()
     {
-        
+
     }
 
 
