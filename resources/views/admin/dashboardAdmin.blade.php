@@ -51,6 +51,7 @@
                     <label for="timeFilter">Période:</label>
                     <select id="timeFilter" class="form-control">
                         <option value="month">Mois</option>
+                        <option value="">Jour</option>
                     </select>
                 </div>
                 <div>

@@ -76,7 +76,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="label" for="password" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Votre matricule</label>
-                        <input type="text" class="form-control" placeholder="pXXX" name="matricule_emp" required>
+                        <input type="text" class="form-control" placeholder="MAT-EXPO-XXX" name="matricule_emp" required>
                     </div>
                   <div class="form-group d-flex">
                     <button type="submit" class="btn btn-primary mr-2">Se connecter</button>
