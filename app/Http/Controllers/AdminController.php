@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\Notification;
+use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -589,13 +590,28 @@ class AdminController extends Controller
 
         //-----------------------------------------------------------------------------------------
 
-         // Créer une notification pour le directeur
-        Notification::create([
-            'user_id' => $id_expediteur,
-            'title' => 'Validation de recrutement acceptée',
-            'message' => 'Votre recrutement a été validé. Cliquez ici pour plus de détails.',
-            'link' => route('viewListEmpAndNombreEmpParStand')
-        ]);
+        //  // Créer une notification pour le directeur
+        // Notification::create([
+        //     'user_id' => $id_expediteur,
+        //     'title' => 'Validation de recrutement acceptée',
+        //     'message' => 'Votre recrutement a été validé. Cliquez ici pour plus de détails.',
+        //     'link' => route('viewListEmpAndNombreEmpParStand')
+        // ]);
+
+
+        //-----------------------------------------------------
+        //     $senderNotification = 0;
+        //     $receiverNotification = $id_expediteur;
+        //     $content = "Votre demande de recrutement a ete accepte";
+        //     $url = `http://127.0.0.1:8000/directeur/viewListEmpAndNombreEmpParStand`;
+
+        // $response = Http::post('http://localhost:8080/api/notifications/directeur/validationRecrutementByAdmin', [
+        //     'sender' => $senderNotification,
+        //     'receiver' => $receiverNotification, // ou un identifiant unique si vous en avez
+        //     'content' =>$content,
+        //     'url' =>$url
+        // ]);
+
 
         Mail::send('emails.sentMailAcceptRecrutement',[
             'prenom_emp' => $prenom_emp,
