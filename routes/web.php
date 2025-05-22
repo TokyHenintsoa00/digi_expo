@@ -719,6 +719,9 @@ Route::prefix('directeur')->group(function(){
             return app(AdminController::class)->getContenuePhoto($request);
         })->name('get.data.photo-contenue.by.year');
 
+
+        
+
     });
 
 

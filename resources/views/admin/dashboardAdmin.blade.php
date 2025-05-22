@@ -98,6 +98,7 @@
 
 
         //nombre de contenue photo et video
+        //photo,video,utilisateur
         function initializeDonutChart1() {
             // Initialisation du Donut Chart 1
             donutChart1 = new ApexCharts(document.querySelector("#donutChart1"), {
@@ -149,22 +150,22 @@
                     .catch(error => console.error("Erreur pour l'AreaChart:", error));
         }
 
-        function updateAreaChart2(year)
-        {
+            function updateAreaChart2(year)
+            {
 
-            fetch(`/admin/get-data-photo-contenue-by-year?year=${year}`)
-            .then(response => response.json())
-                    .then(data => {
-                        const categories = data.map(item => item.nom_mois || "");
-                        const values = data.map(item => item.nombre_contenue || 0);
+                fetch(`/admin/get-data-photo-contenue-by-year?year=${year}`)
+                .then(response => response.json())
+                        .then(data => {
+                            const categories = data.map(item => item.nom_mois || "");
+                            const values = data.map(item => item.nombre_contenue || 0);
 
-                        areaChart2.updateOptions({
-                            series: [{ name: 'Données', data: values }],
-                            xaxis: { categories: categories },
-                        });
-                    })
-                    .catch(error => console.error("Erreur pour l'AreaChart:", error));
-        }
+                            areaChart2.updateOptions({
+                                series: [{ name: 'Données', data: values }],
+                                xaxis: { categories: categories },
+                            });
+                        })
+                        .catch(error => console.error("Erreur pour l'AreaChart:", error));
+            }
 
 
 
@@ -260,8 +261,55 @@
 
         initializeCharts();
          // Initialisation des charts
-    initializeDonutChart1();
+        initializeDonutChart1();
     });
 </script>
+{{-- //-------------------------- --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const timeFilter = document.getElementById('timeFilter');
+        const yearInputDiv = document.getElementById('yearInput').parentElement;
+
+        // Fonction pour créer un select avec les mois
+        function createMonthSelect() {
+            const select = document.createElement('select');
+            select.className = 'form-control';
+            select.id = 'monthSelect';
+
+            const months = [
+                'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+                'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
+            ];
+
+            months.forEach((month, index) => {
+                const option = document.createElement('option');
+                option.value = index + 1; // 1 à 12
+                option.textContent = month;
+                select.appendChild(option);
+            });
+
+            return select;
+        }
+
+        timeFilter.addEventListener('change', function () {
+            // Si "Jour" est sélectionné
+            if (timeFilter.value === '') {
+                // Remplace l'input année par un select des mois
+                yearInputDiv.innerHTML = `
+                    <label for="monthSelect">Mois:</label>
+                    
+                `;
+                yearInputDiv.appendChild(createMonthSelect());
+            } else {
+                // Revenir à l'input année
+                yearInputDiv.innerHTML = `
+                    <label for="yearInput">Année:</label>
+                    <input type="number" id="yearInput" class="form-control" placeholder="Entrez une année">
+                `;
+            }
+        });
+    });
+</script>
+
 
 @endsection

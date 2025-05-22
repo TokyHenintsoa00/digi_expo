@@ -942,6 +942,27 @@ class AdminController extends Controller
         return response()->json($standData);
     }
 
+    public function getMouvementStandByDay(Request $request)
+    {
+         $year = $request->input('year');
+
+        // Vérification de la validité de l'année
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+
+        $standData = DB::table('v_nombre_stand_by_day')
+            ->where('annee', $year)
+            ->select('nom_mois', 'nombre_stands')
+            ->orderBy('mois')
+            ->get();
+
+        if ($standData->isEmpty()) {
+            return response()->json([]);
+        }
+    }
+
     public function getDataUtilisateur(Request $request)
     {
         $year = $request->input('year');
