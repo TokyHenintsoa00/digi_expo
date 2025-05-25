@@ -205,6 +205,9 @@ INSERT INTO place (nom_place, id_etat) VALUES
 ('H1', 14), ('H2', 14), ('H3', 14), ('H4', 14), ('H5', 14), ('H6', 14), ('H7', 14), ('H8', 14), ('H9', 14);
 
 
+insert into salon(nom_du_sallon,date_creation_salon,date_debut,date_fin)VALUES
+('SALON TEST','2020-01-01','2020-01-01','2020-01-01');
+
 
 INSERT INTO place_stand (id_place,id_stand,id_salon) VALUES
 (1,1,2),

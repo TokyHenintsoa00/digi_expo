@@ -86,6 +86,10 @@ class HomePageController extends Controller
         // $date_fin_salon = $reception[0]->date_fin;
 
         $date_debut_salon = $reception[0]->date_debut;
+
+        
+
+
         if ($reste_jour <=0 || $reception[0]->date_fin == null) {
             # code...
 
