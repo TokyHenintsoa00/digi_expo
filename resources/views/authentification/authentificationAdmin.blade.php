@@ -74,7 +74,7 @@
                   </div>
                   <div class="form-group mb-3">
                     <label class="label" for="password" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Mots de passe</label>
-                    <input type="password" class="form-control" placeholder="Password" name="pwd" required>
+                    <input type="password" class="form-control" placeholder="Mots de passe" name="pwd" required>
                   </div>
                   <div class="form-group d-flex">
                     <button type="submit" class="btn btn-primary mr-2">Se connecter</button>
