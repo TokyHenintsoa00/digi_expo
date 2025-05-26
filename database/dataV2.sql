@@ -293,6 +293,52 @@ CREATE TABLE place_stand
 );
 
 
+CREATE TABLE permission_galerie_photo
+(
+    id_permission_gallerie_photos serial primary key,
+    id_stand integer references stand(id_stand),
+    id_type_stand integer references type_stand(id_type_stand),
+    nom_info_type_stand text,
+    description_info_type_stand text,
+    img_info_type_stand text,
+    date_creation timestamp(0),
+    id_etat integer references etat(id_etat)
+);
+
+CREATE TABLE permission_galerie_video
+(
+    id_permission_gallerie_video serial primary key,
+    id_stand integer references stand(id_stand),
+    titre_video text,
+    description_video text,
+    file_video varchar(60),
+    date_creation_video timestamp(0),
+    id_etat integer references etat(id_etat)
+);
+
+CREATE TABLE permission_video_conference_client
+(
+    id_permission_video_conferece_client serial primary key,
+    id_stand integer references stand(id_stand),
+    date_debut_conference_client timestamp(0),
+    liens_video text,
+    id_sallon integer references salon(id_sallon),
+    id_etat integer references etat(id_etat)
+);
+
+
+
+CREATE TABLE permission_temoigange
+(
+    id_permission_temoigange serial primary key,
+    id_stand integer references stand(id_stand),
+    id_directeur integer references emp(id_emp),
+    date_temoigage timestamp(0),
+    leins_video text,
+    titre text,
+    id_sallon integer references salon(id_sallon),
+    id_etat integer references etat(id_etat)
+);
 
 
 -- SELECT distinct(id_stand),id_directeur,nom_stand,description_Stand,

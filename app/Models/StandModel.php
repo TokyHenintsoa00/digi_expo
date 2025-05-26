@@ -411,6 +411,38 @@ class StandModel extends Model
     }
 
 
+    public function insertPermissionGaleriePhoto($id_stand,$id_type_stand,$nom_info_type_stand,
+        $description_info_type_stand,$img_info_type_stand)
+    {
+         DB::beginTransaction();
+         try
+         {
+
+            DB::insert("INSERT INTO permission_galerie_photo(id_stand,id_type_stand,nom_info_type_stand,description_info_type_stand,
+            img_info_type_stand,date_creation,id_etat)values(?,?,?,?,?,CURRENT_TIMESTAMP,1)",[$id_stand,$id_type_stand,
+            $nom_info_type_stand,$description_info_type_stand,json_encode($img_info_type_stand)]);
+
+             DB::commit();
+
+         } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+         }
+    }
+
+    public function listPermissionGaleriePhoto()
+    {
+        $result = DB::select("SELECT * FROM v_permission_galerie_photo");
+        return $result;
+    }
+
+    public function getPermissionGaleriePhotoById($id_permission_galerie_photo)
+    {
+        $result = DB::select("SELECT * FROM v_permission_galerie_photo where id_permission_gallerie_photos = ?",[$id_permission_galerie_photo]);
+        return $result;
+    }
+
     //insertion du contenue de stand [PHOTO]
     public function insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,
     $description_info_type_stand,$img_info_type_stand)

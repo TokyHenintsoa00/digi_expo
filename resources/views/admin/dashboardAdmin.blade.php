@@ -46,19 +46,32 @@
             <h4 class="card-title">Graphiques des Utilisateurs, des Stocks et des Stands</h4>
         </div>
         <div class="card-body">
-            <div class="d-flex justify-content-start mb-4">
-                <div class="mr-3">
+           <div class="d-flex justify-content-start align-items-end mb-4 gap-3 flex-wrap">
+                <div class="me-4"> <!-- marge à droite (end) -->
                     <label for="timeFilter">Période:</label>
                     <select id="timeFilter" class="form-control">
                         <option value="month">Mois</option>
-                        <option value="">Jour</option>
+                        <option value="day">jour</option>
+                        <option value="year">Annee</option>
                     </select>
                 </div>
                 <div>
                     <label for="yearInput">Année:</label>
                     <input type="number" id="yearInput" class="form-control" placeholder="Entrez une année">
                 </div>
+{{--
+                <div class="me-4">
+                    <input type="submit" name="filtrer_periode" value="Filtrer par jour" class="btn btn-primary">
+                </div>
+
+                                <div class="me-4">
+                    <input type="submit" name="filtrer_periode" value="Filtrer par annee" class="btn btn-primary">
+                </div> --}}
+
+
+
             </div>
+
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <h5 class="text-center">Nombre de contenue d'exposition</h5>
@@ -66,7 +79,7 @@
                 </div>
                 <div class="col-md-6 mb-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="text-center mb-0">Graphique des gestion personnel    </h5>
+                        <h5 class="text-center mb-0">Graphique des gestion personnel</h5>
                         <select id="dataFilter" class="form-control w-50 ml-3">
                             <option value="utilisateurs">Utilisateurs</option>
                             <option value="mouvements">Demission et licensiment</option>
@@ -293,11 +306,11 @@
 
         timeFilter.addEventListener('change', function () {
             // Si "Jour" est sélectionné
-            if (timeFilter.value === '') {
+            if (timeFilter.value == 'day') {
                 // Remplace l'input année par un select des mois
                 yearInputDiv.innerHTML = `
                     <label for="monthSelect">Mois:</label>
-                    
+
                 `;
                 yearInputDiv.appendChild(createMonthSelect());
             } else {
@@ -307,8 +320,14 @@
                     <input type="number" id="yearInput" class="form-control" placeholder="Entrez une année">
                 `;
             }
+
+            
         });
+
+
     });
+
+
 </script>
 
 

@@ -151,8 +151,8 @@ Route::prefix('directeur')->group(function(){
     })->name('viewformulaireAddPosterAndProjetEmp');
 
     //Route::get('/viewformulaireAddPosterAndProjetEmp',[DirecteurEmpController::class,'viewformulaireAddPosterAndProjetEmp'])->name('viewformulaireAddPosterAndProjetEmp');
-    Route::post('/AddPosterAndProjetEmp',[DirecteurEmpController::class,'AddPosterAndProjetEmp'])->name('AddPosterAndProjetEmp');
-
+    // Route::post('/AddPosterAndProjetEmp',[DirecteurEmpController::class,'AddPosterAndProjetEmp'])->name('AddPosterAndProjetEmp');
+    Route::post('/permissionGaleriePhoto',[DirecteurEmpController::class,'permissionGaleriePhoto'])->name('permissionGaleriePhoto');
     Route::get('/viewModifierPosterProjet', function (Request $request) {
         if (!session()->has('id_emp')) {
             return redirect('/authentification')->with('error', 'Accès interdit !');
@@ -559,7 +559,7 @@ Route::prefix('directeur')->group(function(){
 //-------------------ADMIN-------------------------------------------------------------------------------
 
     Route::get('/viewAuthentificationAdmin',[AdminController::class,'viewAuthentificationAdmin'])->name('viewAuthentificationAdmin');
-    Route::get('/getSignInAdmin',[AdminController::class,'getSignInAdmin']);
+    Route::post('/getSignInAdmin',[AdminController::class,'getSignInAdmin']);
     Route::get('/getSignOutAdmin',[AdminController::class,'getSignOutAdmin']);
 
     Route::prefix("admin")->group(function(){
@@ -720,7 +720,15 @@ Route::prefix('directeur')->group(function(){
         })->name('get.data.photo-contenue.by.year');
 
 
-        
+        Route::get('/viewValidationGaleriePhoto', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewValidationGaleriePhoto($request);
+        })->name('viewValidationGaleriePhoto');
+
+
+        Route::post('/validePermissionGalerie',[AdminController::class,'validePermissionGalerie'])->name('validePermissionGalerie');
 
     });
 

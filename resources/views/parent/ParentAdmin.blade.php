@@ -366,6 +366,7 @@ aside.top-navbar {
             @yield('listMembreStandSection')
             @yield('calendrierSuiviAdminSection')
             @yield('dasboardAdminSection')
+            @yield('galeriePhotoSection')
 
         </div>
       </div>

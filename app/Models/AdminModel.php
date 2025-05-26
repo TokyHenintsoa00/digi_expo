@@ -18,7 +18,7 @@ class AdminModel extends Model
 
     // Indiquer les champs qui peuvent être remplis
     protected $fillable = [
-        'id_facebook', 'nom', 'prenom', 'email', 'pwd_admin', 'id_etat'
+        'id', 'nom', 'prenom', 'email', 'pwd_admin', 'id_etat'
     ];
 
     //function se signIn de l'admin(Se connection est avec facebook)
@@ -39,18 +39,15 @@ class AdminModel extends Model
 
     public function signInAdminByFormulaire($email, $pwd,$remember)
     {
-        //$admin = $getAuthAdminFirst = $this->getAuthAdminFirst($email);
+        $admin1 = $getAuthAdminFirst = $this->getAuthAdminFirst($email);
         $admin = DB::table('admin')->where('email', $email)->where('pwd_admin', $pwd)->first();
 
-        if($admin == null)
-        {
-            return redirect()->back()->withErrors(['error' => 'Erreur verifier votre email ou votre mots de passe'])->withInput();
-        }
+        //dd($admin1->pwd_admin);
 
         // $admin = $admin[0];
 
         //si le mdp n'est pas hache(Tsy crypter ilay mdp)
-        if(Hash::needsRehash($admin->pwd_admin))
+        if(Hash::needsRehash($admin1->pwd_admin))
         {
             // Si "remember me" est coché
             if ($remember ==TRUE) {
@@ -67,11 +64,27 @@ class AdminModel extends Model
                 if ($remember ==TRUE) {
                     // Créer un cookie pour se souvenir de l'utilisateur pendant 7 jours
                     Cookie::queue('remember_admin', $admin->id, 60 * 24 * 7); // 7 jours
+
                 }
                 return $admin; // ou vous pouvez retourner d'autres informations selon vos besoins
             }
         }
         return null; // ou gérer le cas où l'authentification échoue
+    }
+
+    //function connection admin v2
+    public function signInAdminByFormulaireV1($email,$pwd,$remember)
+    {
+         $admin = DB::table('admin')->where('email', $email)->first();
+
+        if (!$admin) {
+            echo "admin n'existe pas";
+        } else {
+            if (Hash::check($pwd, $admin->pwd_admin) && $remember == TRUE) {
+                return $admin;
+            }
+        }
+
     }
 
      // Fonction pour vérifier si un utilisateur est "remembered"

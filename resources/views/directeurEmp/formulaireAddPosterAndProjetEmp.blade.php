@@ -16,12 +16,10 @@
                        {!! session('success') !!}
                    </div>
                    @endif
-                <form action="{{route('AddPosterAndProjetEmp')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('permissionGaleriePhoto')}}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-row">
-
-
                         <div class="form-group col-md-6 mb-3">
                             <label for="inputPassword4">Stand</label>
                             <select class="form-select" id="faculteSelect" aria-label="Select faculté" name="id_stand">

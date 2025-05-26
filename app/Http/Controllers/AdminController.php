@@ -24,6 +24,7 @@ use App\Models\Notification;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
+
 class AdminController extends Controller
 {
     public function viewAuthentificationAdmin()
@@ -107,27 +108,39 @@ class AdminController extends Controller
         $remember = $request->has('remember');
 
         $getSignInAdmin = new AdminModel();
-        $result = $getSignInAdmin->signInAdminByFormulaire($email,$pwd,$remember);
-        $verify = $getSignInAdmin->signInAdmin($email,$pwd);
+        // $result = $getSignInAdmin->signInAdminByFormulaire($email,$pwd,$remember);
+        // $verify = $getSignInAdmin->signInAdmin($email,$pwd);
 
         // dd($result[0]->id);
 
-        if ($verify == null)
-        {
-            # code...
-            return redirect()->back()->withErrors(['error' => 'Invalide verifier votre email ou votre mots de passe'])->withInput();
+        // if ($verify == null)
+        // {
+        //     # code...
+        //     return redirect()->back()->withErrors(['error' => 'Invalideooooooooooo verifier votre email ou votre mots de passe'])->withInput();
+        // }
+
+        // if ($result !=null)
+        // {
+        //     echo "mety";
+        //     //dd($result->id);
+        //     // Stocker l'id_admin dans la session
+        //     Session::put('id', $result->id);
+        //     return redirect()->route('viewCreationSalonAdmin'); // Redirection vers la page admin
+        // } else {
+        //     return redirect()->back()->withErrors(['error' => 'Invalideo verifier votre email ou votre mots de passe'])->withInput();
+        // }
+
+        $signInAdmin = $getSignInAdmin->signInAdminByFormulaireV1($email,$pwd,$remember);
+
+        if ($signInAdmin === null || $signInAdmin === false) {
+            return redirect()->back()->withErrors(['error' => 'Email ou mot de passe incorrect'])->withInput();
         }
 
-        if ($result !=null)
-        {
-            echo "mety";
-            //dd($result->id);
-            // Stocker l'id_admin dans la session
-            Session::put('id', $result->id);
-            return redirect()->route('viewCreationSalonAdmin'); // Redirection vers la page admin
-        } else {
-            return redirect()->back()->withErrors(['error' => 'Invalide verifier votre email ou votre mots de passe'])->withInput();
-        }
+            Session::put('id', $signInAdmin->id);
+
+
+         return redirect()->route('viewCreationSalonAdmin'); // Redirection vers la page admin
+
     }
 
     public function viewCreationSalonAdmin()
@@ -382,7 +395,7 @@ class AdminController extends Controller
             'email' =>$email,
             'token' => $token,
             'created_at' => now(),
-            'id_emp' =>$id_personne
+            'id_admin' =>$id_personne
         ]);
 
         // // Envoyer l'e-mail via Brevo
@@ -411,7 +424,7 @@ class AdminController extends Controller
 
 
 
-        $id_emp = $reset->id_emp;
+        $id_emp = $reset->id_admin;
         //dd($reset,$id_emp);
 
         // if (!$reset || $reset->email !== $request->email) {
@@ -420,11 +433,13 @@ class AdminController extends Controller
 
         // Réinitialiser le mot de passe
         $admin = AdminModel::where('id', $id_emp)->first();
+
+        // dd($admin);
         $admin->pwd_admin = bcrypt($request->password);
         $admin->save();
 
         // // Supprimer le token
-        DB::table('password_resets')->where('id_emp', $id_emp)->delete();
+        DB::table('password_resets')->where('id_admin', $id_emp)->delete();
 
         return redirect()->route('viewAuthentificationAdmin')->with('status', 'Votre mot de passe a été réinitialisé avec succès.');
     }
@@ -1066,6 +1081,47 @@ class AdminController extends Controller
 
         // Retourne les résultats au format JSON
         return response()->json($results);
+    }
+
+
+    public function viewValidationGaleriePhoto()
+    {
+        $standModel = new StandModel();
+        $permissionGaleriePhoto = $standModel->listPermissionGaleriePhoto();
+        return view('admin.validationPermissionGaleriePhoto',compact('permissionGaleriePhoto'));
+    }
+
+    public function validePermissionGalerie(Request $request)
+    {
+        $id_permission_galerie_photo = $request->id_permission_galerie;
+        //dd($id_permission_galerie_photo);
+
+        $standModel = new StandModel();
+        $permission_galerie_photo = $standModel->getPermissionGaleriePhotoById($id_permission_galerie_photo);
+
+         // Récupérer l'id du stand
+        $id_stand = $permission_galerie_photo[0]->id_stand;
+
+        $id_type_stand = $permission_galerie_photo[0]->id_type_stand;
+
+        $nom_info_type_stand = $permission_galerie_photo[0]->nom_info_type_stand;
+
+        $description_info_type_stand = $permission_galerie_photo[0]->description_info_type_stand;
+        // Décoder le champ JSON contenant les images
+        $images = json_decode($permission_galerie_photo[0]->img_info_type_stand, true);
+
+        $insertContenueStand = $standModel->insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,
+            $description_info_type_stand,$images);
+
+        return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo valider');
+
+        // dd([
+        //     'id_stand' => $id_stand,
+        //     'type' =>$id_type_stand,
+        //     'nom_inf' =>$nom_info_type_stand,
+        //     'images' => $images,
+        //     'desc' => $description_info_type_stand
+        // ]);
     }
 
 

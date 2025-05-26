@@ -205,7 +205,29 @@ class DirecteurEmpController extends Controller
     }
 
 
-    public function AddPosterAndProjetEmp(Request $request)
+    // public function AddPosterAndProjetEmp(Request $request)
+    // {
+    //     $id_stand = $request->id_stand;
+    //     $id_type_stand = $request->id_type_stand;
+    //     $nom_info_type_stand = $request->nom_info_type_stand;
+    //     $description_info_type_stand = $request->description_info_type_stand;
+    //    // dd($id_type_stand);
+    //     $image = [];
+    //     foreach ($request->file('img_info_type_stand') as $img_stand)
+    //     {
+    //         $img_stand_name = $img_stand->getClientOriginalName();
+    //         $img_stand->move(public_path('assets'),$img_stand_name);
+    //         $image[] = $img_stand_name;
+    //     }
+
+    //     $getEmpModel = new StandModel();
+    //     $ContenueStand = $getEmpModel->insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,$description_info_type_stand,$image);
+
+    //     return redirect()->route('viewformulaireAddPosterAndProjetEmp')->with('success', 'Contenue publier');
+
+    // }
+
+    public function permissionGaleriePhoto(Request $request)
     {
         $id_stand = $request->id_stand;
         $id_type_stand = $request->id_type_stand;
@@ -220,11 +242,9 @@ class DirecteurEmpController extends Controller
             $image[] = $img_stand_name;
         }
 
-        $getEmpModel = new StandModel();
-        $ContenueStand = $getEmpModel->insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,$description_info_type_stand,$image);
-
-        return redirect()->route('viewformulaireAddPosterAndProjetEmp')->with('success', 'Contenue publier');
-
+        $getStandModel = new StandModel();
+        $permissionGaleriePhoto = $getStandModel->insertPermissionGaleriePhoto($id_stand,$id_type_stand,$nom_info_type_stand,
+        $description_info_type_stand,$image);
     }
 
 

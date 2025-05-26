@@ -67,7 +67,8 @@
                     <span>{{ $errors->first('error') }}</span>
                 </div>
                 @endif
-                <form action="/getSignInAdmin" class="signin-form" method="GET">
+                <form action="/getSignInAdmin" class="signin-form" method="POST">
+                    @csrf
                   <div class="form-group mb-3">
                     <label class="label" for="name" style="font-family: 'Poppins', sans-serif; font-weight: 600;">Adresse mail</label>
                     <input type="email" class="form-control" placeholder="XXXX@gmail.com" name="email" required>

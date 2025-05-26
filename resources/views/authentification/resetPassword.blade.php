@@ -1,4 +1,4 @@
-{{-- <!DOCTYPE html>
+ {{-- <!DOCTYPE html>
 <html>
 <head>
     <title>Réinitialisation de votre mot de passe</title>
@@ -85,7 +85,7 @@
                   <div class="w-100">
                     <h3 class="mb-4">Renitialisation de mots de passe</h3>
                   </div>
-                  {{-- <div class="w-100">
+                   {{-- <div class="w-100">
                     <p class="social-media d-flex justify-content-end">
                       <a href="/viewAuthentificationAdmin/facebook" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
                     </p>
