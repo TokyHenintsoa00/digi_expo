@@ -245,6 +245,8 @@ class DirecteurEmpController extends Controller
         $getStandModel = new StandModel();
         $permissionGaleriePhoto = $getStandModel->insertPermissionGaleriePhoto($id_stand,$id_type_stand,$nom_info_type_stand,
         $description_info_type_stand,$image);
+
+                return redirect()->route('viewformulaireAddPosterAndProjetEmp')->with('success', 'Votre galerie photo est en cours de validation');
     }
 
 
@@ -287,14 +289,14 @@ class DirecteurEmpController extends Controller
 
         $id_info_type_stand = $getStandModel->viewInfoTypeStandByIdStand($getId_stand);
 
-        return view('directeurEmp.formulaireModificationPosterProjet', compact('type_stand','stand','id_info_type_stand','information_contenue'));
+        return view('directeurEmp.formulaireModificationPosterProjet', compact('type_stand','stand','id_info_type_stand','information_contenue','id_stand'));
     }
 
 
     public function modifierContenue(Request $request)
     {
-
-        $id_type_stand = $request->id_type_stand;
+        $id_stand = $request->id_stand;
+                $id_type_stand = $request->id_type_stand;
         $nom_info_type_stand = $request->nom_info_type_stand;
         $description_info_type_stand = $request->description_info_type_stand;
         $id_info_type_stand = $request->id_info_type_stand;
@@ -308,13 +310,39 @@ class DirecteurEmpController extends Controller
             $image[] = $img_stand_name;
         }
 
-        $getStandModel = new StandModel();
-        $getStandModel->updateContenueStand($id_info_type_stand,$id_info_type_stand_desc,
-        $id_type_stand,$nom_info_type_stand,$description_info_type_stand,$image);
-
-        return redirect()->route('viewGestionContenue')->with('success', 'Contenue publier');
+        $standModel = new StandModel();
+        $modification = $standModel->insertPermissionGaleriePhotoModification($id_stand,
+            $id_type_stand,$nom_info_type_stand,$description_info_type_stand,$image,$id_info_type_stand,$id_info_type_stand_desc);
+        return redirect()->route('viewGestionContenue')->with('success', 'Votre modification de galerie est en cours de validation');
 
     }
+
+    // public function modifierContenue(Request $request)
+    // {
+
+    //     $id_type_stand = $request->id_type_stand;
+    //     $nom_info_type_stand = $request->nom_info_type_stand;
+    //     $description_info_type_stand = $request->description_info_type_stand;
+    //     $id_info_type_stand = $request->id_info_type_stand;
+    //     $id_info_type_stand_desc = $request->id_info_type_stand_desc;
+
+    //     $image = [];
+    //     foreach ($request->file('img_info_type_stand') as $img_stand)
+    //     {
+    //         $img_stand_name = $img_stand->getClientOriginalName();
+    //         $img_stand->move(public_path('assets'),$img_stand_name);
+    //         $image[] = $img_stand_name;
+    //     }
+
+    //     $getStandModel = new StandModel();
+    //     $getStandModel->updateContenueStand($id_info_type_stand,$id_info_type_stand_desc,
+    //     $id_type_stand,$nom_info_type_stand,$description_info_type_stand,$image);
+
+    //     return redirect()->route('viewGestionContenue')->with('success', 'Contenue publier');
+
+    // }
+
+
 
     //-----------------------------------------------------------
 

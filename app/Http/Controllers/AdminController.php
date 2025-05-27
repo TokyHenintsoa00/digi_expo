@@ -1110,10 +1110,37 @@ class AdminController extends Controller
         // Décoder le champ JSON contenant les images
         $images = json_decode($permission_galerie_photo[0]->img_info_type_stand, true);
 
-        $insertContenueStand = $standModel->insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,
+
+        $id_etat = $request->id_etat;
+
+        if($id_etat == 15)
+        {
+            $id_info_type_stand = $request->id_info_type_stand;
+            $id_info_type_stand_desc = $request->id_info_type_stand_desc;
+            $standModel->updateContenueStand($id_info_type_stand,$id_info_type_stand_desc,
+            $id_type_stand,$nom_info_type_stand,$description_info_type_stand,$images);
+            $update_etat = $standModel->updateEtatPermissionaleriePhotoModifier($id_permission_galerie_photo);
+
+            return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo modifier');
+
+        }
+
+        else{
+            $update_etat = $standModel->updateEtatPermissionGaleriePhoto($id_permission_galerie_photo);
+
+            $insertContenueStand = $standModel->insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,
             $description_info_type_stand,$images);
 
-        return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo valider');
+            return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo valider');
+
+
+        }
+
+
+
+
+
+
 
         // dd([
         //     'id_stand' => $id_stand,
@@ -1124,5 +1151,10 @@ class AdminController extends Controller
         // ]);
     }
 
+
+    public function viewGalerieVideo()
+    {
+        return view('admin.validationPermissionGalerieVideo');
+    }
 
 }

@@ -302,7 +302,10 @@ CREATE TABLE permission_galerie_photo
     description_info_type_stand text,
     img_info_type_stand text,
     date_creation timestamp(0),
-    id_etat integer references etat(id_etat)
+    id_etat integer references etat(id_etat),
+    id_info_type_stand integer references info_type_stand(id_info_type_stand),
+    id_info_type_stand_desc integer references info_type_stand_desc(id_info_type_stand_desc),
+
 );
 
 CREATE TABLE permission_galerie_video

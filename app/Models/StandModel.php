@@ -431,6 +431,29 @@ class StandModel extends Model
          }
     }
 
+
+   public function insertPermissionGaleriePhotoModification($id_stand,$id_type_stand,$nom_info_type_stand,
+        $description_info_type_stand,$img_info_type_stand,$id_info_type_stand,$id_info_type_stand_desc)
+    {
+         DB::beginTransaction();
+         try
+         {
+
+            DB::insert("INSERT INTO permission_galerie_photo(id_stand,id_type_stand,nom_info_type_stand,description_info_type_stand,
+            img_info_type_stand,date_creation,id_etat,id_info_type_stand,id_info_type_stand_desc)values(?,?,?,?,?,CURRENT_TIMESTAMP,15,?,?)",[$id_stand,$id_type_stand,
+            $nom_info_type_stand,$description_info_type_stand,json_encode($img_info_type_stand),$id_info_type_stand,$id_info_type_stand_desc]);
+
+             DB::commit();
+
+         } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+         }
+    }
+
+
+
     public function listPermissionGaleriePhoto()
     {
         $result = DB::select("SELECT * FROM v_permission_galerie_photo");
@@ -442,6 +465,22 @@ class StandModel extends Model
         $result = DB::select("SELECT * FROM v_permission_galerie_photo where id_permission_gallerie_photos = ?",[$id_permission_galerie_photo]);
         return $result;
     }
+
+    public function updateEtatPermissionGaleriePhoto($id_permission_gallerie_photos)
+    {
+        $result = DB::update("UPDATE permission_galerie_photo set id_etat = 4 where id_permission_gallerie_photos = ?",[$id_permission_gallerie_photos]);
+
+        return $result;
+    }
+
+    public function updateEtatPermissionaleriePhotoModifier($id_permission_gallerie_photos)
+    {
+        $result = DB::update("UPDATE permission_galerie_photo set id_etat = 4 where id_permission_gallerie_photos = ?",[$id_permission_gallerie_photos]);
+
+        return $result;
+    }
+
+
 
     //insertion du contenue de stand [PHOTO]
     public function insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,
@@ -530,6 +569,28 @@ class StandModel extends Model
     public function viewInfoTypeStand()
     {
         $result = DB::select("SELECT * FROM V_info_type_stand_desc");
+        return $result;
+    }
+
+    public function insertPermissionVideoContenue($id_stand,$description_video,$titre_video,$file_video)
+    {
+        DB::transaction();
+        try {
+            //code...
+            DB::insert("INSERT INTO permission_galerie_video(id_stand,titre_video,description_video,file_video,date_creation_video,id_etat)VALUES
+            (?,?,?,?,CURRENT_TIMESTAMP,1)",[$id_stand,$description_video,$titre_video,$file_video]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+             DB::rollBack();
+            throw $th;
+        }
+    }
+
+    public function updateEtatPermissionGalerieVideo($id_permission_galerie_video)
+    {
+        $result = DB::update("UPDATE permission_galerie_video set id_etat = 4 where id_permission_alerie_video = ?",[$id_permission_galerie_video]);
         return $result;
     }
 
@@ -932,4 +993,6 @@ class StandModel extends Model
         ->update(['id_etat' => 14]);
     }
 }
+
+
 

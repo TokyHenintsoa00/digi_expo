@@ -23,6 +23,7 @@
                 @endif
                 <form action="{{route('modifierContenue')}}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="id_stand" value="{{$id_stand}}">
                      <!-- Champs cachés pour transmettre les valeurs -->
                      @foreach ($information_contenue as $key => $value)
                         <input type="hidden" name="{{ $key }}" value="{{ $value }}">

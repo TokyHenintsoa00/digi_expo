@@ -728,6 +728,14 @@ Route::prefix('directeur')->group(function(){
         })->name('viewValidationGaleriePhoto');
 
 
+        Route::get('/viewGalerieVideo', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewGalerieVideo($request);
+        })->name('viewGalerieVideo');
+
+
         Route::post('/validePermissionGalerie',[AdminController::class,'validePermissionGalerie'])->name('validePermissionGalerie');
 
     });

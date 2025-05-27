@@ -1,5 +1,6 @@
 @extends('parent.ParentAdmin')
-@section('galeriePhotoSection')
+@section('galerieVideoSection')
+
 <h1>Liste de validation des galerie photos</h1>
 
 <div class="col-12">
@@ -35,20 +36,12 @@
                         <div class="d-flex align-items-center gap-2">
                             <p class="text-danger fw-semibold">En attente</p>
                         </div>
-                        @else
-                        <div class="d-flex align-items-center gap-2">
-                            <p class="text-warning fw-semibold">Modification</p>
-                        </div>
                         @endif
                     </td>
                     <td>
                         <form id="validationForm" action="{{route('validePermissionGalerie')}}" method="POST">
                             @csrf
                                 <input type="hidden" name="id_permission_galerie" value="{{$list_galerie_photo->id_permission_gallerie_photos}}">
-                                <input type="hidden" name="id_etat" value="{{$list_galerie_photo->id_etat}}">
-                                <input type="hidden" name="id_info_type_stand" value="{{$list_galerie_photo->id_info_type_stand }}">
-                                <input type="hidden" name="id_info_type_stand_desc" value="{{$list_galerie_photo->id_info_type_stand_desc}}">
-
                                 <input type="submit" value="Valider" class="btn btn-success m-1">
                         </form>
                     </td>
@@ -67,4 +60,5 @@
         </tbody>
     </table>
 </div>
+
 @endsection

@@ -454,4 +454,6 @@ CREATE OR REPLACE VIEW V_PERMISSION_GALERIE_PHOTO AS
 select permission_galerie_photo.*,nom_stand,nom_type_Stand
 from permission_galerie_photo
 join stand on stand.id_stand = permission_galerie_photo.id_Stand
-join type_stand on type_Stand.id_type_Stand = permission_galerie_photo.id_type_stand;
+join type_stand on type_Stand.id_type_Stand = permission_galerie_photo.id_type_stand
+where permission_galerie_photo.id_etat in(1,15)
+order by date_creation desc;
