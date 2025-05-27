@@ -197,7 +197,7 @@ Route::prefix('directeur')->group(function(){
         if (!session()->has('id_emp')) {
             return redirect('/authentification')->with('error', 'Accès interdit !');
         }
-        return app(DirecteurEmpController::class)->viewModificationVideo($request);
+        return app(DirecteurEmpController::class)->viewFormulaireModificationVideo($request);
     })->name('viewFormulaireModificationVideo');
 
     //Route::get('/viewFormulaireModificationVideo',[DirecteurEmpController::class,'viewFormulaireModificationVideo'])->name('viewFormulaireModificationVideo');
@@ -738,6 +738,7 @@ Route::prefix('directeur')->group(function(){
 
 
         Route::post('/validePermissionGalerie',[AdminController::class,'validePermissionGalerie'])->name('validePermissionGalerie');
+        Route::post('/validePermissionGalerieVideo',[AdminController::class,'validePermissionGalerieVideo'])->name('validePermissionGalerieVideo');
 
     });
 

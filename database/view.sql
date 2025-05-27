@@ -456,5 +456,15 @@ from permission_galerie_photo
 join stand on stand.id_stand = permission_galerie_photo.id_Stand
 join type_stand on type_Stand.id_type_Stand = permission_galerie_photo.id_type_stand
 join emp on emp.id_emp = permission_galerie_photo.id_directeur
-where permission_galerie_photo.id_etat in(1,15) alias etat_permission
+where permission_galerie_photo.id_etat in(1,15)
 order by date_creation desc;
+
+
+
+CREATE OR REPLACE VIEW v_permission_galerie_video as
+select permission_Galerie_video.*, nom_stand,nom_emp,prenom_emp
+from permission_Galerie_video
+join stand on stand.id_stand = permission_galerie_video.id_Stand
+join emp on emp.id_emp = permission_galerie_video.id_directeur
+where permission_Galerie_video.id_etat in(1,15)
+order by date_creation_video desc;

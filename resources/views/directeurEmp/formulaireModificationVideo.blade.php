@@ -40,6 +40,7 @@
 
                     </div>
                     <input type="hidden" name="id_video_contenue" value="{{$id_video_contenue}}">
+                    <input type="hidden" name="id_stand" value="{{$id_stand}}">
                     <input type="submit" class="btn btn-primary" value="Modifier">
                 </form>
             </div> <!-- /. card-body -->

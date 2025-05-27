@@ -641,6 +641,9 @@ aside.top-navbar {
                     showNotification(JSON.parse(message.body));
                 });
 
+                stompClient.subscribe(`/topic/validationGalerieVideo/`+id_emp,function(message){
+                    showNotification(JSON.parse(message.body));
+                });
 
 
             });

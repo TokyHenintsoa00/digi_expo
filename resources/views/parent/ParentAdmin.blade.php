@@ -500,10 +500,10 @@ function markNotificationAsRead(notification)
                     }
                 });
 
-                // stompClient.subscribe(`/topic/notifToAdminByDirecteur/`+etat_admin,function (message)
-                // {
-                //     showNotification(JSON.parse(message.body));
-                // });
+                stompClient.subscribe(`/topic/noticationPermissionGalerieVideoByDirecteur/`+etat_admin,function (message)
+                {
+                    showNotification(JSON.parse(message.body));
+                });
 
                 stompClient.subscribe(`/topic/noticationPermissionGaleriePhotoByDirecteur/`+etat_admin,function (message)
                 {

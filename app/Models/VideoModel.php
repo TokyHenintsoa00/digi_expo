@@ -162,11 +162,29 @@ class VideoModel extends Model
     }
 
 
+
+
     public function reunionPersonne($id_stand,$date_debut_conference_client,$liens_video,$id_max_salon)
     {
         DB::beginTransaction();
         try {
             DB::insert("INSERT INTO video_conference_client(id_stand,date_debut_conference_client,liens_video,id_sallon)VALUES(?,?,?,?)",[$id_stand,$date_debut_conference_client,$liens_video,$id_max_salon]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+        }
+    }
+
+    public function permissionConferenceClient($id_stand,$date_debut_conference_client,$liens_video,$id_max_salon)
+    {
+       DB::beginTransaction();
+        try {
+            DB::insert("INSERT INTO permission_video_conference_client(id_stand,
+                date_debut_conference_client,liens_video,id_sallon,id_etat)
+                VALUES(?,?,?,?,1)",[$id_stand,$date_debut_conference_client,
+                $liens_video,$id_max_salon]);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;

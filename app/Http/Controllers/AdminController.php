@@ -1091,6 +1091,7 @@ class AdminController extends Controller
         return view('admin.validationPermissionGaleriePhoto',compact('permissionGaleriePhoto'));
     }
 
+    //galerie photo
     public function validePermissionGalerie(Request $request)
     {
         $id_permission_galerie_photo = $request->id_permission_galerie;
@@ -1187,7 +1188,95 @@ class AdminController extends Controller
 
     public function viewGalerieVideo()
     {
-        return view('admin.validationPermissionGalerieVideo');
+        $standModel = new StandModel();
+        $permissionGalerieVideo = $standModel->listPermissionGalerieVideo();
+        return view('admin.validationPermissionGalerieVideo',compact('permissionGalerieVideo'));
     }
+
+    public function validePermissionGalerieVideo(Request $request)
+    {
+        $id_stand = $request->id_stand;
+        $description_video = $request->description_video;
+        $titre_video = $request->titre_video;
+        $file_video = $request->file_video;
+        $id_etat = $request->id_etat;
+        $id_directeur = $request->id_directeur;
+        $id_permission_gallerie_video = $request->id_permission_gallerie_video;
+         //dd($id_directeur);
+
+        $standModel = new StandModel();
+
+        //dd($id_etat);
+
+        if ($id_etat == 15) {
+            //echo "helo";
+            $id_video_contenue = $request->id_video_contenue;
+            //dd($id_video_contenue);
+            $modificationEtat = $standModel->updateEtatPermissionGalerieVideoModifier($id_permission_gallerie_video);
+            $modificationVideo = $standModel->modifiyVideo($titre_video,$description_video,$file_video,$id_video_contenue);
+
+            //dd($titre_video);
+
+            $sender = 6;
+            $receiver = $id_directeur;
+            $content = "Votre demande de galerie video a ete approuvee";
+            $dateString = date('Y-m-d H:i:s');
+
+            $url = "http://127.0.0.1:8000/directeur/viewModificationVideo";
+            # code...
+            try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/admin/validation/permissionGalerieVideo/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
+
+            return redirect()->route('viewGalerieVideo')->with('success', 'Permission galerie video modifier');
+
+        }
+        else {
+
+            $sender = 6;
+            $receiver = $id_directeur;
+            $content = "Votre demande de galerie video a ete approuvee";
+            $dateString = date('Y-m-d H:i:s');
+
+            $update_etat = $standModel->updateEtatPermissionGalerieVideo($id_permission_gallerie_video);
+            $insert_galerie_video = $standModel->insertVideoContenue($id_stand,$description_video,$titre_video,$file_video);
+
+            $url = "http://127.0.0.1:8000/directeur/viewModificationVideo";
+            # code...
+             try {
+                //code...
+                Http::post('http://localhost:8080/api/notifications/admin/validation/permissionGalerieVideo/sendNotification', [
+                'sender'=>$sender,
+                'receiver'=>$receiver,
+                'content'=>$content,
+                'dateNotification'=>$dateString,
+                'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
+
+            return redirect()->route('viewGalerieVideo')->with('success', 'Permission galerie video valider');
+
+        }
+
+
+
+
+    }
+
+
+
 
 }

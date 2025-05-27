@@ -55,7 +55,7 @@
     @if($contenue_video && count($contenue_video) > 0)
         @foreach($contenue_video as $video)
             <div class="video-card">
-                <h3>Titre: {{ $video->titre_video }}</h3>
+                <h3>Titre: {{ $video->titre_video}}</h3>
                 <p>Description: {{ $video->description_video }}</p>
                 <video controls>
                     <source src="{{ asset('assets/' .  $video->file_video) }}" type="video/mp4">
@@ -63,6 +63,7 @@
                 </video>
                 <form action="{{ route('viewFormulaireModificationVideo') }}" method="get" class="mt-4">
                     <input type="hidden" name="id_video_contenue" value="{{ $video->id_video_contenue }}">
+                    <input type="hidden" name="id_stand" value="{{$video->id_stand}}">
                     <input type="submit" value="Modifier" class="btn btn-primary">
                 </form>
             </div>

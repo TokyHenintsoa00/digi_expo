@@ -317,8 +317,10 @@ CREATE TABLE permission_galerie_video
     file_video varchar(60),
     date_creation_video timestamp(0),
     id_etat integer references etat(id_etat),
-    id_directeur integer references emp(id_emp)
+    id_directeur integer references emp(id_emp),
+    id_video_contenue integer references video_contenue(id_video_contenue)
 );
+
 
 CREATE TABLE permission_video_conference_client
 (
@@ -327,7 +329,9 @@ CREATE TABLE permission_video_conference_client
     date_debut_conference_client timestamp(0),
     liens_video text,
     id_sallon integer references salon(id_sallon),
-    id_etat integer references etat(id_etat)
+    id_etat integer references etat(id_etat),
+    id_directeur integer references emp(id_emp),
+
 );
 
 
@@ -343,6 +347,9 @@ CREATE TABLE permission_temoigange
     id_sallon integer references salon(id_sallon),
     id_etat integer references etat(id_etat)
 );
+
+
+
 
 --CREATION TABLE PERMISSION(VIDEO CONFERENCE ET PERMISSION BROUCHURE);
 

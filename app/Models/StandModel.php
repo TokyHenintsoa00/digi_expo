@@ -590,11 +590,46 @@ class StandModel extends Model
         }
     }
 
-    public function updateEtatPermissionGalerieVideo($id_permission_galerie_video)
+    public function insertPermissionVideoContenueModification($id_stand,$titre_video,
+        $description_video,$file_video,$id_directeur,$id_video_contenue)
     {
-        $result = DB::update("UPDATE permission_galerie_video set id_etat = 4 where id_permission_alerie_video = ?",[$id_permission_galerie_video]);
+        DB::beginTransaction();
+        try {
+            //code...
+            DB::insert("INSERT INTO permission_galerie_video(id_stand,titre_video,description_video,
+            file_video,date_creation_video,id_etat,id_directeur,id_video_contenue)VALUES
+            (?,?,?,?,CURRENT_TIMESTAMP,15,?,?)",[$id_stand,$titre_video,
+            $description_video,$file_video,$id_directeur,$id_video_contenue]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+             DB::rollBack();
+            throw $th;
+        }
+    }
+
+
+
+    public function listPermissionGalerieVideo()
+    {
+        $result = DB::select("SELECT * FROM v_permission_galerie_video");
+
         return $result;
     }
+
+    public function updateEtatPermissionGalerieVideo($id_permission_galerie_video)
+    {
+        $result = DB::update("UPDATE permission_galerie_video set id_etat = 4 where id_permission_gallerie_video = ?",[$id_permission_galerie_video]);
+        return $result;
+    }
+
+    public function updateEtatPermissionGalerieVideoModifier($id_permission_galerie_video)
+    {
+        $result = DB::update("UPDATE permission_galerie_video set id_etat = 4 where id_permission_gallerie_video = ?",[$id_permission_galerie_video]);
+        return $result;
+    }
+
 
     public function insertVideoContenue($id_stand,$description_video,$titre_video,$file_video)
     {
@@ -636,13 +671,21 @@ class StandModel extends Model
         DB::beginTransaction();
         try {
             //code...
-            DB::update("UPDATE video_contenue set titre_video = ?,description_video = ?,file_video = ? WHERE id_video_contenue = ?",[$titre_video,$description_video,$file_video,$id_video_contenue]);
+            DB::update("UPDATE video_contenue set titre_video = ?,description_video = ?,file_video = ?
+            WHERE id_video_contenue = ?",[$titre_video,$description_video,
+                $file_video,$id_video_contenue]);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
             throw $th;
         }
+    }
+
+
+    public function update_permission()
+    {
+
     }
 
 

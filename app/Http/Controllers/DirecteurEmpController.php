@@ -410,6 +410,11 @@ class DirecteurEmpController extends Controller
             'video_contenue' => 'required|file|mimetypes:video/mp4,video/mpeg,video/ogg,video/webm|max:40960', // Taille max 40MB
         ]);
         $id_directeur = Session::get('id_emp');
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Vous avez recu une nouvelle permission de faire une galerie video";
+        $dateString = date('Y-m-d H:i:s');
+        $url = "http://127.0.0.1:8000/admin/viewGalerieVideo";
 
         try {
             //code...
@@ -424,14 +429,31 @@ class DirecteurEmpController extends Controller
             $video_contenue->move(public_path('assets'),$video_contenue_name);
 
             $standModel = new StandModel();
-            $insertPermissionVideo = $standModel->insertPermissionVideoContenue($id_stand,$description_video,
-            $titre_video,$video_contenue_name,$id_directeur);
+            $insertPermissionVideo = $standModel->insertPermissionVideoContenue($id_stand,$titre_video,
+            $description_video,$video_contenue_name,$id_directeur);
+
+            try
+            {
+                //code...
+             Http::post('http://localhost:8080/api/notifications/directeur/permissionGalerieVideo/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
 
         } catch (\Throwable $th) {
             //throw $th;.
                DB::rollBack();
             throw $th;
         }
+
+         return redirect()->route('viewFormulaireAddVideo')->with('success', 'Votre demande de faire un galerie video est en cours de validation');
     }
 
     // public function addVideo(Request $request)
@@ -491,26 +513,67 @@ class DirecteurEmpController extends Controller
     public function viewFormulaireModificationVideo(Request $request)
     {
         $id_video_contenue = $request->id_video_contenue;
-        return view('directeurEmp.formulaireModificationVideo',compact('id_video_contenue'));
+        $id_stand = $request->id_stand;
+        //dd("id du stand" $id_stand);
+        return view('directeurEmp.formulaireModificationVideo',compact('id_video_contenue','id_stand'));
 
     }
 
     public function modificationVideo(Request $request)
     {
+        $id_video_contenue = $request->id_video_contenue;
         $titre_video = $request->titre_video;
         $description_video = $request->description_video;
         $video_contenue = $request->file('video_contenue');
         $video_contenue_name = $video_contenue->getClientOriginalName();
         $video_contenue->move(public_path('assets'),$video_contenue_name);
-        $id_video_contenue = $request->id_video_contenue;
+        $id_stand = $request->id_stand;
+        // dd($id_stand);
+        $standModel = new StandModel();
+        $id_directeur = Session::get('id_emp');
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Vous avez une demade de modification de video";
+        $url = "http://127.0.0.1:8000/admin/viewGalerieVideo";
+        $dateString = date('Y-m-d H:i:s');
+        $insertPermissionGalerieVideoModification = $standModel
+            ->insertPermissionVideoContenueModification($id_stand,$titre_video,
+            $description_video,$video_contenue_name,$id_directeur,$id_video_contenue);
 
-        //dd($id_video_contenue);
-        $getStandModel = new StandModel();
-        $getStandModel->modifiyVideo($titre_video,$description_video,$video_contenue_name,$id_video_contenue);
+        try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionGalerieVideo/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
 
-        return redirect()->route('viewGestionContenue')->with('success', 'Contenue publier');
+        return redirect()->route('viewGestionContenue')->with('success', 'Votre demande de modification est en cours de validation');
 
     }
+
+    // public function modificationVideo(Request $request)
+    // {
+    //     $titre_video = $request->titre_video;
+    //     $description_video = $request->description_video;
+    //     $video_contenue = $request->file('video_contenue');
+    //     $video_contenue_name = $video_contenue->getClientOriginalName();
+    //     $video_contenue->move(public_path('assets'),$video_contenue_name);
+    //     $id_video_contenue = $request->id_video_contenue;
+
+    //     //dd($id_video_contenue);
+    //     $getStandModel = new StandModel();
+    //     $getStandModel->modifiyVideo($titre_video,$description_video,$video_contenue_name,$id_video_contenue);
+
+    //     return redirect()->route('viewGestionContenue')->with('success', 'Contenue publier');
+
+    // }
 
     //----------------------------------------------------------------------
     public function viewGestionBrochure()
@@ -984,23 +1047,27 @@ class DirecteurEmpController extends Controller
         return view('directeurEmp.ConferenceClient',compact('standDirecteur'));
     }
 
-    public function ajoutDeReunion(Request $request)
-    {
-        $date_heure = $request->date_heure_reunion;
-        $liens = $request->liens_video;
-        $id_stand = $request->id_stand;
 
-        $salon = new ReceptionModel();
-        $getMaxSalon = $salon->maxSalon();
+    
 
-        $idMaxSalon = $getMaxSalon[0]->id_sallon;
 
-        $getVideoModel = new VideoModel();
-        $reunionPersonne = $getVideoModel->reunionPersonne($id_stand,$date_heure,$liens,$idMaxSalon);
+    // public function ajoutDeReunion(Request $request)
+    // {
+    //     $date_heure = $request->date_heure_reunion;
+    //     $liens = $request->liens_video;
+    //     $id_stand = $request->id_stand;
 
-        return redirect()->route('viewConferenceClient')->with('success', 'AudioConference planifier');
+    //     $salon = new ReceptionModel();
+    //     $getMaxSalon = $salon->maxSalon();
 
-    }
+    //     $idMaxSalon = $getMaxSalon[0]->id_sallon;
+
+    //     $getVideoModel = new VideoModel();
+    //     $reunionPersonne = $getVideoModel->reunionPersonne($id_stand,$date_heure,$liens,$idMaxSalon);
+
+    //     return redirect()->route('viewConferenceClient')->with('success', 'AudioConference planifier');
+
+    // }
 
     public function viewListTemoignage()
     {
