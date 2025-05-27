@@ -412,15 +412,15 @@ class StandModel extends Model
 
 
     public function insertPermissionGaleriePhoto($id_stand,$id_type_stand,$nom_info_type_stand,
-        $description_info_type_stand,$img_info_type_stand)
+        $description_info_type_stand,$img_info_type_stand,$id_directeur)
     {
          DB::beginTransaction();
          try
          {
 
             DB::insert("INSERT INTO permission_galerie_photo(id_stand,id_type_stand,nom_info_type_stand,description_info_type_stand,
-            img_info_type_stand,date_creation,id_etat)values(?,?,?,?,?,CURRENT_TIMESTAMP,1)",[$id_stand,$id_type_stand,
-            $nom_info_type_stand,$description_info_type_stand,json_encode($img_info_type_stand)]);
+            img_info_type_stand,date_creation,id_etat,id_directeur)values(?,?,?,?,?,CURRENT_TIMESTAMP,1,?)",[$id_stand,$id_type_stand,
+            $nom_info_type_stand,$description_info_type_stand,json_encode($img_info_type_stand),$id_directeur]);
 
              DB::commit();
 
@@ -433,15 +433,15 @@ class StandModel extends Model
 
 
    public function insertPermissionGaleriePhotoModification($id_stand,$id_type_stand,$nom_info_type_stand,
-        $description_info_type_stand,$img_info_type_stand,$id_info_type_stand,$id_info_type_stand_desc)
+        $description_info_type_stand,$img_info_type_stand,$id_info_type_stand,$id_info_type_stand_desc,$id_directeur)
     {
          DB::beginTransaction();
          try
          {
 
             DB::insert("INSERT INTO permission_galerie_photo(id_stand,id_type_stand,nom_info_type_stand,description_info_type_stand,
-            img_info_type_stand,date_creation,id_etat,id_info_type_stand,id_info_type_stand_desc)values(?,?,?,?,?,CURRENT_TIMESTAMP,15,?,?)",[$id_stand,$id_type_stand,
-            $nom_info_type_stand,$description_info_type_stand,json_encode($img_info_type_stand),$id_info_type_stand,$id_info_type_stand_desc]);
+            img_info_type_stand,date_creation,id_etat,id_info_type_stand,id_info_type_stand_desc,id_directeur)values(?,?,?,?,?,CURRENT_TIMESTAMP,15,?,?,?)",[$id_stand,$id_type_stand,
+            $nom_info_type_stand,$description_info_type_stand,json_encode($img_info_type_stand),$id_info_type_stand,$id_info_type_stand_desc,$id_directeur]);
 
              DB::commit();
 
@@ -572,13 +572,15 @@ class StandModel extends Model
         return $result;
     }
 
-    public function insertPermissionVideoContenue($id_stand,$description_video,$titre_video,$file_video)
+    public function insertPermissionVideoContenue($id_stand,$description_video,$titre_video,$file_video,$id_directeur)
     {
-        DB::transaction();
+        DB::beginTransaction();
         try {
             //code...
-            DB::insert("INSERT INTO permission_galerie_video(id_stand,titre_video,description_video,file_video,date_creation_video,id_etat)VALUES
-            (?,?,?,?,CURRENT_TIMESTAMP,1)",[$id_stand,$description_video,$titre_video,$file_video]);
+            DB::insert("INSERT INTO permission_galerie_video(id_stand,titre_video,description_video,
+            file_video,date_creation_video,id_etat,id_directeur)VALUES
+            (?,?,?,?,CURRENT_TIMESTAMP,1,?)",[$id_stand,$description_video,
+            $titre_video,$file_video,$id_directeur]);
 
             DB::commit();
         } catch (\Throwable $th) {

@@ -1112,7 +1112,11 @@ class AdminController extends Controller
 
 
         $id_etat = $request->id_etat;
-
+        $id_directeur = $request->id_directeur;
+        $receiver = $id_directeur;
+        $sender = 6;
+        $dateString = date('Y-m-d H:i:s');
+        $url = "http://127.0.0.1:8000/directeur/viewModifierPosterProjet";
         if($id_etat == 15)
         {
             $id_info_type_stand = $request->id_info_type_stand;
@@ -1121,15 +1125,44 @@ class AdminController extends Controller
             $id_type_stand,$nom_info_type_stand,$description_info_type_stand,$images);
             $update_etat = $standModel->updateEtatPermissionaleriePhotoModifier($id_permission_galerie_photo);
 
+            $content = "Votre modification de galerie photo a ete approuvee";
+
+            try {
+                //code...
+             Http::post('http://localhost:8080/api/notifications/admin/validation/permissionGaleriePhoto/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
+
             return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo modifier');
 
         }
 
         else{
             $update_etat = $standModel->updateEtatPermissionGaleriePhoto($id_permission_galerie_photo);
-
             $insertContenueStand = $standModel->insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,
             $description_info_type_stand,$images);
+            $content = "Votre permission de faire une galerie photo a ete approuvee ";
+            try {
+                //code...
+             Http::post('http://localhost:8080/api/notifications/admin/validation/permissionGaleriePhoto/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
 
             return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo valider');
 

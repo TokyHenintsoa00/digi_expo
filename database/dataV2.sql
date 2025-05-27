@@ -305,7 +305,7 @@ CREATE TABLE permission_galerie_photo
     id_etat integer references etat(id_etat),
     id_info_type_stand integer references info_type_stand(id_info_type_stand),
     id_info_type_stand_desc integer references info_type_stand_desc(id_info_type_stand_desc),
-
+    id_directeur integer references emp(id_emp)
 );
 
 CREATE TABLE permission_galerie_video
@@ -316,7 +316,8 @@ CREATE TABLE permission_galerie_video
     description_video text,
     file_video varchar(60),
     date_creation_video timestamp(0),
-    id_etat integer references etat(id_etat)
+    id_etat integer references etat(id_etat),
+    id_directeur integer references emp(id_emp)
 );
 
 CREATE TABLE permission_video_conference_client
@@ -343,6 +344,7 @@ CREATE TABLE permission_temoigange
     id_etat integer references etat(id_etat)
 );
 
+--CREATION TABLE PERMISSION(VIDEO CONFERENCE ET PERMISSION BROUCHURE);
 
 -- SELECT distinct(id_stand),id_directeur,nom_stand,description_Stand,
 -- img_stand,id_etat,nom_directeur,prenom_directeur,date_de_creation_stand

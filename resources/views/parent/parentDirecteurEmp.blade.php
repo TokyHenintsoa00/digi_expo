@@ -637,6 +637,10 @@ aside.top-navbar {
 
                 });
 
+                stompClient.subscribe(`/topic/validationGaleriePhoto/`+id_emp,function(message){
+                    showNotification(JSON.parse(message.body));
+                });
+
 
 
             });

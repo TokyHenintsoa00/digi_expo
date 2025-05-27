@@ -181,7 +181,8 @@ Route::prefix('directeur')->group(function(){
     })->name('viewFormulaireAddVideo');
 
     //Route::get('/viewFormulaireAddVideo',[DirecteurEmpController::class,'viewFormulaireAddVideo'])->name('viewFormulaireAddVideo');
-    Route::post('/addVideo',[DirecteurEmpController::class,'addVideo'])->name('addVideo');
+    // Route::post('/addVideo',[DirecteurEmpController::class,'addVideo'])->name('addVideo');
+ Route::post('/permissionGalerieVideo',[DirecteurEmpController::class,'permissionGalerieVideo'])->name('permissionGalerieVideo');
 
     Route::get('/viewModificationVideo', function (Request $request) {
         if (!session()->has('id_emp')) {
