@@ -750,6 +750,7 @@ class DirecteurEmpController extends Controller
         return view('directeurEmp.VideoConference');
     }
 
+
     public function planificationGallerie(Request $request)
     {
         $titre_video = $request->titre_video;
@@ -1048,7 +1049,59 @@ class DirecteurEmpController extends Controller
     }
 
 
-    
+    public function permissionVideoConferenceClient(Request $request)
+    {
+        $date_heure = $request->date_heure_reunion;
+        $liens = $request->liens_video;
+        $id_stand = $request->id_stand;
+
+        $salon = new ReceptionModel();
+        $getMaxSalon = $salon->maxSalon();
+        $id_directeur = Session::get('id_emp');
+        $idMaxSalon = $getMaxSalon[0]->id_sallon;
+
+        $videoModel = new VideoModel();
+        $permissionVideoConferenceClient = $videoModel->permissionConferenceClient($id_stand,$date_heure,
+        $liens,$idMaxSalon,$id_directeur);
+
+
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Vous avez recu une nouvelle permission de video conferece avec les clients";
+        $dateString = date('Y-m-d H:i:s');
+        $url = "http://127.0.0.1:8000/admin/viewValidationVideoConferenceClient";
+
+        try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionVideoConferenceClient/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+
+
+        return redirect()->route('viewConferenceClient')->with('success', 'AudioConference en cours de validation');
+
+
+    }
+
+    public function listConferenceClient()
+    {
+        $id_directeur = Session::get('id_emp');
+        $videoModel = new VideoModel();
+
+        $listVideoConferenceClient = $videoModel->viewListVideoConferenceClient($id_directeur);
+
+        return view('directeurEmp.listVideoConferenceClient',compact('listVideoConferenceClient'));
+
+    }
+
 
 
     // public function ajoutDeReunion(Request $request)
@@ -1127,5 +1180,9 @@ class DirecteurEmpController extends Controller
         return redirect()->route('viewTemoignage')->with('success', 'Gestion de temoignage modifié');
 
     }
+
+    public function viewListConfenceClient()
+    {
+          }
 
 }

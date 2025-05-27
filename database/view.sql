@@ -468,3 +468,9 @@ join stand on stand.id_stand = permission_galerie_video.id_Stand
 join emp on emp.id_emp = permission_galerie_video.id_directeur
 where permission_Galerie_video.id_etat in(1,15)
 order by date_creation_video desc;
+
+CREATE OR REPLACE VIEW v_permission_video_conference_client as
+select permission_video_conference_client.*, nom_stand
+from permission_video_conference_client
+join stand on stand.id_stand = permission_video_conference_client.id_stand
+where permission_video_conference_client.id_etat in(1,15);

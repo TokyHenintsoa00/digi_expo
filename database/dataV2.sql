@@ -330,8 +330,7 @@ CREATE TABLE permission_video_conference_client
     liens_video text,
     id_sallon integer references salon(id_sallon),
     id_etat integer references etat(id_etat),
-    id_directeur integer references emp(id_emp),
-
+    id_directeur integer references emp(id_emp)
 );
 
 
@@ -345,7 +344,8 @@ CREATE TABLE permission_temoigange
     leins_video text,
     titre text,
     id_sallon integer references salon(id_sallon),
-    id_etat integer references etat(id_etat)
+    id_etat integer references etat(id_etat),
+    
 );
 
 

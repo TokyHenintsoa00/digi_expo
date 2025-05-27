@@ -66,6 +66,19 @@
                     </div>
                 </div>
 
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            les liste de vidéoconférence  avec les clients
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Panifier une vidéoconférence  avec les clients</h5>
+                            <p class="card-text">Assurez-vous que toutes les conférences ont les liens appropriés pour une accessibilité optimale.</p>
+                            <a href="{{route('listConferenceClient')}}" class="btn btn-primary">Planifier</a>
+                        </div>
+                    </div>
+                </div>
+
 
 
           </div>

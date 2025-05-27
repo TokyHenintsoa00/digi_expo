@@ -421,6 +421,7 @@ aside.top-navbar {
             @yield('listTemoignageSection')
             @yield('ModificationTemoignageSection')
             @yield('AjoutLiensTemoignageSection')
+            @yield('listConferenceClientSection')
 
         </div>
     </div>
@@ -642,6 +643,10 @@ aside.top-navbar {
                 });
 
                 stompClient.subscribe(`/topic/validationGalerieVideo/`+id_emp,function(message){
+                    showNotification(JSON.parse(message.body));
+                });
+
+                stompClient.subscribe(`/topic/validationConferenceClient/`+id_emp,function(message){
                     showNotification(JSON.parse(message.body));
                 });
 

@@ -1271,11 +1271,57 @@ class AdminController extends Controller
 
         }
 
-
-
-
     }
 
+    public function viewValidationVideoConferenceClient()
+    {
+        $videoModel = new VideoModel();
+        $permissionVideoConferenceClient = $videoModel->viewPermissionConferenceClient();
+        return view('admin.validationPermissionVideoConferenceClient',compact('permissionVideoConferenceClient'));
+    }
+
+    public function validationPermissionVideoConferenceClient(Request $request)
+    {
+        $id_stand = $request->id_stand;
+        $date_debut_conference_client = $request->date_debut_conference_client;
+        $id_etat = $request->id_etat;
+        $liens_video = $request->liens_video;
+        $id_sallon = $request->id_sallon;
+        $id_directeur = $request->id_directeur;
+        $id_permission_video_conferece_client = $request->id_permission_video_conferece_client;
+        //dd($id_permission_video_conferece_client);
+
+
+
+        $videoModel = new VideoModel();
+        $updateEtat = $videoModel->updateEtatPermissionVideoConferenceClientModifier($id_permission_video_conferece_client);
+        $videoClient = $videoModel->reunionPersonne($id_stand,$date_debut_conference_client,
+        $liens_video,$id_sallon,$id_directeur);
+
+
+        $sender = 6;
+        $receiver = $id_directeur;
+        $content = "Votre permission de video conference client a ete approuvee";
+         $dateString = date('Y-m-d H:i:s');
+         $url = "http://127.0.0.1:8000/directeur/listConferenceClient";
+
+          try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/admin/validation/permissionVideoConferenceClient/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+
+         return redirect()->route('viewValidationVideoConferenceClient')->with('success', 'Permission  video conference avec client valider');
+
+    }
 
 
 

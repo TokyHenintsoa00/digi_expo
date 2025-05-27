@@ -368,6 +368,7 @@ aside.top-navbar {
             @yield('dasboardAdminSection')
             @yield('galeriePhotoSection')
             @yield('galerieVideoSection')
+            @yield('videoConferenceClientSection')
 
         </div>
       </div>
@@ -509,6 +510,17 @@ function markNotificationAsRead(notification)
                 {
                     showNotification(JSON.parse(message.body));
                 });
+
+                stompClient.subscribe(`/topic/noticationPermissionGaleriePhotoByDirecteur/`+etat_admin,function (message)
+                {
+                    showNotification(JSON.parse(message.body));
+                });
+
+                stompClient.subscribe(`/topic/noticationPermissionConferenceClientByDirecteur/`+etat_admin,function (message)
+                {
+                    showNotification(JSON.parse(message.body));
+                });
+
 
 
             });

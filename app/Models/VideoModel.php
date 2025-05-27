@@ -164,11 +164,11 @@ class VideoModel extends Model
 
 
 
-    public function reunionPersonne($id_stand,$date_debut_conference_client,$liens_video,$id_max_salon)
+    public function reunionPersonne($id_stand,$date_debut_conference_client,$liens_video,$id_max_salon,$id_directeur)
     {
         DB::beginTransaction();
         try {
-            DB::insert("INSERT INTO video_conference_client(id_stand,date_debut_conference_client,liens_video,id_sallon)VALUES(?,?,?,?)",[$id_stand,$date_debut_conference_client,$liens_video,$id_max_salon]);
+            DB::insert("INSERT INTO video_conference_client(id_stand,date_debut_conference_client,liens_video,id_sallon,id_directeur)VALUES(?,?,?,?,?)",[$id_stand,$date_debut_conference_client,$liens_video,$id_max_salon,$id_directeur]);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
@@ -177,20 +177,26 @@ class VideoModel extends Model
         }
     }
 
-    public function permissionConferenceClient($id_stand,$date_debut_conference_client,$liens_video,$id_max_salon)
+    public function permissionConferenceClient($id_stand,$date_debut_conference_client,$liens_video,$id_max_salon,$id_directeur)
     {
        DB::beginTransaction();
         try {
             DB::insert("INSERT INTO permission_video_conference_client(id_stand,
-                date_debut_conference_client,liens_video,id_sallon,id_etat)
-                VALUES(?,?,?,?,1)",[$id_stand,$date_debut_conference_client,
-                $liens_video,$id_max_salon]);
+                date_debut_conference_client,liens_video,id_sallon,id_etat,id_directeur)
+                VALUES(?,?,?,?,1,?)",[$id_stand,$date_debut_conference_client,
+                $liens_video,$id_max_salon,$id_directeur]);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack(); // Annuler si quelque chose échoue
             throw $th; // Renvoyer l'erreur
         }
+    }
+
+    public function viewPermissionConferenceClient()
+    {
+        $result = DB::select("SELECT * FROM v_permission_video_conference_client");
+        return $result;
     }
 
     public function getAllReunionPersonne()
@@ -206,5 +212,18 @@ class VideoModel extends Model
     }
 
 
+    public function updateEtatPermissionVideoConferenceClientModifier($id_permission_video_conferece_client)
+    {
+        $result = DB::update("UPDATE permission_video_conference_client set id_etat = 4 where id_permission_video_conferece_client = ?",[$id_permission_video_conferece_client]);
+        return $result;
+    }
+
+
+    public function viewListVideoConferenceClient($id_directeur)
+    {
+        $result = DB::select("SELECT * FROM VIDEO_CONFERENCE_cLIENT WHERE id_directeur = ? order by date_debut_conference_client desc",[$id_directeur]);
+
+        return $result;
+    }
 
 }

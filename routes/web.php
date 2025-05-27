@@ -298,6 +298,13 @@ Route::prefix('directeur')->group(function(){
         return app(DirecteurEmpController::class)->viewModificationVideoConference($request);
     })->name('viewModificationVideoConference');
 
+    Route::get('/listConferenceClient', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->listConferenceClient($request);
+    })->name('listConferenceClient');
+
     //Route::get('/viewModificationVideoConference',[DirecteurEmpController::class,'viewModificationVideoConference'])->name('viewModificationVideoConference');
 
     Route::get('/viewFormulaireModificationVideoConference', function (Request $request) {
@@ -403,7 +410,8 @@ Route::prefix('directeur')->group(function(){
 
     //Route::get('/viewGalerie',[DirecteurEmpController::class,'viewGalerie'])->name('viewGalerie');
     Route::post('/planificationGallerie',[DirecteurEmpController::class,'planificationGallerie'])->name('planificationGallerie');
-    Route::post('/ajoutDeReunion',[DirecteurEmpController::class,'ajoutDeReunion'])->name('ajoutDeReunion');
+    // Route::post('/ajoutDeReunion',[DirecteurEmpController::class,'ajoutDeReunion'])->name('ajoutDeReunion');
+    Route::post('/permissionVideoConferenceClient',[DirecteurEmpController::class,'permissionVideoConferenceClient'])->name('permissionVideoConferenceClient');
 
     Route::get('/viewListTemoignage', function (Request $request) {
         if (!session()->has('id_emp')) {
@@ -411,6 +419,10 @@ Route::prefix('directeur')->group(function(){
         }
         return app(DirecteurEmpController::class)->viewListTemoignage($request);
     })->name('viewListTemoignage');
+
+
+    
+
 
 
     //Route::get('/viewListTemoignage',[DirecteurEmpController::class,'viewListTemoignage'])->name('viewListTemoignage');
@@ -737,8 +749,17 @@ Route::prefix('directeur')->group(function(){
         })->name('viewGalerieVideo');
 
 
+        Route::get('/viewValidationVideoConferenceClient', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewValidationVideoConferenceClient($request);
+        })->name('viewValidationVideoConferenceClient');
+
+
         Route::post('/validePermissionGalerie',[AdminController::class,'validePermissionGalerie'])->name('validePermissionGalerie');
         Route::post('/validePermissionGalerieVideo',[AdminController::class,'validePermissionGalerieVideo'])->name('validePermissionGalerieVideo');
+        Route::post('/validationPermissionVideoConferenceClient',[AdminController::class,'validationPermissionVideoConferenceClient'])->name('validationPermissionVideoConferenceClient');
 
     });
 

@@ -2,7 +2,7 @@
 @section('listTemoignageSection')
 
 
-<h2>Liens de vidéo</h2>
+<h2>Liens de vidéo de temoignage</h2>
 
 <div class="col-13">
 
