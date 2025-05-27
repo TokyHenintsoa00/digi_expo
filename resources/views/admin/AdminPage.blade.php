@@ -79,7 +79,7 @@
                 </div>
 
 
-                {{-- <div class="col-md-4">
+                <div class="col-md-4">
                     <div class="card">
                     <div class="card-header">
                         Validation de temoignage
@@ -87,10 +87,10 @@
                     <div class="card-body">
                         <h5 class="card-title">Validez les recrutement des directeurs </h5>
                         <p class="card-text">Vérifiez les données soumises et approuvez ou rejetez la demande de validation.</p>
-                        <a href="{{route('viewValidationRecrutementEmp')}}" class="btn btn-primary">Valider maintenant</a>
+                        <a href="{{route('viewValidationTemoigage')}}" class="btn btn-primary">Valider maintenant</a>
                     </div>
                     </div>
-                </div> --}}
+                </div>
 
                 {{-- <div class="col-md-4">
                     <div class="card">

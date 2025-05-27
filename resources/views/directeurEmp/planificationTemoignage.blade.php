@@ -21,7 +21,7 @@
                        {!! session('success') !!}
                    </div>
                    @endif
-                <form action="{{route('insertTemoignage')}}" method="POST">
+                <form action="{{route('permissionTemoignage')}}" method="POST">
                     @csrf
                     <div class="form-row">
                             <div class="form-group col-md-6 mb-3">

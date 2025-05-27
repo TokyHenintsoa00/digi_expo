@@ -110,4 +110,28 @@ class Temoignage extends Model
         }
     }
 
+    public function viewPermissionTemoigange()
+    {
+        $result = DB::select("select * from V_permission_temoignage");
+        return $result;
+    }
+
+    public function permissionTemoignage($id_stand,$date_temoigange,$liens_video,$titre,
+        $id_sallon,$id_directeur)
+    {
+        DB::beginTransaction();
+        try {
+            //code...
+            DB::insert("INSERT INTO permission_temoignage(id_stand,date_temoignage,liens_video,titre,
+                id_sallon,id_etat,id_directeur)VALUES(?,?,?,?,?,1,?)",[$id_stand,$date_temoigange,$liens_video,
+                    $titre,$id_sallon,$id_directeur]);
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            //throw $th;
+             DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+        }
+    }
 }

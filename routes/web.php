@@ -372,7 +372,10 @@ Route::prefix('directeur')->group(function(){
     })->name('viewPlanificationTemoignage');
 
     //Route::get('/viewPlanificationTemoignage',[DirecteurEmpController::class,'viewPlanificationTemoignage'])->name('viewPlanificationTemoignage');
-    Route::post('/insertTemoignage',[DirecteurEmpController::class,'insertTemoignage'])->name('insertTemoignage');
+    // Route::post('/insertTemoignage',[DirecteurEmpController::class,'insertTemoignage'])->name('insertTemoignage');
+
+    Route::post('/permissionTemoignage',[DirecteurEmpController::class,'permissionTemoignage'])->name('permissionTemoignage');
+
 
     Route::get('/viewInformationExposition', function (Request $request) {
         if (!session()->has('id_emp')) {
@@ -421,7 +424,7 @@ Route::prefix('directeur')->group(function(){
     })->name('viewListTemoignage');
 
 
-    
+
 
 
 
@@ -755,6 +758,13 @@ Route::prefix('directeur')->group(function(){
             }
             return app(AdminController::class)->viewValidationVideoConferenceClient($request);
         })->name('viewValidationVideoConferenceClient');
+
+        Route::get('/viewValidationTemoigage', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewValidationTemoigage($request);
+        })->name('viewValidationTemoigage');
 
 
         Route::post('/validePermissionGalerie',[AdminController::class,'validePermissionGalerie'])->name('validePermissionGalerie');

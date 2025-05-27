@@ -1324,5 +1324,16 @@ class AdminController extends Controller
     }
 
 
+    public function viewValidationTemoigage()
+    {
+        $temoignageModel = new Temoignage();
+        $list_permission_temoignage = $temoignageModel->viewPermissionTemoigange();
+        return view('admin.validationPermissionTemoignage',compact('list_permission_temoignage'));
+    }
+
+    public function validationPermissionTemoigange()
+    {
+        
+    }
 
 }

@@ -335,17 +335,16 @@ CREATE TABLE permission_video_conference_client
 
 
 
-CREATE TABLE permission_temoigange
+CREATE TABLE permission_temoignage
 (
     id_permission_temoigange serial primary key,
     id_stand integer references stand(id_stand),
-    id_directeur integer references emp(id_emp),
-    date_temoigage timestamp(0),
-    leins_video text,
+    date_temoignage timestamp(0),
+    liens_video text,
     titre text,
     id_sallon integer references salon(id_sallon),
     id_etat integer references etat(id_etat),
-    
+    id_directeur integer references emp(id_emp)
 );
 
 

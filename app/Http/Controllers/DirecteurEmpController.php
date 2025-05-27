@@ -1010,20 +1010,64 @@ class DirecteurEmpController extends Controller
         return view('directeurEmp.planificationTemoignage',compact('getStandDirecteur'));
     }
 
-    public function insertTemoignage(Request $request)
+
+    public function permissionTemoignage(Request $request)
     {
         $titre = $request->titre;
         $id_stand = $request->id_stand;
         $id_directeur = Session::get('id_emp');
         $date_temoignage = $request->date_temoignage;
         $liens_video = $request->liens_video;
-
+        $salon = new ReceptionModel();
+        $getMaxSalon = $salon->maxSalon();
+        $id_directeur = Session::get('id_emp');
+        $idMaxSalon = $getMaxSalon[0]->id_sallon;
         $getTemoignage = new Temoignage();
-        $insertTemoignage = $getTemoignage->insertTemoignage($id_stand,$id_directeur,$date_temoignage,$liens_video,$titre);
 
-        return redirect()->route('viewPlanificationTemoignage')->with('success', 'Temoignage planifier');
+        $permission_temoigange = $getTemoignage
+            ->permissionTemoignage($id_stand,$date_temoignage,$liens_video,$titre,
+            $idMaxSalon,$id_directeur);
+
+
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Votre demande de permission de temoigange est en cours de validation";
+        $url = "http://127.0.0.1:8000/admin/viewValidationTemoigage";
+        $dateString = date('Y-m-d H:i:s');
+
+          try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionTemoigange/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+
+        return redirect()->route('viewPlanificationTemoignage')->with('success', 'Temoignage en cours de validation');
+
 
     }
+
+    // public function insertTemoignage(Request $request)
+    // {
+    //     $titre = $request->titre;
+    //     $id_stand = $request->id_stand;
+    //     $id_directeur = Session::get('id_emp');
+    //     $date_temoignage = $request->date_temoignage;
+    //     $liens_video = $request->liens_video;
+
+    //     $getTemoignage = new Temoignage();
+    //     $insertTemoignage = $getTemoignage->insertTemoignage($id_stand,$id_directeur,$date_temoignage,$liens_video,$titre);
+
+    //     return redirect()->route('viewPlanificationTemoignage')->with('success', 'Temoignage planifier');
+
+    // }
 
 
     public function viewInformationExposition(Request $request)
@@ -1181,8 +1225,6 @@ class DirecteurEmpController extends Controller
 
     }
 
-    public function viewListConfenceClient()
-    {
-          }
+
 
 }
