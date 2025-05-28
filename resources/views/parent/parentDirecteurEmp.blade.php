@@ -659,6 +659,10 @@ aside.top-navbar {
                     showNotification(JSON.parse(message.body));
                 });
 
+                stompClient.subscribe(`/topic/validationBrochure/`+id_emp,function(message){
+                    showNotification(JSON.parse(message.body));
+                });
+
 
 
             });

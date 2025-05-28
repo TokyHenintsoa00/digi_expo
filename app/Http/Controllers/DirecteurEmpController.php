@@ -634,8 +634,10 @@ class DirecteurEmpController extends Controller
         }
     }
 
+
+
     //function pour publication de brochure de stand
-    public function publierBrochure(Request $request)
+    public function permissionBrochure(Request $request)
     {
         $id_info_type_stand = $request->id_info_type_stand;
         $nom_brochure = $request->nom_brochure;
@@ -643,13 +645,49 @@ class DirecteurEmpController extends Controller
         $fichier = $request->file('fichier');
         $fichier_name = $fichier->getClientOriginalName();
         $fichier->move(public_path('assets/pdf'),$fichier_name);
+        $id_directeur = Session::get('id_emp');
 
-        $getStandModel = new StandModel();
-        $getStandModel->insertBrochure($id_info_type_stand,$nom_brochure,$fichier_name);
-        return redirect()->route('viewChoixDeStandBrochure')->with('success', 'Brochure publier');
+        $standModel = new StandModel();
+        $permissionBrochure = $standModel->permissionBrochure($id_info_type_stand,
+            $nom_brochure,$fichier_name,$id_directeur);
 
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Demande de permission de brochure";
+        $url = "http://127.0.0.1:8000/admin/viewValidationPermissionBrochure";
+        $dateString = date('Y-m-d H:i:s');
+        try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionBrochure/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+
+        return redirect()->route('viewChoixDeStandBrochure')->with('success', 'Brochure en cours de validation');
 
     }
+    // public function publierBrochure(Request $request)
+    // {
+    //     $id_info_type_stand = $request->id_info_type_stand;
+    //     $nom_brochure = $request->nom_brochure;
+
+    //     $fichier = $request->file('fichier');
+    //     $fichier_name = $fichier->getClientOriginalName();
+    //     $fichier->move(public_path('assets/pdf'),$fichier_name);
+
+    //     $getStandModel = new StandModel();
+    //     $getStandModel->insertBrochure($id_info_type_stand,$nom_brochure,$fichier_name);
+    //     return redirect()->route('viewChoixDeStandBrochure')->with('success', 'Brochure publier');
+
+
+    // }
 
     public function viewFormulaireDeModificationBrochure(Request $request)
     {
@@ -657,10 +695,14 @@ class DirecteurEmpController extends Controller
         $getStandModel = new StandModel();
         $fichier = $getStandModel->getFichierPdf($id_info_type_stand);
 
+        $id_brochure_stand = $fichier[0]->id_brochure_stand;
+
+        // dd($id_brochure);
+
         if ($fichier !=null)
         {
             # code...
-            return view('directeurEmp.formulaireDeModificationBrochure',compact('id_info_type_stand'));
+            return view('directeurEmp.formulaireDeModificationBrochure',compact('id_info_type_stand','id_brochure_stand'));
 
         } else {
             # code...
@@ -669,24 +711,62 @@ class DirecteurEmpController extends Controller
 
         }
 
-
     }
 
     public function modificationBrochure(Request $request)
     {
-        $id_info_type_stand = $request->id_info_type_stand;
-
+        $id_brochure_stand = $request->id_brochure_stand;
         $nom_brochure = $request->nom_brochure;
+
+        $id_info_type_stand=$request->id_info_type_stand;
 
         $fichier = $request->file('fichier');
         $fichier_name = $fichier->getClientOriginalName();
         $fichier->move(public_path('assets/pdf'),$fichier_name);
 
-        $getStandModel = new StandModel();
-        $getStandModel->modifieBrochure($id_info_type_stand,$nom_brochure,$fichier_name);
+        $id_directeur = Session::get('id_emp');
 
-        //return redirect()->route('viewChoixDeStandBrochure')->with('success', 'Brochure publier');
+        $getStandModel = new StandModel();
+        $getStandModel->permissionBrochureModification($id_brochure_stand,$id_info_type_stand,$nom_brochure,$fichier_name,$id_directeur);
+
+
+         $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Demande de permission de brochure";
+        $url = "http://127.0.0.1:8000/admin/viewValidationPermissionBrochure";
+        $dateString = date('Y-m-d H:i:s');
+        try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionBrochure/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+
+
     }
+
+    // public function modificationBrochure(Request $request)
+    // {
+    //     $id_info_type_stand = $request->id_info_type_stand;
+
+    //     $nom_brochure = $request->nom_brochure;
+
+    //     $fichier = $request->file('fichier');
+    //     $fichier_name = $fichier->getClientOriginalName();
+    //     $fichier->move(public_path('assets/pdf'),$fichier_name);
+
+    //     $getStandModel = new StandModel();
+    //     $getStandModel->modifieBrochure($id_info_type_stand,$nom_brochure,$fichier_name);
+
+    //     //return redirect()->route('viewChoixDeStandBrochure')->with('success', 'Brochure publier');
+    // }
 
     //test de git hub
     public function viewJustificationDemissionEditeur(Request $request)

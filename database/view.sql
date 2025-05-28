@@ -492,3 +492,10 @@ join type_conference on type_conference.id_type_conference = permission_video_co
 join type_video on type_video.id_type_video = permission_video_conference.id_type_video
 where permission_video_conference.id_etat in(1,15)
 order by date_heure_salle_conference desc;
+
+CREATE OR REPLACE VIEW v_permission_brochure as
+select permission_brochure.*,prenom_emp
+from permission_brochure
+join emp on emp.id_emp = permission_brochure.id_directeur
+where permission_brochure.id_etat in(1,15)
+order by date_ajout_brochure desc;

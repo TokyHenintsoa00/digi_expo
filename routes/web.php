@@ -240,7 +240,9 @@ Route::prefix('directeur')->group(function(){
     })->name('viewFormulaireAjoutBrochure');
 
     //Route::get('/viewFormulaireAjoutBrochure',[DirecteurEmpController::class,'viewFormulaireAjoutBrochure'])->name('viewFormulaireAjoutBrochure');
-    Route::post('/publierBrochure',[DirecteurEmpController::class,'publierBrochure'])->name('publierBrochure');
+    // Route::post('/publierBrochure',[DirecteurEmpController::class,'publierBrochure'])->name('publierBrochure');
+    Route::post('/permissionBrochure',[DirecteurEmpController::class,'permissionBrochure'])->name('permissionBrochure');
+
 
     Route::get('/viewFormulaireDeModificationBrochure', function (Request $request) {
         if (!session()->has('id_emp')) {
@@ -782,6 +784,13 @@ Route::prefix('directeur')->group(function(){
             return app(AdminController::class)->viewPermissionConference($request);
         })->name('viewPermissionConference');
 
+        Route::get('/viewValidationPermissionBrochure', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewValidationPermissionBrochure($request);
+        })->name('viewValidationPermissionBrochure');
+
 
 
 
@@ -790,6 +799,7 @@ Route::prefix('directeur')->group(function(){
         Route::post('/validationPermissionVideoConferenceClient',[AdminController::class,'validationPermissionVideoConferenceClient'])->name('validationPermissionVideoConferenceClient');
         Route::post('/validationPermissionTemoigange',[AdminController::class,'validationPermissionTemoigange'])->name('validationPermissionTemoigange');
         Route::post('/validationPermissionConference',[AdminController::class,'validationPermissionConference'])->name('validationPermissionConference');
+        Route::post('/validationPermissionBrochure',[AdminController::class,'validationPermissionBrochure'])->name('validationPermissionBrochure');
 
     });
 

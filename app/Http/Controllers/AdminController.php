@@ -1493,11 +1493,88 @@ class AdminController extends Controller
             return redirect()->route('viewPermissionConference')->with('success', 'video conferece valider');
 
         }
-
-
-        //return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
-
-
     }
+
+    public function viewValidationPermissionBrochure()
+    {
+        $standModel = new StandModel();
+        $permissionBrochure = $standModel->viewPermissionBrochure();
+        return view('admin.validationPermissionBrochure',compact('permissionBrochure'));
+    }
+
+    public function validationPermissionBrochure(Request $request)
+    {
+        $id_info_type_stand = $request->id_info_type_stand;
+        $nom_brochure_stand = $request->nom_brochure_stand;
+        $img_brochure = $request->img_brochure;
+        //$date_ajout_brochure = $request->date_ajout_brochure;
+        $id_permission_brochure = $request->id_permission_brochure;
+        $id_directeur = $request->id_directeur;
+        $id_etat = $request->id_etat;
+
+        //dd($id_etat);
+
+        if ($id_etat == 15)
+        {
+            # code...
+             $getStandModel = new StandModel();
+             $updateEtat = $getStandModel->updatePermissionBrochure($id_permission_brochure);
+            $updateEtat = $getStandModel->modifieBrochure($id_info_type_stand,$nom_brochure_stand,$img_brochure);
+
+             $sender = 6;
+            $receiver = $id_directeur;
+            $content = "Votre demande de modification de brochure a ete appprouve";
+            $url = "http://127.0.0.1:8000/directeur/viewChoixDeStandBrochure";
+            $dateString = date('Y-m-d H:i:s');
+            try {
+                //code...
+                Http::post('http://localhost:8080/api/notifications/admin/validation/permissionBrochure/sendNotification', [
+                'sender'=>$sender,
+                'receiver'=>$receiver,
+                'content'=>$content,
+                'dateNotification'=>$dateString,
+                'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
+
+            return redirect()->route('viewValidationPermissionBrochure')->with('success', 'brochure valider');
+
+
+
+        } else {
+            $getStandModel = new StandModel();
+            $updateEtat = $getStandModel->updatePermissionBrochure($id_permission_brochure);
+
+
+            $getStandModel->insertBrochure($id_info_type_stand,$nom_brochure_stand,$img_brochure);
+
+            $sender = 6;
+            $receiver = $id_directeur;
+            $content = "Votre demande de permission de brochure a ete appprouve";
+            $url = "http://127.0.0.1:8000/directeur/viewChoixDeStandBrochure";
+            $dateString = date('Y-m-d H:i:s');
+            try {
+                //code...
+                Http::post('http://localhost:8080/api/notifications/admin/validation/permissionBrochure/sendNotification', [
+                'sender'=>$sender,
+                'receiver'=>$receiver,
+                'content'=>$content,
+                'dateNotification'=>$dateString,
+                'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
+
+            return redirect()->route('viewValidationPermissionBrochure')->with('success', 'brochure valider');
+
+        }
+
+
+          }
 
 }

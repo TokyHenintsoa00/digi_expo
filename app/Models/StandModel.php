@@ -699,6 +699,51 @@ class StandModel extends Model
     }
 
 
+
+    public function permissionBrochure($id_info_type_stand,$nom_brochure_stand,$img_brochure,$id_directeur)
+    {
+        DB::beginTransaction();
+        try {
+            //code...
+            DB::insert("INSERT INTO permission_brochure(id_info_type_stand,nom_brochure_stand,
+            img_brochure,date_ajout_brochure,id_directeur,id_etat)
+            VALUES(?,?,?,CURRENT_TIMESTAMP,?,1)",[$id_info_type_stand,$nom_brochure_stand,$img_brochure,$id_directeur]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            throw $th;
+        }
+    }
+
+    public function permissionBrochureModification($id_brochure_stand,$id_info_type_stand,$nom_brochure_stand,$img_brochure,$id_directeur)
+    {
+        DB::beginTransaction();
+        try {
+            //code...
+            DB::insert("INSERT INTO permission_brochure(id_brochure_stand,id_info_type_stand,nom_brochure_stand,
+            img_brochure,date_ajout_brochure,id_directeur,id_etat)
+            VALUES(?,?,?,?,CURRENT_TIMESTAMP,?,15)",[$id_brochure_stand,$id_info_type_stand,$nom_brochure_stand,$img_brochure,$id_directeur]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            throw $th;
+        }
+    }
+
+
+
+    public function viewPermissionBrochure()
+    {
+        $result = DB::select("SELECT * FROM v_permission_brochure");
+
+        return $result;
+    }
+
+
     //insert brochure
     public function insertBrochure($id_info_type_stand,$nom_brochure,$fichier)
     {
@@ -714,6 +759,12 @@ class StandModel extends Model
             DB::rollBack();
             throw $th;
         }
+    }
+
+    public function updatePermissionBrochure($id_permission_brochure)
+    {
+        $result = DB::update("UPDATE permission_brochure set id_etat = 4 where id_permission_brochure = ?",[$id_permission_brochure]);
+        return $result;
     }
 
     //modification de brochure

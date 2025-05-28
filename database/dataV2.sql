@@ -366,8 +366,17 @@ CREATE TABLE permission_video_conference
 
 CREATE TABLE permission_brochure
 (
-    
+    id_permission_brochure serial primary key,
+    id_brochure_stand integer references brochure_contenue(id_brochure_stand),
+    id_info_type_stand integer references info_type_stand(id_info_type_stand),
+    nom_brochure_stand varchar(40),
+    img_brochure text,
+    date_ajout_brochure timestamp,
+    id_directeur integer references emp(id_emp),
+    id_etat integer references etat(id_etat),
 );
+
+
 
 -- create table brochure_contenue
 -- (

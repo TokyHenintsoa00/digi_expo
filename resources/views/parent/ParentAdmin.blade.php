@@ -371,6 +371,7 @@ aside.top-navbar {
             @yield('videoConferenceClientSection')
             @yield('validationPermissionTemoignage')
             @yield('validationPermissionConference')
+            @yield('permissionBrochure')
         </div>
       </div>
     </div>
@@ -528,6 +529,11 @@ function markNotificationAsRead(notification)
                 });
 
                 stompClient.subscribe(`/topic/noticationPermissionConferenceByDirecteur/`+etat_admin,function (message)
+                {
+                    showNotification(JSON.parse(message.body));
+                });
+
+                stompClient.subscribe(`/topic/noticationPermissionBrochureByDirecteur/`+etat_admin,function (message)
                 {
                     showNotification(JSON.parse(message.body));
                 });

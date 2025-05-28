@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="card shadow mb-4">
             <div class="card-header">
-                <strong class="card-title">formulaire d'ajout de brochure</strong>
+                <strong class="card-title">formulaire d'ajout de brochures</strong>
             </div>
             <div class="card-body">
                   <!-- Afficher le message de succès -->
@@ -20,7 +20,7 @@
                             {{ $errors->first('error') }}
                         </div>
                     @endif
-                <form action="{{route('publierBrochure')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('permissionBrochure')}}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-row">
@@ -37,7 +37,7 @@
 
                         </div>
                         <input type="hidden" name="id_info_type_stand" value="{{$id_info_type_stand}}">
-                    <input type="submit" class="btn btn-primary" value="Publier">
+                    <input type="submit" class="btn btn-primary" value="Envoyer">
                 </form>
             </div> <!-- /. card-body -->
         </div> <!-- /. card -->
