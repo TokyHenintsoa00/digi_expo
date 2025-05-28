@@ -424,6 +424,14 @@ Route::prefix('directeur')->group(function(){
     })->name('viewListTemoignage');
 
 
+    Route::get('/viewModificationPodcast', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewModificationPodcast($request);
+    })->name('viewModificationPodcast');
+
+
 
 
 
@@ -452,6 +460,7 @@ Route::prefix('directeur')->group(function(){
 
     //Route::get('/viewAjoutLiensTemoignage',[DirecteurEmpController::class,'viewAjoutLiensTemoignage'])->name('viewAjoutLiensTemoignage');
     Route::post('/ajoutLiensTemoignage',[DirecteurEmpController::class,'ajoutLiensTemoignage'])->name('ajoutLiensTemoignage');
+        Route::post('/permissionModificationGalerie',[DirecteurEmpController::class,'permissionModificationGalerie'])->name('permissionModificationGalerie');
 
 });
 // -----------------Authentification--------------------------------------------------------------------------------

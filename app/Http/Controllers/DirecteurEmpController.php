@@ -750,6 +750,58 @@ class DirecteurEmpController extends Controller
         return view('directeurEmp.VideoConference');
     }
 
+    //ampiasana am ilay planification gallerie(PODCAST)
+    public function viewGalerie()
+    {
+        return view('directeurEmp.PlanificationGalerie');
+    }
+
+    //MODIFICATION PODCAST
+    public function viewModificationPodcast(Request $request)
+    {
+        $id_salle_conference = $request->id_salle_conference;
+        return view('directeurEmp.viewModificationPodcast',compact('id_salle_conference'));
+    }
+
+    public function permissionModificationGalerie(Request $request)
+    {
+        $titre_video = $request->titre_video;
+        $date_heure_galerie = $request->date_heure_galerie;
+        $liens_video = $request->liens_video;
+        $type_video = 1;
+        $type_conference = 3;
+        $id_directeur = Session::get('id_emp');
+        $id_salle_conference  = $request->id_salle_conference;
+
+        //dd($id_salle_conference);
+
+        $getVideoModel = new VideoModel();
+
+        $permissionVideoConference = $getVideoModel->permissionVideoConferenceModification($titre_video,
+        $id_directeur,$type_video,
+        $type_conference,$date_heure_galerie,$liens_video,$id_salle_conference);
+
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Vous avez recu une permission de confenrence";
+            $url = "http://127.0.0.1:8000/admin/viewPermissionConference";
+            $dateString = date('Y-m-d H:i:s');
+
+        try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionConfenrece/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+    }
+
 
     public function planificationGallerie(Request $request)
     {
@@ -788,7 +840,7 @@ class DirecteurEmpController extends Controller
 
     }
 
-    
+
 
     // public function planificationGallerie(Request $request)
     // {
@@ -985,11 +1037,6 @@ class DirecteurEmpController extends Controller
     // }
 
 
-    //ampiasana am ilay planification gallerie
-    public function viewGalerie()
-    {
-        return view('directeurEmp.PlanificationGalerie');
-    }
 
 
     public function viewAddLinkVideo(Request $request)

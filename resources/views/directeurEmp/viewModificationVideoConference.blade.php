@@ -46,10 +46,22 @@
                         @if (\Carbon\Carbon::parse($videoConferences->date_heure_salle_conference)->isFuture())
                             <div class="d-flex gap-2">
                                 @if ($videoConferences->liens_video != null)
-                                    <form action="{{ route('viewFormulaireModificationVideoConference') }}" method="get">
-                                        <input type="hidden" name="id_salle_conference" value="{{ $videoConferences->id_salle_conference }}">
-                                        <input type="submit" class="btn btn-primary" value="Modifier">
-                                    </form>
+
+                                    @if ($videoConferences->id_type_conference ==3)
+
+                                        <form action="{{ route('viewModificationPodcast') }}" method="get">
+                                            <input type="hidden" name="id_salle_conference" value="{{ $videoConferences->id_salle_conference }}">
+                                            <input type="submit" class="btn btn-primary" value="Modifier">
+                                        </form>
+
+                                    @else
+                                        <form action="{{ route('viewFormulaireModificationVideoConference') }}" method="get">
+                                            <input type="hidden" name="id_salle_conference" value="{{ $videoConferences->id_salle_conference }}">
+                                            <input type="submit" class="btn btn-primary" value="Modifier">
+                                        </form>
+                                    @endif
+
+
                                 @endif
                             </div>
                         @else
