@@ -1031,7 +1031,7 @@ class DirecteurEmpController extends Controller
 
         $sender = $id_directeur;
         $receiver = 6;
-        $content = "Votre demande de permission de temoigange est en cours de validation";
+        $content = "Vous avez recu une demande de permission de temoignage";
         $url = "http://127.0.0.1:8000/admin/viewValidationTemoigage";
         $dateString = date('Y-m-d H:i:s');
 
@@ -1193,18 +1193,64 @@ class DirecteurEmpController extends Controller
         $liens_video = $request->liens_video;
         $id_temoignage = $request->id_temoignage;
 
-        $getTemoignageModel = new Temoignage();
 
-        if ($liens_video == null)
-        {
-            $getModificationWithLink = $getTemoignageModel->modificationTemoignageWithoutLink($id_stand,$date_temoignage,$titre,$id_temoignage);
-            return redirect()->route('viewTemoignage')->with('success', 'Gestion de temoignage modifié');
+        $salon = new ReceptionModel();
+        $getMaxSalon = $salon->maxSalon();
+        $id_directeur = Session::get('id_emp');
+        $idMaxSalon = $getMaxSalon[0]->id_sallon;
 
-        } else {
-            $getModificationWithLink = $getTemoignageModel->modificationTemoignageWithLink($id_stand,$date_temoignage,$liens_video,$titre,$id_temoignage);
-            return redirect()->route('viewTemoignage')->with('success', 'Gestion de temoignage modifié');
+        $getTemoignage = new Temoignage();
+        $permission_temoigange = $getTemoignage
+            ->permissionModificationTemoignage($id_stand,$date_temoignage,$liens_video,$titre,
+            $idMaxSalon,$id_directeur,$id_temoignage);
+
+
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Vous avez recu une demande de permission de temoignage";
+        $url = "http://127.0.0.1:8000/admin/viewValidationTemoigage";
+        $dateString = date('Y-m-d H:i:s');
+
+          try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionTemoigange/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
         }
+
+        return redirect()->route('viewTemoignage')->with('success', 'Votre demande de modification est en cours de validation');
+
+
     }
+
+
+    // public function modificationTemoignage(Request $request)
+    // {
+    //     $titre = $request->titre;
+    //     $id_stand = $request->id_stand;
+    //     $date_temoignage = $request->date_temoignage;
+    //     $liens_video = $request->liens_video;
+    //     $id_temoignage = $request->id_temoignage;
+
+    //     $getTemoignageModel = new Temoignage();
+
+    //     if ($liens_video == null)
+    //     {
+    //         $getModificationWithLink = $getTemoignageModel->modificationTemoignageWithoutLink($id_stand,$date_temoignage,$titre,$id_temoignage);
+    //         return redirect()->route('viewTemoignage')->with('success', 'Gestion de temoignage modifié');
+
+    //     } else {
+    //         $getModificationWithLink = $getTemoignageModel->modificationTemoignageWithLink($id_stand,$date_temoignage,$liens_video,$titre,$id_temoignage);
+    //         return redirect()->route('viewTemoignage')->with('success', 'Gestion de temoignage modifié');
+    //     }
+    // }
 
 
     public function viewAjoutLiensTemoignage(Request $request)

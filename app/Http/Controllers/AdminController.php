@@ -1331,9 +1331,82 @@ class AdminController extends Controller
         return view('admin.validationPermissionTemoignage',compact('list_permission_temoignage'));
     }
 
-    public function validationPermissionTemoigange()
+    public function validationPermissionTemoigange(Request $request)
     {
-        
+        $id_stand = $request->id_stand;
+        $date_temoignage = $request->date_temoignage;
+        $liens_video = $request->liens_video;
+        $titre = $request->titre;
+        $id_sallon = $request->id_sallon;
+        $id_directeur = $request->id_directeur;
+        $id_permission_temoigange = $request->id_permission_temoigange;
+        $id_etat = $request->id_etat;
+
+          //dd($id_etat);
+
+          if ($id_etat == 15)
+          {
+                $id_temoignage = $request->id_temoignage;
+                $getTemoignage = new Temoignage();
+                $updateEtat =$getTemoignage->updateEtatermissionTemoignage($id_permission_temoigange);
+                $getModificationWithLink = $getTemoignage->modificationTemoignageWithLink($id_stand,$date_temoignage,$liens_video,$titre,$id_temoignage);
+
+                    $sender = 6;
+                    $receiver = $id_directeur;
+                    $content = "Votre demande de modification temoignage a ete appprouve";
+                    $url = "http://127.0.0.1:8000/directeur/viewListTemoignage";
+                    $dateString = date('Y-m-d H:i:s');
+                    try {
+                        //code...
+                        Http::post('http://localhost:8080/api/notifications/admin/validation/permissionVideoConferenceClient/sendNotification', [
+                        'sender'=>$sender,
+                        'receiver'=>$receiver,
+                        'content'=>$content,
+                        'dateNotification'=>$dateString,
+                        'url'=>$url
+                    ]);
+                    } catch (\Exception $e) {
+                        // Tu peux logger l'erreur ou la gérer
+                        \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+                    }
+
+                    return redirect()->route('viewValidationTemoigage')->with('success', 'Permission  temoignage valider');
+
+          }
+          else
+          {
+            # code...
+
+            $getTemoignage = new Temoignage();
+            $updateEtat =$getTemoignage->updateEtatermissionTemoignage($id_permission_temoigange);
+            $insertTemoignage = $getTemoignage->insertTemoignage($id_stand,$id_directeur,$date_temoignage,
+                $liens_video,$titre,$id_sallon);
+
+            $sender = 6;
+            $receiver = $id_directeur;
+            $content = "Votre demande de permission temoignage a ete appprouve";
+            $url = "http://127.0.0.1:8000/directeur/viewListTemoignage";
+            $dateString = date('Y-m-d H:i:s');
+            try {
+                //code...
+                Http::post('http://localhost:8080/api/notifications/admin/validation/permissionVideoConferenceClient/sendNotification', [
+                'sender'=>$sender,
+                'receiver'=>$receiver,
+                'content'=>$content,
+                'dateNotification'=>$dateString,
+                'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
+
+            return redirect()->route('viewValidationTemoigage')->with('success', 'Permission  temoignage valider');
+
+          }
+
+
+
     }
 
 }

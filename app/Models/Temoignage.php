@@ -31,6 +31,12 @@ class Temoignage extends Model
         }
     }
 
+    public function updateEtatermissionTemoignage($id_permission_temoigange)
+    {
+        $result = DB::update("UPDATE permission_temoignage SET id_etat = 4 where id_permission_temoigange = ?",[$id_permission_temoigange]);
+        return $result;
+    }
+
     public function getAllTemoignage()
     {
         $temoignage = DB::table('v_temoignage')->get();
@@ -134,4 +140,26 @@ class Temoignage extends Model
             throw $th; // Renvoyer l'erreur
         }
     }
+
+
+    public function permissionModificationTemoignage($id_stand,$date_temoigange,$liens_video,$titre,
+        $id_sallon,$id_directeur,$id_temoignage)
+    {
+        DB::beginTransaction();
+        try {
+            //code...
+            DB::insert("INSERT INTO permission_temoignage(id_stand,date_temoignage,liens_video,titre,
+                id_sallon,id_etat,id_directeur,id_temoignage)VALUES(?,?,?,?,?,15,?,?)",[$id_stand,$date_temoigange,$liens_video,
+                    $titre,$id_sallon,$id_directeur,$id_temoignage]);
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            //throw $th;
+             DB::rollBack(); // Annuler si quelque chose échoue
+            throw $th; // Renvoyer l'erreur
+        }
+    }
+
+
 }

@@ -25,6 +25,7 @@
                 <th>Exposition</th>
                 <th>date de temoignage</th>
                 <th>liens de la video</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -48,11 +49,11 @@
                                         <input type="hidden" name="id_temoignage" value="{{ $list_temoignage->id_temoignage }}">
                                         <input type="submit" class="btn btn-primary" value="Modifier">
                                     </form>
-                                @else
+                                {{-- @else
                                     <form action="{{route('viewAjoutLiensTemoignage')}}" method="get">
                                         <input type="hidden" name="id_temoignage" value="{{ $list_temoignage->id_temoignage }}">
                                         <input type="submit" class="btn btn-primary" value="Ajouter un lien">
-                                    </form>
+                                    </form> --}}
                                 @endif
                             </div>
                         @else

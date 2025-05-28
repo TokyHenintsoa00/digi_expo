@@ -477,8 +477,9 @@ where permission_video_conference_client.id_etat in(1,15);
 
 
 CREATE OR REPLACE VIEW V_permission_temoignage as
-select permission_temoignage.*,nom_stand
+select permission_temoignage.*,nom_stand,prenom_emp
 from permission_temoignage
 join stand on stand.id_stand = permission_temoignage.id_Stand
+join emp on emp.id_emp = permission_temoignage.id_directeur
 where permission_temoignage.id_etat in(1,15)
 order by date_temoignage desc;

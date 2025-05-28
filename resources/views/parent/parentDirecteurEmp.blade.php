@@ -650,6 +650,11 @@ aside.top-navbar {
                     showNotification(JSON.parse(message.body));
                 });
 
+                stompClient.subscribe(`/topic/validationTemoigage/`+id_emp,function(message){
+                    showNotification(JSON.parse(message.body));
+                });
+
+
 
             });
 

@@ -770,6 +770,7 @@ Route::prefix('directeur')->group(function(){
         Route::post('/validePermissionGalerie',[AdminController::class,'validePermissionGalerie'])->name('validePermissionGalerie');
         Route::post('/validePermissionGalerieVideo',[AdminController::class,'validePermissionGalerieVideo'])->name('validePermissionGalerieVideo');
         Route::post('/validationPermissionVideoConferenceClient',[AdminController::class,'validationPermissionVideoConferenceClient'])->name('validationPermissionVideoConferenceClient');
+        Route::post('/validationPermissionTemoigange',[AdminController::class,'validationPermissionTemoigange'])->name('validationPermissionTemoigange');
 
     });
 
