@@ -59,9 +59,6 @@
                         </div>
                     </div>
 
-
-
-
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
             </div> <!-- /. card-body -->

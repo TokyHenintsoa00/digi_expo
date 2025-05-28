@@ -1404,7 +1404,98 @@ class AdminController extends Controller
             return redirect()->route('viewValidationTemoigage')->with('success', 'Permission  temoignage valider');
 
           }
+    }
 
+    public function viewPermissionConference()
+    {
+        $videoModel = new VideoModel();
+        $permissionConference = $videoModel->viewPermissionConfenrence();
+        return view('admin.validationPermissionConference',compact('permissionConference'));
+    }
+
+
+    public function validationPermissionConference(Request $request)
+    {
+        $id_etat = $request->id_etat;
+        $titre_video = $request->titre_video;
+        $id_type_conference = $request->id_type_conference;
+        $date_heure_salle_conference = $request->date_heure_salle_conference;
+        $id_permission_video_conference = $request->id_permission_video_conference;
+
+        // dd($date_heure_salle_conference);
+
+        $liens_video = $request->liens_video;
+        $id_directeur = $request->id_directeur;
+        $getVideoModel = new VideoModel();
+        $id_type_video = $request->id_type_video;
+
+
+
+        if ($id_etat == 15) {
+            # code...
+            $id_salle_conference = $request->id_salle_conference;
+            $updateEtat = $getVideoModel->updateEtatPermissionConfenrence($id_permission_video_conference);
+            $getVideoModel->modificationVideoConferenceWithLink($titre_video,$id_type_video,$id_type_conference,$date_heure_salle_conference,$liens_video,$id_salle_conference);
+
+
+            $sender = 6;
+            $receiver = $id_directeur;
+            $content = "Votre demande de permission modification de conference a ete appprouve";
+            $url = "http://127.0.0.1:8000/directeur/viewModificationVideoConference";
+            $dateString = date('Y-m-d H:i:s');
+            try {
+                //code...
+                Http::post('http://localhost:8080/api/notifications/admin/validation/permissionConference/sendNotification', [
+                'sender'=>$sender,
+                'receiver'=>$receiver,
+                'content'=>$content,
+                'dateNotification'=>$dateString,
+                'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
+
+
+            return redirect()->route('viewPermissionConference')->with('success', 'video conferece valider');
+
+
+            // echo"modification";
+
+        } else {
+            //dd($id_permission_video_conference);
+            // # code...
+            $updateEtat = $getVideoModel->updateEtatPermissionConfenrence($id_permission_video_conference);
+            $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,
+            $id_type_video,$id_type_conference,$date_heure_salle_conference ,$liens_video);
+
+            $sender = 6;
+            $receiver = $id_directeur;
+            $content = "Votre demande de permission conference ou galerie a ete appprouve";
+            $url = "http://127.0.0.1:8000/directeur/viewModificationVideoConference";
+            $dateString = date('Y-m-d H:i:s');
+            try {
+                //code...
+                Http::post('http://localhost:8080/api/notifications/admin/validation/permissionConference/sendNotification', [
+                'sender'=>$sender,
+                'receiver'=>$receiver,
+                'content'=>$content,
+                'dateNotification'=>$dateString,
+                'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
+
+
+            return redirect()->route('viewPermissionConference')->with('success', 'video conferece valider');
+
+        }
+
+
+        //return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
 
 
     }

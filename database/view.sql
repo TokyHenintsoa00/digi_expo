@@ -483,3 +483,12 @@ join stand on stand.id_stand = permission_temoignage.id_Stand
 join emp on emp.id_emp = permission_temoignage.id_directeur
 where permission_temoignage.id_etat in(1,15)
 order by date_temoignage desc;
+
+CREATE OR REPLACE VIEW v_permission_video_confenrence as
+select permission_video_conference.*,prenom_emp,nom_type,nom_type_conference
+from permission_video_conference
+join emp on emp.id_emp = permission_video_conference.id_directeur
+join type_conference on type_conference.id_type_conference = permission_video_conference.id_type_conference
+join type_video on type_video.id_type_video = permission_video_conference.id_type_video
+where permission_video_conference.id_etat in(1,15)
+order by date_heure_salle_conference desc;

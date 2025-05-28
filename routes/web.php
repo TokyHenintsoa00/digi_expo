@@ -766,11 +766,21 @@ Route::prefix('directeur')->group(function(){
             return app(AdminController::class)->viewValidationTemoigage($request);
         })->name('viewValidationTemoigage');
 
+        Route::get('/viewPermissionConference', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->viewPermissionConference($request);
+        })->name('viewPermissionConference');
+
+
+
 
         Route::post('/validePermissionGalerie',[AdminController::class,'validePermissionGalerie'])->name('validePermissionGalerie');
         Route::post('/validePermissionGalerieVideo',[AdminController::class,'validePermissionGalerieVideo'])->name('validePermissionGalerieVideo');
         Route::post('/validationPermissionVideoConferenceClient',[AdminController::class,'validationPermissionVideoConferenceClient'])->name('validationPermissionVideoConferenceClient');
         Route::post('/validationPermissionTemoigange',[AdminController::class,'validationPermissionTemoigange'])->name('validationPermissionTemoigange');
+        Route::post('/validationPermissionConference',[AdminController::class,'validationPermissionConference'])->name('validationPermissionConference');
 
     });
 

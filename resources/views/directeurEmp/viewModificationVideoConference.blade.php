@@ -3,7 +3,7 @@
 
 <h2>Modification de liens de vidéo</h2>
 
-<div class="col-13">
+<div class="col-13" style="overflow-x: auto;">
 
     @if (session('success'))
         <div class="alert alert-success" role="alert">
@@ -49,11 +49,6 @@
                                     <form action="{{ route('viewFormulaireModificationVideoConference') }}" method="get">
                                         <input type="hidden" name="id_salle_conference" value="{{ $videoConferences->id_salle_conference }}">
                                         <input type="submit" class="btn btn-primary" value="Modifier">
-                                    </form>
-                                @else
-                                    <form action="{{ route('viewAddLinkVideo') }}" method="get">
-                                        <input type="hidden" name="id_salle_conference" value="{{ $videoConferences->id_salle_conference }}">
-                                        <input type="submit" class="btn btn-primary" value="Ajouter un lien">
                                     </form>
                                 @endif
                             </div>

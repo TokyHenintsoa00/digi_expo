@@ -753,28 +753,67 @@ class DirecteurEmpController extends Controller
 
     public function planificationGallerie(Request $request)
     {
-        $titre_video = $request->titre_video;
-        $date_heure_galerie = $request->date_heure_galerie;
-        $liens_video = $request->liens_video;
-        $type_video = 1;
-        $type_conference = 3;
-        $id_directeur = Session::get('id_emp');
+            $titre_video = $request->titre_video;
+            $date_heure_galerie = $request->date_heure_galerie;
+            $liens_video = $request->liens_video;
+            $type_video = 1;
+            $type_conference = 3;
+            $id_directeur = Session::get('id_emp');
 
-        $getVideoModel = new VideoModel();
+            $getVideoModel = new VideoModel();
 
-        if($liens_video == null)
-        {
-            $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$type_video,$type_conference,$date_heure_galerie);
-            return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
+            $permissionVideoConference = $getVideoModel->permissionVideoConference($titre_video,
+            $id_directeur,$type_video,
+            $type_conference,$date_heure_galerie,$liens_video);
 
-        }
-        else{
+             $sender = $id_directeur;
+            $receiver = 6;
+            $content = "Vous avez recu une permission de galerie";
+                $url = "http://127.0.0.1:8000/admin/viewPermissionConference";
+                $dateString = date('Y-m-d H:i:s');
 
-            $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$type_video,$type_conference,$date_heure_galerie,$liens_video);
-            return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
+            try {
+                //code...
+                Http::post('http://localhost:8080/api/notifications/directeur/permissionConfenrece/sendNotification', [
+                'sender'=>$sender,
+                'receiver'=>$receiver,
+                'content'=>$content,
+                'dateNotification'=>$dateString,
+                'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
 
-        }
     }
+
+    
+
+    // public function planificationGallerie(Request $request)
+    // {
+    //     $titre_video = $request->titre_video;
+    //     $date_heure_galerie = $request->date_heure_galerie;
+    //     $liens_video = $request->liens_video;
+    //     $type_video = 1;
+    //     $type_conference = 3;
+    //     $id_directeur = Session::get('id_emp');
+
+    //     $getVideoModel = new VideoModel();
+
+    //     if($liens_video == null)
+    //     {
+    //         $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$type_video,$type_conference,$date_heure_galerie);
+    //         return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
+
+    //     }
+    //     else{
+
+    //         $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$type_video,$type_conference,$date_heure_galerie,$liens_video);
+    //         return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
+
+    //     }
+    // }
 
 
     public function viewPlanificationVideoConference()
@@ -795,27 +834,66 @@ class DirecteurEmpController extends Controller
         $getVideoModel = new VideoModel();
         $id_type_video = $request->id_type_video;
 
+        $permissionVideoConference = $getVideoModel->permissionVideoConference($titre_video,
+        $id_directeur,$id_type_video,
+        $id_type_conference,$date_heure_conference,$liens_video);
 
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Vous avez recu une permission de confenrence";
+            $url = "http://127.0.0.1:8000/admin/viewPermissionConference";
+            $dateString = date('Y-m-d H:i:s');
 
+        try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionConfenrece/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
 
-        //type conference atelier => podcast
-        //type conference salle de conference =>streaming
-
-            if ($liens_video ==null) {
-                //pour le podcast
-                $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_conference);
-                return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
-
-
-            } else {
-                //pour le streaming
-                $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video);
-                return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
-
-            }
+        return redirect()->route('viewVideoConference')->with('success', 'video conference en cours de validation');
 
 
     }
+
+    // public function planificationVideoConference(Request $request)
+    // {
+    //     $titre_video = $request->titre_video;
+    //     $id_type_conference = $request->id_type_conference;
+    //     $date_heure_conference = $request->date_heure_conference;
+    //     $liens_video = $request->liens_video;
+    //     $id_directeur = Session::get('id_emp');
+    //     $getVideoModel = new VideoModel();
+    //     $id_type_video = $request->id_type_video;
+
+
+
+
+    //     //type conference atelier => podcast
+    //     //type conference salle de conference =>streaming
+
+    //         if ($liens_video ==null) {
+    //             //pour le podcast
+    //             $getVideoModel->insertSalleConferenceWithoutLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_conference);
+    //             return redirect()->route('viewVideoConference')->with('success', 'video conference publier');
+
+
+    //         } else {
+    //             //pour le streaming
+    //             $getVideoModel->insertSalleConferenceWithLink($titre_video,$id_directeur,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video);
+    //             return redirect()->route('viewVideoConference')->with('success', 'video conferece publier');
+
+    //         }
+
+
+    // }
 
 
     public function viewModificationVideoConference()
@@ -830,40 +908,81 @@ class DirecteurEmpController extends Controller
     public function viewFormulaireModificationVideoConference(Request $request)
     {
         $getVideoModel = new VideoModel();
-        $type_conference = $getVideoModel->getAllTypeConference();
-        $type_video = $getVideoModel->getAllTypeVideo();
+        $type_conference = $getVideoModel->typeConferenceWithAlterlierAndSalleConf();
+        $type_video = $getVideoModel->typeVideoWithAtelierandSalleConf();
         $id_salle_conference = $request->id_salle_conference;
 
         //dd($id_salle_conference);
         return view('directeurEmp.formulaireModificationVideoConference',compact('type_conference','type_video','id_salle_conference'));
     }
 
+
     public function modificationVideoConference(Request $request)
     {
         $titre_video = $request->titre_video;
-        $id_type_video = $request->id_type_video;
         $id_type_conference = $request->id_type_conference;
         $date_heure_conference = $request->date_heure_conference;
+        $id_salle_conference  = $request->id_salle_conference;
         $liens_video = $request->liens_video;
-        $id_salle_conference = $request->id_salle_conference;
+        $id_directeur = Session::get('id_emp');
         $getVideoModel = new VideoModel();
-        if ($liens_video ==null) {
-            # code...
-            $getVideoModel->modificationVideoConferenceWithoutLink($titre_video,$id_type_video,$id_type_conference,$date_heure_conference,$id_salle_conference);
-            return redirect()->route('viewVideoConference')->with('success', 'video conferece modifier');
+        $id_type_video = $request->id_type_video;
 
+        // dd($id_salle_conference);
 
+        $permissionVideoConference = $getVideoModel->permissionVideoConferenceModification($titre_video,
+        $id_directeur,$id_type_video,
+        $id_type_conference,$date_heure_conference,$liens_video,$id_salle_conference);
 
-        } else {
-            # code...
-            $getVideoModel->modificationVideoConferenceWithLink($titre_video,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video,$id_salle_conference);
-            return redirect()->route('viewVideoConference')->with('success', 'video conferece modifier');
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Vous avez recu une permission de confenrence";
+            $url = "http://127.0.0.1:8000/admin/viewPermissionConference";
+            $dateString = date('Y-m-d H:i:s');
 
-
+        try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionConfenrece/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
         }
 
-        //dd($titre_video,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video,$id_salle_conference);
+        return redirect()->route('viewVideoConference')->with('success', 'video conferece en cours de modification');
     }
+
+    // public function modificationVideoConference(Request $request)
+    // {
+    //     $titre_video = $request->titre_video;
+    //     $id_type_video = $request->id_type_video;
+    //     $id_type_conference = $request->id_type_conference;
+    //     $date_heure_conference = $request->date_heure_conference;
+    //     $liens_video = $request->liens_video;
+    //     $id_salle_conference = $request->id_salle_conference;
+    //     $getVideoModel = new VideoModel();
+    //     if ($liens_video ==null) {
+    //         # code...
+    //         $getVideoModel->modificationVideoConferenceWithoutLink($titre_video,$id_type_video,$id_type_conference,$date_heure_conference,$id_salle_conference);
+    //         return redirect()->route('viewVideoConference')->with('success', 'video conferece modifier');
+
+
+
+    //     } else {
+    //         # code...
+    //         $getVideoModel->modificationVideoConferenceWithLink($titre_video,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video,$id_salle_conference);
+    //         return redirect()->route('viewVideoConference')->with('success', 'video conferece modifier');
+
+
+    //     }
+
+    //     //dd($titre_video,$id_type_video,$id_type_conference,$date_heure_conference,$liens_video,$id_salle_conference);
+    // }
 
 
     //ampiasana am ilay planification gallerie

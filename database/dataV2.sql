@@ -361,10 +361,21 @@ CREATE TABLE permission_temoignage
 -- );
 
 
-CREATE TABLE video_conference
+CREATE TABLE permission_video_conference
 (
-
+    id_permission_video_conference serial primary key,
+    titre_video varchar(50),
+    id_directeur integer references emp(id_emp),
+    id_type_video integer references type_video(id_type_video),
+    id_type_conference integer references type_conference(id_type_conference),
+    date_heure_salle_conference timestamp(0),
+    liens_video text,
+    id_Sallon integer references salon(id_Sallon),
+    id_salle_conference integer references video_conference(id_salle_conference),
+    id_etat integer
 );
+
+
 
 
 
