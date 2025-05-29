@@ -772,6 +772,10 @@ Route::prefix('directeur')->group(function(){
 
 
 
+
+
+
+
         Route::get('/get-data-stand-by-day', function (Request $request) {
             if (!session()->has('id')) {
             return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
@@ -817,6 +821,40 @@ Route::prefix('directeur')->group(function(){
             }
             return app(AdminController::class)->getMvtEmpByYear($request);
         })->name('get.data.mvtemp.by.year');
+
+
+        Route::get('/get-data-photo-by-day', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getContenuePhotoByDay($request);
+        })->name('get.data.photo.by.day');
+
+
+        Route::get('/get-data-photo-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getContenuePhotoByYear($request);
+        })->name('get.data.photo.by.year');
+
+
+        Route::get('/get-data-video-by-day', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getContenueVideoByDay($request);
+        })->name('get.data.video.by.day');
+
+
+
+        Route::get('/get-data-video-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getContenueVideo1ByYear($request);
+        })->name('get.data.video.by.year');
+
 
 
 

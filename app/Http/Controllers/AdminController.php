@@ -1242,6 +1242,104 @@ class AdminController extends Controller
     }
 
 
+    public function getContenuePhotoByDay(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('nbr_contenue_photo_by_day')
+        ->where('annee', $year)
+        ->select('annee','nom_jour', 'total_contenue')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+
+    public function getContenuePhotoByYear(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('v_nombre_contenue_photo_by_year')
+        ->where('annee', $year)
+        ->select('annee','nombre_contenue')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+
+
+    public function getContenueVideoByDay(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('v_nombre_video_contenue_by_day')
+        ->where('date_creation_video', $year)
+        ->select('date_creation_video','nom_jour', 'nombre_contenue')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+
+    public function getContenueVideo1ByYear(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('v_nombre_video_contenue_by_year')
+        ->where('date_creation_video', $year)
+        ->select('date_creation_video', 'nombre_contenue')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+
+
     public function search(Request $request)
     {
         $search = $request->search;

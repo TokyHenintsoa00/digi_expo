@@ -319,7 +319,7 @@ create or replace view nbr_contenue_photo_by_day as
 select
     EXTRACT(YEAR FROM date_creation) AS annee,
     TO_CHAR(date_creation, 'TMDay') AS nom_jour,
-    SUM(nombre_contenue) AS total_user
+    SUM(nombre_contenue) AS total_contenue
 from v_nombre_contenue_photo_by_day
 GROUP BY
     EXTRACT(YEAR FROM date_creation),
@@ -421,12 +421,15 @@ select * from video_contenue;
 CREATE OR REPLACE VIEW V_nombre_video_contenue_by_day as
 SELECT
 EXTRACT(YEAR FROM date_creation_video) AS date_creation_video,
-TO_CHAR(DATE(date_creation_video), 'Dy') AS nom_jour,
+TO_CHAR(DATE(date_creation_video), 'TMDay') AS nom_jour,
 count(*) AS nombre_Contenue,
 ROUND((count(*) * 100.0) / SUM(count(*)) OVER (PARTITION BY EXTRACT(YEAR FROM date_creation_video)), 2) AS pourcentage
 FROM video_contenue
 GROUP BY  EXTRACT(YEAR FROM date_creation_video),nom_jour
 ORDER BY date_creation_video DESC;
+
+
+
 
 
 

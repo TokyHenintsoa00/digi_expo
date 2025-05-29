@@ -132,14 +132,13 @@
     </div>
     <div class="col-md-3 mb-4">
         <div class="card p-3">
-            <h6 class="text-center">Tableau 4</h6>
-            <table class="table table-sm">
+            <h6 class="text-center">Nombre de contenue photo par jour</h6>
+             <table class="table table-sm">
                 <thead>
-                    <tr><th>#</th><th>Donnée</th></tr>
+                    <tr><th>Annee</th><th>Jour</th><th>Nombre total</th></tr>
                 </thead>
-                <tbody>
-                    <tr><td>1</td><td>Valeur G</td></tr>
-                    <tr><td>2</td><td>Valeur H</td></tr>
+                <tbody id="contenuePhotoByDayBody">
+
                 </tbody>
             </table>
         </div>
@@ -148,7 +147,7 @@
     <!-- Deuxième ligne de 4 petits tableaux -->
     <div class="col-md-3 mb-4">
         <div class="card p-3">
-            <h6 class="text-center">Nombre de stand par ans</h6>
+            <h6 class="text-center">Nombre de stand en annee</h6>
             <table class="table table-sm">
                 <thead>
                     <tr><th>Annee</th><th>Nombre total</th></tr>
@@ -161,7 +160,7 @@
     </div>
     <div class="col-md-3 mb-4">
         <div class="card p-3">
-            <h6 class="text-center">Nombre de personnel par ans</h6>
+            <h6 class="text-center">Nombre de personnel en annee</h6>
             <table class="table table-sm">
                 <thead>
                     <tr><th>Annee</th><th>Nombre total</th></tr>
@@ -174,7 +173,7 @@
     </div>
     <div class="col-md-3 mb-4">
         <div class="card p-3">
-            <h6 class="text-center">Nombre demmission et licensiment par ans</h6>
+            <h6 class="text-center">Nombre demmission et licensiment en annee</h6>
             <table class="table table-sm">
                 <thead>
                     <tr><th>Annee</th><th>Nombre total</th></tr>
@@ -187,14 +186,13 @@
     </div>
     <div class="col-md-3 mb-4">
         <div class="card p-3">
-            <h6 class="text-center">Tableau 8</h6>
-            <table class="table table-sm">
+            <h6 class="text-center">Nombre de contenue photo en annee</h6>
+             <table class="table table-sm">
                 <thead>
-                    <tr><th>#</th><th>Donnée</th></tr>
+                    <tr><th>Annee</th><th>Nombre total</th></tr>
                 </thead>
-                <tbody>
-                    <tr><td>1</td><td>Valeur O</td></tr>
-                    <tr><td>2</td><td>Valeur P</td></tr>
+                <tbody id="contenuePhotoByYearBody">
+
                 </tbody>
             </table>
         </div>
@@ -202,14 +200,13 @@
 
     <div class="col-md-3 mb-4">
         <div class="card p-3">
-            <h6 class="text-center">Tableau 8</h6>
-            <table class="table table-sm">
+            <h6 class="text-center">Nombre de contenue video par jour</h6>
+             <table class="table table-sm">
                 <thead>
-                    <tr><th>#</th><th>Donnée</th></tr>
+                    <tr><th>Annee</th><th>Jour</th><th>Nombre total</th></tr>
                 </thead>
-                <tbody>
-                    <tr><td>1</td><td>Valeur O</td></tr>
-                    <tr><td>2</td><td>Valeur P</td></tr>
+                <tbody id="contenueVideoByDayBody">
+
                 </tbody>
             </table>
         </div>
@@ -217,14 +214,13 @@
 
     <div class="col-md-3 mb-4">
         <div class="card p-3">
-            <h6 class="text-center">Tableau 8</h6>
-            <table class="table table-sm">
+             <h6 class="text-center">Nombre de contenue video en annee</h6>
+             <table class="table table-sm">
                 <thead>
-                    <tr><th>#</th><th>Donnée</th></tr>
+                    <tr><th>Annee</th><th>Nombre total</th></tr>
                 </thead>
-                <tbody>
-                    <tr><td>1</td><td>Valeur O</td></tr>
-                    <tr><td>2</td><td>Valeur P</td></tr>
+                <tbody id="contenueVideoByYearBody">
+
                 </tbody>
             </table>
         </div>
@@ -677,6 +673,160 @@
                                 tdNombre.textContent = item.nombre_mouvement;
 
                                 tr.appendChild(tdJour);
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+                fetch(`/admin/get-data-photo-by-day?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('contenuePhotoByDayBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+                                const tdDate = document.createElement('td');
+                                tdDate.textContent = item.annee;
+
+                                const tdJour = document.createElement('td');
+                                tdJour.textContent = item.nom_jour;
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.total_contenue;
+
+                                tr.appendChild(tdDate);
+                                tr.appendChild(tdJour);
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+                fetch(`/admin/get-data-photo-by-year?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('contenuePhotoByYearBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+                                const tdDate = document.createElement('td');
+                                tdDate.textContent = item.annee;
+
+
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.nombre_contenue;
+
+                                tr.appendChild(tdDate);
+
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+
+                fetch(`/admin/get-data-video-by-day?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('contenueVideoByDayBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+                                const tdDate = document.createElement('td');
+                                tdDate.textContent = item.date_creation_video;
+
+                                const tdJour = document.createElement('td');
+                                tdJour.textContent = item.nom_jour;
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.nombre_contenue;
+
+                                tr.appendChild(tdDate);
+
+                                tr.appendChild(tdJour);
+
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+                fetch(`/admin/get-data-video-by-year?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('contenueVideoByYearBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+                                const tdDate = document.createElement('td');
+                                tdDate.textContent = item.date_creation_video;
+
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.nombre_contenue;
+
+                                tr.appendChild(tdDate);
+
+
+
                                 tr.appendChild(tdNombre);
 
                                 tbody.appendChild(tr);
