@@ -18,8 +18,7 @@
                 <i class="fas fa-microphone-alt fa-2x text-primary"></i>
             </div>
             <h5 class="card-title text-muted">Témoignage</h5>
-            <h3 class="font-weight-bold">{{$countTemoignage}}</h3>
-
+            <h3 class="font-weight-bold" id="temoignageCount">0</h3>
         </div>
     </div>
 </div>
@@ -34,7 +33,7 @@
                 <i class="fas fa-video fa-2x text-danger"></i>
             </div>
             <h5 class="card-title text-muted">Vidéo conference</h5>
-            <h3 class="font-weight-bold">{{$countVideo}}</h3>
+            <h3 class="font-weight-bold" id="videoContenueCount">0</h3>
 
         </div>
     </div>
@@ -51,24 +50,13 @@
                     <label for="timeFilter">Période:</label>
                     <select id="timeFilter" class="form-control">
                         <option value="month">Mois</option>
-                        <option value="day">jour</option>
-                        <option value="year">Annee</option>
+
                     </select>
                 </div>
                 <div>
                     <label for="yearInput">Année:</label>
                     <input type="number" id="yearInput" class="form-control" placeholder="Entrez une année">
                 </div>
-{{--
-                <div class="me-4">
-                    <input type="submit" name="filtrer_periode" value="Filtrer par jour" class="btn btn-primary">
-                </div>
-
-                                <div class="me-4">
-                    <input type="submit" name="filtrer_periode" value="Filtrer par annee" class="btn btn-primary">
-                </div> --}}
-
-
 
             </div>
 
@@ -100,6 +88,177 @@
         </div>
     </div>
 </div>
+
+<div class="row mt-4">
+    <!-- Première ligne de 4 petits tableaux -->
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Nombre de stand par jour</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>Date</th><th>Jour</th><th>Nombre total</th></tr>
+                </thead>
+                <tbody id="standByDayBody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Nombre de personnel par jour</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>Annee</th><th>Jour</th><th>Nombre total</th></tr>
+                </thead>
+                <tbody id="empByDayBody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Nombre demmission et licensiment par jour</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>Annee</th><th>Jour</th><th>Nombre total</th></tr>
+                </thead>
+                <tbody id="mvtempByDayBody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Tableau 4</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>#</th><th>Donnée</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Valeur G</td></tr>
+                    <tr><td>2</td><td>Valeur H</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Deuxième ligne de 4 petits tableaux -->
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Nombre de stand par ans</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>Annee</th><th>Nombre total</th></tr>
+                </thead>
+                <tbody id="standByYearBody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Nombre de personnel par ans</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>Annee</th><th>Nombre total</th></tr>
+                </thead>
+                <tbody id="empByYearBody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Nombre demmission et licensiment par ans</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>Annee</th><th>Nombre total</th></tr>
+                </thead>
+                <tbody id="mvtempByYearBody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Tableau 8</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>#</th><th>Donnée</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Valeur O</td></tr>
+                    <tr><td>2</td><td>Valeur P</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Tableau 8</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>#</th><th>Donnée</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Valeur O</td></tr>
+                    <tr><td>2</td><td>Valeur P</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card p-3">
+            <h6 class="text-center">Tableau 8</h6>
+            <table class="table table-sm">
+                <thead>
+                    <tr><th>#</th><th>Donnée</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Valeur O</td></tr>
+                    <tr><td>2</td><td>Valeur P</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{{--
+<script>
+    const yearInput = document.getElementById('yearInput');
+        const temoignageCount = document.getElementById('temoignageCount');
+
+        yearInput.addEventListener('change', function () {
+        const year = yearInput.value;
+
+        if (year) {
+        fetch(`/admin/get-data-temoignage-by-year?year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+                if (Array.isArray(data) && data.length > 0) {
+                    temoignageCount.textContent = data[0].nombre_temoigange;
+                } else {
+                    temoignageCount.textContent = 0;
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des données:', error);
+                temoignageCount.textContent = 'Erreur';
+            });
+        }
+        });
+</script> --}}
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let barChart;
@@ -263,18 +422,289 @@
 
         document.getElementById("yearInput").addEventListener("input", function () {
             const year = this.value;
+            const joursEnFrancais = {
+                "Monday": "Lundi",
+                "Tuesday": "Mardi",
+                "Wednesday": "Mercredi",
+                "Thursday": "Jeudi",
+                "Friday": "Vendredi",
+                "Saturday": "Samedi",
+                "Sunday": "Dimanche"
+            };
+
             if (year) {
                 updateBarChart(year);
                 updateAreaChart(year);
                 updateDonutChart1(year);
                 updateAreaChart2(year);
 
+                // Ajout pour récupérer le nombre de témoignages
+                fetch(`/admin/get-data-temoignage-by-year?year=${year}`)
+                .then(response => response.json())
+                .then(data => {
+                const temoignageCount = document.getElementById('temoignageCount');
+                if (Array.isArray(data) && data.length > 0) {
+                    temoignageCount.textContent = data[0].nombre_temoigange;
+                } else {
+                    temoignageCount.textContent = 0;
+                }
+                })
+                .catch(error => {
+                console.error('Erreur lors de la récupération des témoignages:', error);
+                document.getElementById('temoignageCount').textContent = 'Erreur';
+                });
+
+                // Ajout pour récupérer le nombre de video
+                fetch(`/admin/get-data-video-conference-by-year?year=${year}`)
+                .then(response => response.json())
+                .then(data => {
+                const videoConferenceCount = document.getElementById('videoContenueCount');
+                if (Array.isArray(data) && data.length > 0) {
+                    videoConferenceCount.textContent = data[0].nombre_video;
+                } else {
+                    videoConferenceCount.textContent = 0;
+                }
+                })
+                .catch(error => {
+                console.error('Erreur lors de la récupération des témoignages:', error);
+                document.getElementById('videoContenueCount').textContent = 'Erreur';
+                });
+
+
+               fetch(`/admin/get-data-stand-by-day?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('standByDayBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+                                const tdDate = document.createElement('td');
+                                tdDate.textContent = item.annee;
+
+                                const tdJour = document.createElement('td');
+                                tdJour.textContent = item.nom_jour;
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.total_stands;
+
+                                tr.appendChild(tdDate);
+                                tr.appendChild(tdJour);
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+                fetch(`/admin/get-data-stand-by-year?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('standByYearBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+
+                                const tdJour = document.createElement('td');
+                                tdJour.textContent = item.annee;
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.nombre_stands;
+
+                                tr.appendChild(tdJour);
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+
+
+                fetch(`/admin/get-data-emp-by-day?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('empByDayBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+                                const tdDate = document.createElement('td');
+                                tdDate.textContent = item.annee;
+
+                                const tdJour = document.createElement('td');
+                                tdJour.textContent = item.nom_jour;
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.total_user;
+
+                                tr.appendChild(tdDate);
+                                tr.appendChild(tdJour);
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+
+                fetch(`/admin/get-data-emp-by-year?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('empByYearBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+
+                                const tdJour = document.createElement('td');
+                                tdJour.textContent = item.annee;
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.nombre_de_personnel;
+
+                                tr.appendChild(tdJour);
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+                fetch(`/admin/get-data-mvtemp-by-day?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('mvtempByDayBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+                                const tdDate = document.createElement('td');
+                                tdDate.textContent = item.date_mouvement;
+
+                                const tdJour = document.createElement('td');
+                                tdJour.textContent = item.nom_jour;
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.nombre_mouvement;
+
+                                tr.appendChild(tdDate);
+                                tr.appendChild(tdJour);
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+
+                fetch(`/admin/get-data-mvtemp-by-year?year=${year}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tbody = document.getElementById('mvtempByYearBody'); // ✅ définir ici
+                        tbody.innerHTML = ''; // Vider le contenu précédent
+
+                        if (Array.isArray(data) && data.length > 0) {
+                            data.forEach(item => {
+                                const tr = document.createElement('tr');
+
+
+                                const tdJour = document.createElement('td');
+                                tdJour.textContent = item.annee;
+
+                                const tdNombre = document.createElement('td');
+                                tdNombre.textContent = item.nombre_mouvement;
+
+                                tr.appendChild(tdJour);
+                                tr.appendChild(tdNombre);
+
+                                tbody.appendChild(tr);
+                            });
+                        } else {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td colspan="2" class="text-center">Aucune donnée</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la récupération des témoignages:', error);
+                        const tbody = document.getElementById('standByDayBody'); // ✅ à redéfinir ici aussi dans le catch
+                        tbody.innerHTML = `<tr><td colspan="2" class="text-center text-danger">Erreur</td></tr>`;
+                });
+
+
+
             }
         });
+
+
 
         initializeCharts();
          // Initialisation des charts
         initializeDonutChart1();
+
+
     });
 </script>
 {{-- //-------------------------- --}}
@@ -321,8 +751,10 @@
                 `;
             }
 
-            
+
         });
+
+
 
 
     });

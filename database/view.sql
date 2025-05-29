@@ -177,6 +177,20 @@ ORDER BY
     date_creation DESC;
 
 
+CREATE OR REPLACE VIEW nbr_Stand_by_day as
+SELECT
+    EXTRACT(YEAR FROM date_creation) AS annee,
+    TO_CHAR(date_creation, 'TMDay') AS nom_jour,
+    SUM(nombre_stands) AS total_stands
+FROM
+    v_nombre_stand_by_day
+GROUP BY
+    EXTRACT(YEAR FROM date_creation),
+    TO_CHAR(date_creation, 'TMDay')
+ORDER BY
+    annee,
+    nom_jour;
+
 --nombre stand par mois
 CREATE OR REPLACE VIEW V_nombre_Stand_by_month_number as
 SELECT
@@ -224,6 +238,20 @@ SELECT
 FROM v_emp
 GROUP BY id_etat, DATE(date_membre)
 ORDER BY date_membre, id_etat DESC;
+
+
+create or replace view nbr_emp_by_day as
+select
+    EXTRACT(YEAR FROM date_membre) AS annee,
+    TO_CHAR(date_membre, 'TMDay') AS nom_jour,
+    SUM(nombre_de_personnel) AS total_user
+from v_nombre_emp_by_day
+GROUP BY
+    EXTRACT(YEAR FROM date_membre),
+    TO_CHAR(date_membre, 'TMDay')
+ORDER BY
+    annee, nom_jour;
+
 
 
 --nombre de personnel non licensier ni demissionner by month
@@ -277,7 +305,7 @@ select * from v_info_type_stand_desc_v1;
 CREATE OR REPLACE VIEW v_nombre_contenue_photo_by_day AS
 select
 DATE(date_creation) AS date_creation,
-        TO_CHAR(DATE(date_creation ), 'Dy') AS nom_jour,
+        TO_CHAR(DATE(date_creation), 'Dy') AS nom_jour,
     COUNT(*) AS nombre_contenue
 from
 v_info_type_stand_desc_v1
@@ -285,6 +313,19 @@ GROUP BY
     DATE(date_creation)
 ORDER BY
     date_creation DESC;
+
+
+create or replace view nbr_contenue_photo_by_day as
+select
+    EXTRACT(YEAR FROM date_creation) AS annee,
+    TO_CHAR(date_creation, 'TMDay') AS nom_jour,
+    SUM(nombre_contenue) AS total_user
+from v_nombre_contenue_photo_by_day
+GROUP BY
+    EXTRACT(YEAR FROM date_creation),
+    TO_CHAR(date_creation, 'TMDay')
+ORDER BY
+    annee, nom_jour;
 
 
 CREATE OR REPLACE VIEW v_nombre_contenue_photo_by_month_number as
@@ -422,12 +463,16 @@ select * from v_mouvememt_personnel;
 CREATE OR REPLACE VIEW v_mouvement_personnel_by_day as
     SELECT
     EXTRACT(YEAR FROM date_mouvement) AS date_mouvement,
-    TO_CHAR(DATE(date_mouvement), 'Dy') AS nom_jour,
+    TO_CHAR(DATE(date_mouvement), 'TMDay') AS nom_jour,
     count(*) AS nombre_mouvement,
     ROUND((count(*) * 100.0) / SUM(count(*)) OVER (PARTITION BY EXTRACT(YEAR FROM date_mouvement)), 2) AS pourcentage
     FROM v_mouvememt_personnel
     GROUP BY  EXTRACT(YEAR FROM date_mouvement),nom_jour
     ORDER BY date_mouvement DESC;
+
+
+
+
 -- select
 -- EXTRACT(YEAR FROM date_mouvement) AS annee,
 -- TO_CHAR(DATE(date_mouvement), 'Dy') AS nom_jour,
@@ -479,36 +524,65 @@ from temoignage
 join stand on  stand.id_stand = temoignage.id_stand;
 
 
-create or replace view v_temoignage_by_day as
-SELECT
-    DATE(date_temoignage) AS date_creation,
-        TO_CHAR(DATE(date_temoignage), 'Dy') AS nom_jour,
-    COUNT(*) AS nombre_temoigange
-FROM V_TEMOIGNAGE
-GROUP BY
-DATE(date_temoignage)
-ORDER BY
-    date_creation DESC;
+-- create or replace view v_temoignage_by_day as
+-- SELECT
+--     DATE(date_temoignage) AS date_creation,
+--         TO_CHAR(DATE(date_temoignage), 'Dy') AS nom_jour,
+--     COUNT(*) AS nombre_temoigange
+-- FROM V_TEMOIGNAGE
+-- GROUP BY
+-- DATE(date_temoignage)
+-- ORDER BY
+--     date_creation DESC;
 
 
-create or replace view v_temoignage_by_month_number as
-SELECT
-    EXTRACT(YEAR FROM date_temoignage) AS annee,
-    EXTRACT(MONTH FROM date_temoignage) AS mois,
-    COUNT(*) AS nombre_temoigange
-FROM
-    V_TEMOIGNAGE
-GROUP BY
-    EXTRACT(YEAR FROM date_temoignage),
-    EXTRACT(MONTH FROM date_temoignage)
-ORDER BY
-    annee DESC, mois DESC;
+-- create or replace view v_temoignage_by_month_number as
+-- SELECT
+--     EXTRACT(YEAR FROM date_temoignage) AS annee,
+--     EXTRACT(MONTH FROM date_temoignage) AS mois,
+--     COUNT(*) AS nombre_temoigange
+-- FROM
+--     V_TEMOIGNAGE
+-- GROUP BY
+--     EXTRACT(YEAR FROM date_temoignage),
+--     EXTRACT(MONTH FROM date_temoignage)
+-- ORDER BY
+--     annee DESC, mois DESC;
 
-Create or replace view v_temoignage_by_month as
-select * from
-v_temoignage_by_month_number
-join mois on mois.id_mois=v_temoignage_by_month_number.mois;
+-- Create or replace view v_temoignage_by_month as
+-- select * from
+-- v_temoignage_by_month_number
+-- join mois on mois.id_mois=v_temoignage_by_month_number.mois;
 
+
+
+
+
+-- CREATE OR REPLACE VIEW V_VIDEO_cONFENRENCE_BY_DAY AS
+-- SELECT
+-- DATE(date_heure_salle_conference) AS date_creation,
+--         TO_CHAR(DATE(date_heure_salle_conference ), 'Dy') AS nom_jour,
+--     COUNT(*) AS NOMBRE_VIDEO
+-- FROM video_conference
+-- GROUP BY
+--     DATE(date_heure_salle_conference)
+-- ORDER BY
+--     date_creation DESC;
+
+
+-- CREATE OR REPLACE VIEW V_VIDEO_CONFERENCE_BY_MONTH_NUMBER AS
+-- select
+--     EXTRACT(YEAR FROM date_heure_salle_conference) AS annee,
+--     EXTRACT(MONTH FROM date_heure_salle_conference) AS mois,
+--      COUNT(*) AS NOMBRE_VIDEO
+-- from video_conference
+-- GROUP BY
+--     EXTRACT(YEAR FROM date_heure_salle_conference),
+--     EXTRACT(MONTH FROM date_heure_salle_conference)
+-- ORDER BY
+--     annee DESC, mois DESC;
+-- select * from V_VIDEO_CONFERENCE_BY_MONTH_NUMBER
+-- join mois on mois.id_mois=V_VIDEO_CONFERENCE_BY_MONTH_NUMBER.mois;
 
 
 CREATE OR REPLACE VIEW V_TEMOIGANGE_BY_YEAR AS
@@ -523,22 +597,16 @@ GROUP BY
     annee DESC;
 
 
+CREATE OR REPLACE VIEW V_VIDEO_CONFERENCE_BY_YEAR AS
+select
+    EXTRACT(YEAR FROM date_heure_salle_conference) AS annee,
 
-CREATE OR REPLACE VIEW V_VIDEO_cONFENRENCE_BY_DAY AS
-SELECT
-DATE(date_heure_salle_conference) AS date_creation,
-        TO_CHAR(DATE(date_heure_salle_conference ), 'Dy') AS nom_jour,
-    COUNT(*) AS NOMBRE_VIDEO
-FROM video_conference
+    count(*) as nombre_video
+from video_conference
 GROUP BY
-    DATE(date_heure_salle_conference)
-ORDER BY
-    date_creation DESC;
-
-
-
-
-
+    EXTRACT(YEAR FROM date_heure_salle_conference)
+ ORDER BY
+    annee DESC;
 
 
 SELECT *

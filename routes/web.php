@@ -756,6 +756,71 @@ Route::prefix('directeur')->group(function(){
             return app(AdminController::class)->getContenuePhoto($request);
         })->name('get.data.photo-contenue.by.year');
 
+        Route::get('/get-data-temoignage-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getContenueTemoignageByYear($request);
+        })->name('get.data.temoignage.by.year');
+
+        Route::get('/get-data-video-conference-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+                return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getContenueVideoByYear($request);
+        })->name('get.data.video-conference.by.year');
+
+
+
+        Route::get('/get-data-stand-by-day', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getStandByDay($request);
+        })->name('get.data.stand.by.day');
+
+
+        Route::get('/get-data-stand-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getstandByYear($request);
+        })->name('get.data.stand.by.year');
+
+
+        Route::get('/get-data-emp-by-day', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getEmpByDay($request);
+        })->name('get.data.emp.by.day');
+
+        Route::get('/get-data-emp-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getEmpByYear($request);
+        })->name('get.data.emp.by.year');
+
+
+        Route::get('/get-data-mvtemp-by-day', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getMvtEmpByDay($request);
+        })->name('get.data.mvtemp.by.day');
+
+
+        Route::get('/get-data-mvtemp-by-year', function (Request $request) {
+            if (!session()->has('id')) {
+            return redirect('/viewAuthentificationAdmin')->with('error', 'Accès interdit !');
+            }
+            return app(AdminController::class)->getMvtEmpByYear($request);
+        })->name('get.data.mvtemp.by.year');
+
+
+
+
 
         Route::get('/viewValidationGaleriePhoto', function (Request $request) {
             if (!session()->has('id')) {

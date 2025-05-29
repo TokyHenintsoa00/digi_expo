@@ -917,6 +917,8 @@ class AdminController extends Controller
         return view('admin.dashboardAdmin', compact('standData', 'categories','countTemoignage','countVideo'));
     }
 
+
+
     public function getDataByYear(Request $request)
     {
         $year = $request->input('year');
@@ -1052,6 +1054,192 @@ class AdminController extends Controller
         return response()->json($standData);
     }
 
+    public function getContenueTemoignageByYear(Request $request)
+    {
+         $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $standData = DB::table('v_temoigange_by_year')
+            ->where('annee', $year)
+            ->select('nombre_temoigange')
+            ->get();
+
+        if ($standData->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $standData->toArray());
+
+        return response()->json($standData);
+    }
+
+    public function getContenueVideoByYear(Request $request)
+    {
+          $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $standData = DB::table('v_video_conference_by_year')
+            ->where('annee', $year)
+            ->select('nombre_video')
+            ->get();
+
+        if ($standData->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $standData->toArray());
+
+        return response()->json($standData);
+    }
+
+    public function getStandByDay(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('nbr_stand_by_day')
+        ->where('annee', $year)
+        ->select('annee','nom_jour', 'total_stands')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+    public function getstandByYear(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('v_nombre_stand_by_year')
+        ->where('annee', $year)
+        ->select('annee','nombre_stands')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+
+    public function getEmpByDay(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('nbr_emp_by_day')
+        ->where('annee', $year)
+        ->select('annee','nom_jour', 'total_user')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+    public function getEmpByYear(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('v_nombre_emp_by_year')
+        ->where('annee', $year)
+        ->select('annee','nombre_de_personnel')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+
+    public function getMvtEmpByDay(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('v_mouvement_personnel_by_day')
+        ->where('date_mouvement', $year)
+        ->select('date_mouvement','nom_jour', 'nombre_mouvement')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
+
+
+    public function getMvtEmpByYear(Request $request)
+    {
+        $year = $request->input('year');
+
+        if (!$year || !is_numeric($year)) {
+            return response()->json([]);
+        }
+
+        $data = DB::table('v_mouvememt_personnel_by_year')
+        ->where('annee', $year)
+        ->select('annee','nombre_mouvement')
+        ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([]);
+        }
+
+        // Debug des données avant de les retourner
+        logger()->info('temoignage', $data->toArray());
+
+        return response()->json($data);
+    }
 
 
     public function search(Request $request)
