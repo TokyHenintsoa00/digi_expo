@@ -511,6 +511,11 @@ class EmpModel extends Model
 }
 
 
+    public function getDirecteur($id_emp)
+    {
+        $result = DB::select("select * from membre_Stand where id_emp = ?",[$id_emp]);
 
+        return $result;
+    }
 
 }

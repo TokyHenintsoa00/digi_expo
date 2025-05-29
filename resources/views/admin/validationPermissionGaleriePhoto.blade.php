@@ -21,7 +21,7 @@
                 <th>Nom Stand</th>
                 <th>Type de photo</th>
                 <th>description</th>
-                <th>Directeur</th>
+                <th>Nom du personnel</th>
             </tr>
         </thead>
         <tbody>
@@ -57,6 +57,13 @@
                         <form action="#" method="POST">
                             @csrf
                                 {{-- web socket refuser fa tsy mila manao an ny controler --}}
+                                <input type="hidden" name="id_permission_galerie" value="{{$list_galerie_photo->id_permission_gallerie_photos}}">
+                                <input type="hidden" name="id_etat" value="{{$list_galerie_photo->id_etat}}">
+                                <input type="hidden" name="id_info_type_stand" value="{{$list_galerie_photo->id_info_type_stand }}">
+                                <input type="hidden" name="id_info_type_stand_desc" value="{{$list_galerie_photo->id_info_type_stand_desc}}">
+                                <input type="hidden" name = id_directeur value="{{$list_galerie_photo->id_directeur}}">
+                                <input type="submit" value="Valider" class="btn btn-success m-1">
+
                             <input type="submit" value="Refuser" class="btn btn-danger m-1">
                         </form>
 

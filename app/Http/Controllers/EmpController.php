@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 class EmpController extends Controller
 {
 
@@ -269,16 +270,67 @@ class EmpController extends Controller
         $image = [];
         foreach ($request->file('img_info_type_stand') as $img_stand)
         {
-            $img_stand_name = $img_stand->getClientOriginalName();
-            $img_stand->move(public_path('assets'),$img_stand_name);
-            $image[] = $img_stand_name;
+        $img_stand_name = $img_stand->getClientOriginalName();
+        $img_stand->move(public_path('assets'),$img_stand_name);
+        $image[] = $img_stand_name;
         }
 
-        $getEmpModel = new StandModel();
-        $ContenueStand = $getEmpModel->insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,$description_info_type_stand,$image);
+         $id_emp = Session::get('id_emp');
 
-        return redirect()->route('viewformulaireAddPosterAndProjet')->with('success', 'Contenue publier');
+        $empModel = new EmpModel();
+        $getDirecteur = $empModel->getDirecteur($id_emp);
+        $id_directeur = $getDirecteur[0]->id_directeur;
+
+
+        $sender = Session::get('id_emp');
+
+        $getStandModel = new StandModel();
+        $permissionGaleriePhoto = $getStandModel->insertPermissionGaleriePhoto
+        ($id_stand,$id_type_stand,$nom_info_type_stand,
+        $description_info_type_stand,$image,$sender);
+
+
+        $receiver = 6;
+        $content = "Vous avez une nouvelle notification de permission de galerie photo";
+        $dateString = date('Y-m-d H:i:s');
+        $url = "http://127.0.0.1:8000/admin/viewValidationGaleriePhoto";
+
+        try {
+        Http::post('http://localhost:8080/api/notifications/directeur/permissionGaleriePhoto/sendNotification', [
+           'sender'=>$sender,
+           'receiver'=>$receiver,
+           'content'=>$content,
+           'dateNotification'=>$dateString,
+           'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+        return redirect()->route('viewformulaireAddPosterAndProjet')->with('success', 'Contenue en cours de validation');
+
     }
+
+    // public function AddPosterAndProjet(Request $request)
+    // {
+    //     $id_stand = $request->id_stand;
+    //     $id_type_stand = $request->id_type_stand;
+    //     $nom_info_type_stand = $request->nom_info_type_stand;
+    //     $description_info_type_stand = $request->description_info_type_stand;
+
+    //     $image = [];
+    //     foreach ($request->file('img_info_type_stand') as $img_stand)
+    //     {
+    //         $img_stand_name = $img_stand->getClientOriginalName();
+    //         $img_stand->move(public_path('assets'),$img_stand_name);
+    //         $image[] = $img_stand_name;
+    //     }
+
+    //     $getEmpModel = new StandModel();
+    //     $ContenueStand = $getEmpModel->insertContenueStand($id_stand,$id_type_stand,$nom_info_type_stand,$description_info_type_stand,$image);
+
+    //     return redirect()->route('viewformulaireAddPosterAndProjet')->with('success', 'Contenue publier');
+    // }
 
 
     public function viewGestionBrochure()
@@ -341,13 +393,53 @@ class EmpController extends Controller
         $fichier = $request->file('fichier');
         $fichier_name = $fichier->getClientOriginalName();
         $fichier->move(public_path('assets/pdf'),$fichier_name);
+        $id_emp = Session::get('id_emp');
 
-        $getStandModel = new StandModel();
-        $getStandModel->insertBrochure($id_info_type_stand,$nom_brochure,$fichier_name);
+        $empModel = new EmpModel();
+        $getDirecteur = $empModel->getDirecteur($id_emp);
+        $id_directeur = $getDirecteur[0]->id_directeur;
 
+         $standModel = new StandModel();
+        $permissionBrochure = $standModel->permissionBrochure($id_info_type_stand,
+            $nom_brochure,$fichier_name,$id_directeur);
 
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Demande de permission de brochure";
+        $url = "http://127.0.0.1:8000/admin/viewValidationPermissionBrochure";
+        $dateString = date('Y-m-d H:i:s');
+        try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/directeur/permissionBrochure/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
         return redirect()->route('viewChoixDeStandBrochureEmp')->with('success', 'Brochure publier');
+
     }
+
+    // public function publierBrochureEmp(Request $request)
+    // {
+    //     $id_info_type_stand = $request->id_info_type_stand;
+    //     $nom_brochure = $request->nom_brochure;
+
+    //     $fichier = $request->file('fichier');
+    //     $fichier_name = $fichier->getClientOriginalName();
+    //     $fichier->move(public_path('assets/pdf'),$fichier_name);
+
+    //     $getStandModel = new StandModel();
+    //     $getStandModel->insertBrochure($id_info_type_stand,$nom_brochure,$fichier_name);
+
+
+    //     return redirect()->route('viewChoixDeStandBrochureEmp')->with('success', 'Brochure publier');
+    // }
 
     public function viewPermissionDemissionEmp()
     {
@@ -445,23 +537,24 @@ class EmpController extends Controller
         return view('emp.formulaireAddVideoEmp',compact('stand'));
     }
 
-
     public function addVideoEmp(Request $request)
     {
-        // Validation des données du formulaire
         $validator = Validator::make($request->all(), [
             'id_stand' => 'required|exists:stand,id_stand', // Assurez-vous que la table "stand" existe
             'titre_video' => 'required|string|max:255',
             'description_video' => 'required|string',
             'video_contenue' => 'required|file|mimetypes:video/mp4,video/mpeg,video/ogg,video/webm|max:40960', // Taille max 40MB
         ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors(['error' => $validator->errors()->first()])->withInput();
-        }
+        $id_directeur = Session::get('id_emp');
+        $sender = $id_directeur;
+        $receiver = 6;
+        $content = "Vous avez recu une nouvelle permission de faire une galerie video";
+        $dateString = date('Y-m-d H:i:s');
+        $url = "http://127.0.0.1:8000/admin/viewGalerieVideo";
 
         try {
-            // // Récupérer les données validées
+            //code...
+
             $id_stand = $request->input('id_stand');
             $titre_video = $request->input('titre_video');
             $description_video = $request->input('description_video');
@@ -471,17 +564,70 @@ class EmpController extends Controller
             $video_contenue_name = $video_contenue->getClientOriginalName();
             $video_contenue->move(public_path('assets'),$video_contenue_name);
 
-            $getStandModel = new StandModel();
-            $getStandModel->insertVideoContenue($id_stand,$description_video,$titre_video,$video_contenue_name);
+            $standModel = new StandModel();
+            $insertPermissionVideo = $standModel->insertPermissionVideoContenue($id_stand,$titre_video,
+            $description_video,$video_contenue_name,$id_directeur);
 
-            return redirect()->route('viewformulaireAddVideoEmpSection')->with('success', 'Contenue publier');
+            try
+            {
+                //code...
+             Http::post('http://localhost:8080/api/notifications/directeur/permissionGalerieVideo/sendNotification', [
+            'sender'=>$sender,
+            'receiver'=>$receiver,
+            'content'=>$content,
+            'dateNotification'=>$dateString,
+            'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
 
-
-            // Retour avec un message de succès
-            return back()->with('success', 'Vidéo ajoutée avec succès.');
-        } catch (\Throwable $e) {
-            // Gestion des erreurs
-            return back()->withErrors(['error' => 'Une erreur s\'est produite lors de l\'ajout de la vidéo : ' . $e->getMessage()]);
+        } catch (\Throwable $th) {
+            //throw $th;.
+               DB::rollBack();
+            throw $th;
         }
+
+        return back()->withErrors(['error' => 'Une erreur s\'est produite lors de l\'ajout de la vidéo : ' . $e->getMessage()]);
     }
+
+    // public function addVideoEmp(Request $request)
+    // {
+    //     // Validation des données du formulaire
+    //     $validator = Validator::make($request->all(), [
+    //         'id_stand' => 'required|exists:stand,id_stand', // Assurez-vous que la table "stand" existe
+    //         'titre_video' => 'required|string|max:255',
+    //         'description_video' => 'required|string',
+    //         'video_contenue' => 'required|file|mimetypes:video/mp4,video/mpeg,video/ogg,video/webm|max:40960', // Taille max 40MB
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return back()->withErrors(['error' => $validator->errors()->first()])->withInput();
+    //     }
+
+    //     try {
+    //         // // Récupérer les données validées
+    //         $id_stand = $request->input('id_stand');
+    //         $titre_video = $request->input('titre_video');
+    //         $description_video = $request->input('description_video');
+
+    //         $video_contenue = $request->file('video_contenue');
+    //         //dd($video_contenue);
+    //         $video_contenue_name = $video_contenue->getClientOriginalName();
+    //         $video_contenue->move(public_path('assets'),$video_contenue_name);
+
+    //         $getStandModel = new StandModel();
+    //         $getStandModel->insertVideoContenue($id_stand,$description_video,$titre_video,$video_contenue_name);
+
+    //         return redirect()->route('viewformulaireAddVideoEmpSection')->with('success', 'Contenue publier');
+
+
+    //         // Retour avec un message de succès
+    //         return back()->with('success', 'Vidéo ajoutée avec succès.');
+    //     } catch (\Throwable $e) {
+    //         // Gestion des erreurs
+    //         return back()->withErrors(['error' => 'Une erreur s\'est produite lors de l\'ajout de la vidéo : ' . $e->getMessage()]);
+    //     }
+    // }
 }

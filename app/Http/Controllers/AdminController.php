@@ -1170,12 +1170,6 @@ class AdminController extends Controller
 
         }
 
-
-
-
-
-
-
         // dd([
         //     'id_stand' => $id_stand,
         //     'type' =>$id_type_stand,
@@ -1185,6 +1179,31 @@ class AdminController extends Controller
         // ]);
     }
 
+
+    public function refusDeGaleriePhoto(Request $request)
+    {
+        $id_directeur = $request->id_directeur;
+        $receiver = $id_directeur;
+        $sender = 6;
+        $dateString = date('Y-m-d H:i:s');
+        $url = "";
+        $content = "Votre permission a ete refusee";
+            try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/admin/validation/permissionGaleriePhoto/sendNotification', [
+        'sender'=>$sender,
+        'receiver'=>$receiver,
+        'content'=>$content,
+        'dateNotification'=>$dateString,
+        'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+
+        return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo modifier');
+    }
 
     public function viewGalerieVideo()
     {
@@ -1270,6 +1289,30 @@ class AdminController extends Controller
             return redirect()->route('viewGalerieVideo')->with('success', 'Permission galerie video valider');
 
         }
+
+    }
+
+    public function refusGalerieVideo(Request $request)
+    {
+          $sender = 6;
+            $receiver = $id_directeur;
+            $content = "Votre demande a ete refusee";
+            $dateString = date('Y-m-d H:i:s');
+            $url = "";
+            # code...
+             try {
+                //code...
+                Http::post('http://localhost:8080/api/notifications/admin/validation/permissionGalerieVideo/sendNotification', [
+                'sender'=>$sender,
+                'receiver'=>$receiver,
+                'content'=>$content,
+                'dateNotification'=>$dateString,
+                'url'=>$url
+            ]);
+            } catch (\Exception $e) {
+                // Tu peux logger l'erreur ou la gérer
+                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+            }
 
     }
 
