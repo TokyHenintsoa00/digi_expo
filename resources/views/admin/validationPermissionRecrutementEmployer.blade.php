@@ -1,7 +1,7 @@
 @extends('parent.ParentAdmin')
 @section('recrutementEmpSection')
 <h1>Liste de validation de recrutement</h1>
-<div class="col-12">
+<div class="col-12" style="overflow-x: auto;">
 
     @if (session('success'))
     <div class="alert alert-success" role="alert">
@@ -58,14 +58,19 @@
                         </form>
                     </td>
                     <td>
-                        <form action="{{route('refusDeRecrutement')}}" method="POST">
+                        {{-- <form action="{{route('refusDeRecrutement')}}" method="POST">
                             @csrf
                             <input type="hidden" name="prenom_emp" value="{{$list_recrutement->prenom_emp}}">
                             <input type="hidden" name="id_expediteur" value="{{$list_recrutement->id_expediteur}}">
                             <input type="hidden" name="id_permission_recrutement_emp" value="{{$list_recrutement->id_permission_recrutement_emp}}">
                             <input type="submit" value="Refuser" class="btn btn-danger m-1">
-                        </form>
-
+                        </form> --}}
+                        <button
+                            class="btn btn-danger m-1 btn-refuser"
+                            data-id_permission="{{$list_recrutement->id_permission_recrutement_emp}}"
+                            data-id_directeur="{{$list_recrutement->id_expediteur}}">
+                            Refuser
+                        </button>
                     </td>
 
                 </tr>
@@ -105,5 +110,56 @@
         });
 
     }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-refuser').forEach(button => {
+        button.addEventListener('click', async function () {
+
+            const id_permission = this.dataset.id_permission;
+            const id_directeur = this.dataset.id_directeur;
+            const csrfToken = '{{ csrf_token() }}';
+
+
+            try {
+                // Étape 1 : Appel vers /refusPhoto
+                let response1 = await fetch("{{ route('refusDeRecrutement') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                    },
+                    body: JSON.stringify({
+                        id_permission_galerie: id_permission
+                    })
+                });
+
+                if (!response1.ok) throw new Error("Échec de refusPhoto");
+
+                // Étape 2 : Appel vers /refusPermission
+                let response2 = await fetch("{{ route('refusPermission') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                    },
+                    body: JSON.stringify({
+                        id_directeur: id_directeur
+                    })
+                });
+
+                if (!response2.ok) throw new Error("Échec de refusPermission");
+
+                alert("Refus effectué avec succès.");
+                location.reload();
+
+            } catch (error) {
+                console.error(error);
+                alert("Une erreur est survenue.");
+            }
+        });
+    });
+});
 </script>
 @endsection

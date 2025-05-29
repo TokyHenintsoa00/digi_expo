@@ -282,7 +282,7 @@ class EmpController extends Controller
         $id_directeur = $getDirecteur[0]->id_directeur;
 
 
-        $sender = Session::get('id_emp');
+        $sender = $id_directeur;
 
         $getStandModel = new StandModel();
         $permissionGaleriePhoto = $getStandModel->insertPermissionGaleriePhoto
@@ -545,7 +545,12 @@ class EmpController extends Controller
             'description_video' => 'required|string',
             'video_contenue' => 'required|file|mimetypes:video/mp4,video/mpeg,video/ogg,video/webm|max:40960', // Taille max 40MB
         ]);
-        $id_directeur = Session::get('id_emp');
+
+        $empModel = new EmpModel();
+        $getDirecteur = $empModel->getDirecteur($id_emp);
+        $id_directeur = $getDirecteur[0]->id_directeur;
+
+        //$id_directeur = Session::get('id_emp');
         $sender = $id_directeur;
         $receiver = 6;
         $content = "Vous avez recu une nouvelle permission de faire une galerie video";

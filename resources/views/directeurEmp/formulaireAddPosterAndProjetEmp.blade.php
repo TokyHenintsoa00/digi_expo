@@ -54,7 +54,7 @@
                         <input type="file" class="form-control" id="img_stand" name="img_info_type_stand[]" accept="image/*" multiple>
                     </div>
 
-                    <input type="submit" class="btn btn-primary" value="Publier">
+                    <input type="submit" class="btn btn-primary" value="Envoyer">
                 </form>
             </div> <!-- /. card-body -->
         </div> <!-- /. card -->

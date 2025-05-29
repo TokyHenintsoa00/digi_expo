@@ -524,11 +524,14 @@ class AdminController extends Controller
             }
             else
             {
+                $session_emp = $getAllEmp[0]->id_emp;
 
-                $lastInsertId = $getStandModel->insertStand($id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand);
+
+                $lastInsertId = $getStandModel->insertStand($id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand,$date_debut_stand,$date_fin_stand,$id_salon);
                 // $session_emp = Session::get('id_emp');
                 $session_emp = $getAllEmp[0]->id_emp;
                 $getStandModel->membreStandEmpExiste($lastInsertId,$session_emp);
+
                 $getStandModel->acceptStandExsist($id_permission_stand);
                 Mail::send('emails.sentMailAcceptNewStand',[
                         'prenom_emp' =>$prenom_emp
@@ -547,28 +550,7 @@ class AdminController extends Controller
 
 
 
-    //function en cas de refus
-    public function refusePermissiontandByAdmin(Request $request)
-    {
-        $id_permission_stand = $request->id_permission_stand;
-        $prenom_emp = $request->prenom_emp;
-        $email = $request->email;
-        $getRefusePermission = new StandModel();
-        $getRefusePermission->refuseStand($id_permission_stand);
-        $error = 'Mail envoyer pour la refus de permission';
 
-        //enmvoi de refus de stand par mail
-        Mail::send('emails.sentMailRefuseStand',[
-            'email' =>$email,
-            'prenom_emp' => $prenom_emp
-        ],function($message)use($prenom_emp,$email){
-            $message->to($email)
-                    ->subject('Refus de permission de stand');
-        });
-
-        return redirect()->back()->withErrors(['error' => $error])->withInput();
-
-    }
 
     //view list recrutement
     public function viewValidationRecrutementEmp()
@@ -643,27 +625,27 @@ class AdminController extends Controller
         return redirect()->route('viewValidationRecrutementEmp')->with('success', 'Permission recrutement valider');
     }
 
-    //fonction en cas de refus de recrutement
-    public function refusDeRecrutement(Request $request)
-    {
-        $id_permission_recrutement_emp = $request->id_permission_recrutement_emp;
-        $id_expediteur = $request->id_expediteur;
-        $prenom_emp = $request->prenom_emp;
-        //insertion avec etat de refus
-        $getEmpModel = new EmpModel();
-        $getEmpModel->refusRecrutement($id_permission_recrutement_emp);
-        $error = 'Recrutement refuser';
+    // //fonction en cas de refus de recrutement
+    // public function refusDeRecrutement(Request $request)
+    // {
+    //     $id_permission_recrutement_emp = $request->id_permission_recrutement_emp;
+    //     $id_expediteur = $request->id_expediteur;
+    //     $prenom_emp = $request->prenom_emp;
+    //     //insertion avec etat de refus
+    //     $getEmpModel = new EmpModel();
+    //     $getEmpModel->refusRecrutement($id_permission_recrutement_emp);
+    //     $error = 'Recrutement refuser';
 
-        //creation de notification
-        Notification::create([
-            'user_id' => $id_expediteur,
-            'title' => 'Validation de recrutement refuser',
-            'message' => 'Votre recrutement a été refuser.',
-            'link' => route('viewListEmpAndNombreEmpParStand')
-        ]);
+    //     //creation de notification
+    //     Notification::create([
+    //         'user_id' => $id_expediteur,
+    //         'title' => 'Validation de recrutement refuser',
+    //         'message' => 'Votre recrutement a été refuser.',
+    //         'link' => route('viewListEmpAndNombreEmpParStand')
+    //     ]);
 
-        return redirect()->back()->withErrors(['error' => $error])->withInput();
-    }
+    //     return redirect()->back()->withErrors(['error' => $error])->withInput();
+    // }
 
 
     //view gestion personnel
@@ -1180,30 +1162,9 @@ class AdminController extends Controller
     }
 
 
-    public function refusDeGaleriePhoto(Request $request)
-    {
-        $id_directeur = $request->id_directeur;
-        $receiver = $id_directeur;
-        $sender = 6;
-        $dateString = date('Y-m-d H:i:s');
-        $url = "";
-        $content = "Votre permission a ete refusee";
-            try {
-            //code...
-            Http::post('http://localhost:8080/api/notifications/admin/validation/permissionGaleriePhoto/sendNotification', [
-        'sender'=>$sender,
-        'receiver'=>$receiver,
-        'content'=>$content,
-        'dateNotification'=>$dateString,
-        'url'=>$url
-        ]);
-        } catch (\Exception $e) {
-            // Tu peux logger l'erreur ou la gérer
-            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
-        }
 
-        return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo modifier');
-    }
+
+
 
     public function viewGalerieVideo()
     {
@@ -1292,29 +1253,7 @@ class AdminController extends Controller
 
     }
 
-    public function refusGalerieVideo(Request $request)
-    {
-          $sender = 6;
-            $receiver = $id_directeur;
-            $content = "Votre demande a ete refusee";
-            $dateString = date('Y-m-d H:i:s');
-            $url = "";
-            # code...
-             try {
-                //code...
-                Http::post('http://localhost:8080/api/notifications/admin/validation/permissionGalerieVideo/sendNotification', [
-                'sender'=>$sender,
-                'receiver'=>$receiver,
-                'content'=>$content,
-                'dateNotification'=>$dateString,
-                'url'=>$url
-            ]);
-            } catch (\Exception $e) {
-                // Tu peux logger l'erreur ou la gérer
-                \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
-            }
 
-    }
 
     public function viewValidationVideoConferenceClient()
     {
@@ -1618,6 +1557,149 @@ class AdminController extends Controller
         }
 
 
-          }
+    }
+
+
+    //function en cas de refus stand
+    public function refusePermissiontandByAdmin(Request $request)
+    {
+        $id_permission_stand = $request->id_permission_stand;
+        $prenom_emp = $request->prenom_emp;
+        $email = $request->email;
+        $getRefusePermission = new StandModel();
+        $getRefusePermission->refuseStand($id_permission_stand);
+        $error = 'Mail envoyer pour la refus de permission';
+
+        //enmvoi de refus de stand par mail
+        Mail::send('emails.sentMailRefuseStand',[
+            'email' =>$email,
+            'prenom_emp' => $prenom_emp
+        ],function($message)use($prenom_emp,$email){
+            $message->to($email)
+                    ->subject('Refus de permission de stand');
+        });
+
+        return redirect()->back()->withErrors(['error' => $error])->withInput();
+
+    }
+
+
+     public function refusPermission(Request $request)
+    {
+        $id_directeur = $request->id_directeur;
+        $receiver = $id_directeur;
+        $sender = 6;
+        $dateString = date('Y-m-d H:i:s');
+        $url = "";
+        $content = "Votre permission que vous avez demander a ete refusee";
+            try {
+            //code...
+            Http::post('http://localhost:8080/api/notifications/refus/permission/sendNotification', [
+        'sender'=>$sender,
+        'receiver'=>$receiver,
+        'content'=>$content,
+        'dateNotification'=>$dateString,
+        'url'=>$url
+        ]);
+        } catch (\Exception $e) {
+            // Tu peux logger l'erreur ou la gérer
+            \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
+        }
+
+        return redirect()->route('viewValidationGaleriePhoto')->with('success', 'Permission galerie photo modifier');
+    }
+
+
+
+
+
+    public function refusPhoto(Request $request)
+    {
+        $id_permission = $request->input('id_permission_galerie');
+
+        $result = DB::update(
+            "UPDATE permission_galerie_photo SET id_etat = 5 WHERE id_permission_gallerie_photos = ?",
+            [$id_permission]
+        );
+
+        return response()->json(['success' => $result]);
+    }
+
+
+    public function refusVideo(Request $request)
+    {
+        $id_permission = $request->input('id_permission_galerie');
+
+        $result = DB::update(
+            "UPDATE permission_galerie_video SET id_etat = 5 WHERE id_permission_gallerie_video = ?",
+            [$id_permission]
+        );
+
+        return response()->json(['success' => $result]);
+    }
+
+
+    public function refusDeRecrutement(Request $request)
+    {
+        $id_permission = $request->input('id_permission_galerie');
+
+        $result = DB::update(
+            "UPDATE permission_recrutement_emp SET id_etat = 5 WHERE id_permission_recrutement_emp = ?",
+            [$id_permission]
+        );
+
+        return response()->json(['success' => $result]);
+    }
+
+    public function refusDeConferenceClient(Request $request)
+    {
+        $id_permission = $request->input('id_permission_galerie');
+
+        $result = DB::update(
+            "UPDATE permission_video_conference_client SET id_etat = 5 WHERE id_permission_video_conferece_client = ?",
+            [$id_permission]
+        );
+
+        return response()->json(['success' => $result]);
+    }
+
+    public function refusDeTemoigange(Request $request)
+    {
+        $id_permission = $request->input('id_permission_galerie');
+
+        $result = DB::update(
+            "UPDATE permission_temoignage SET id_etat = 5 WHERE id_permission_temoigange = ?",
+            [$id_permission]
+        );
+
+        return response()->json(['success' => $result]);
+    }
+
+    public function refusDeConference(Request $request)
+    {
+        $id_permission = $request->input('id_permission_galerie');
+
+        $result = DB::update(
+            "UPDATE permission_temoignage SET id_etat = 5 WHERE id_permission_temoigange = ?",
+            [$id_permission]
+        );
+
+        return response()->json(['success' => $result]);
+    }
+
+
+
+    public function refusDeBrochure(Request $request)
+    {
+        $id_permission = $request->input('id_permission_galerie');
+
+        $result = DB::update(
+            "UPDATE permission_brochure SET id_etat = 5 WHERE id_permission_brochure  = ?",
+            [$id_permission]
+        );
+
+        return response()->json(['success' => $result]);
+    }
+
 
 }

@@ -423,6 +423,7 @@ aside.top-navbar {
             @yield('AjoutLiensTemoignageSection')
             @yield('listConferenceClientSection')
             @yield('modificationPodcast')
+            @yield('placeNewStand')
 
         </div>
     </div>

@@ -73,6 +73,13 @@ Route::prefix('directeur')->group(function(){
         return app(DirecteurEmpController::class)->viewStandDirecteur();
     })->name('viewStandDirecteur');
 
+    Route::get('/viewPlaceNewStand', function (Request $request) {
+        if (!session()->has('id_emp')) {
+            return redirect('/authentification')->with('error', 'Accès interdit !');
+        }
+        return app(DirecteurEmpController::class)->viewPlaceNewStand();
+    })->name('viewPlaceNewStand');
+
     //Route::get('/viewDirecteurEmpPage',[DirecteurEmpController::class, 'viewDirecteurEmpPage'])->name('viewDirecteurEmpPage');
     //Route::get('/viewStandDirecteur',[DirecteurEmpController::class,'viewStandDirecteur'])->name('viewStandDirecteur');
     Route::post('/publication',[DirecteurEmpController::class,'publication'])->name('publication');
@@ -96,14 +103,14 @@ Route::prefix('directeur')->group(function(){
 
     //Route::get('/viewDemandeNouvelleStand',[DirecteurEmpController::class,'viewDemandeNouvelleStand'])->name('viewDemandeNouvelleStand');
 
-    Route::get('/demandeStandEmp', function (Request $request) {
-        if (!session()->has('id_emp')) {
-            return redirect('/authentification')->with('error', 'Accès interdit !');
-        }
-        return app(DirecteurEmpController::class)->demandeStandEmp($request);
-    })->name('demandeStandEmp');
+    // Route::get('/demandeStandEmp', function (Request $request) {
+    //     if (!session()->has('id_emp')) {
+    //         return redirect('/authentification')->with('error', 'Accès interdit !');
+    //     }
+    //     return app(DirecteurEmpController::class)->demandeStandEmp($request);
+    // })->name('demandeStandEmp');
 
-    //Route::post('/demandeStandEmp',[DirecteurEmpController::class,'demandeStandEmp'])->name('demandeStandEmp');
+    Route::post('/demandeStandEmp',[DirecteurEmpController::class,'demandeStandEmp'])->name('demandeStandEmp');
 
     Route::get('/viewGestionPersonnel', function (Request $request) {
         if (!session()->has('id_emp')) {
@@ -406,6 +413,9 @@ Route::prefix('directeur')->group(function(){
 
     //Route::get('/viewJustificationDemissionEditeur',[DirecteurEmpController::class,'viewJustificationDemissionEditeur'])->name('viewJustificationDemissionEditeur');
 
+    Route::post('/insertPemissionNewExposition',[DirecteurEmpController::class,'insertPemissionNewExposition'])->name('insertPemissionNewExposition');
+
+
     Route::get('/viewGalerie', function (Request $request) {
         if (!session()->has('id_emp')) {
             return redirect('/authentification')->with('error', 'Accès interdit !');
@@ -616,7 +626,7 @@ Route::prefix('directeur')->group(function(){
 
         //--------Stand
         Route::post('/validePermissionByAdmin',[AdminController::class,'validePermissionByAdmin'])->name('validePermissionByAdmin');
-        Route::post('/refusePermissiontandByAdmin',[AdminController::class,'refusePermissiontandByAdmin']);
+        Route::post('/refusePermissiontandByAdmin',[AdminController::class,'refusePermissiontandByAdmin'])->name('refusePermissiontandByAdmin');
 
 
         Route::get('/viewValidationRecrutementEmp', function (Request $request) {
@@ -800,6 +810,25 @@ Route::prefix('directeur')->group(function(){
         Route::post('/validationPermissionTemoigange',[AdminController::class,'validationPermissionTemoigange'])->name('validationPermissionTemoigange');
         Route::post('/validationPermissionConference',[AdminController::class,'validationPermissionConference'])->name('validationPermissionConference');
         Route::post('/validationPermissionBrochure',[AdminController::class,'validationPermissionBrochure'])->name('validationPermissionBrochure');
+
+        Route::post('/refusPermission',[AdminController::class,'refusPermission'])->name('refusPermission');
+
+        Route::post('/refusPhoto',[AdminController::class,'refusPhoto'])->name('refusPhoto');
+
+
+        Route::post('/refusVideo',[AdminController::class,'refusVideo'])->name('refusVideo');
+
+        Route::post('/refusDeRecrutement', [AdminController::class, 'refusDeRecrutement'])->name('refusDeRecrutement');
+
+        Route::post('/refusDeConferenceClient', [AdminController::class, 'refusDeConferenceClient'])->name('refusDeConferenceClient');
+
+        Route::post('/refusDeTemoigange', [AdminController::class, 'refusDeTemoigange'])->name('refusDeTemoigange');
+
+        Route::post('/refusDeConference', [AdminController::class, 'refusDeConference'])->name('refusDeConference');
+
+        Route::post('/refusDeBrochure', [AdminController::class, 'refusDeBrochure'])->name('refusDeBrochure');
+
+
 
     });
 

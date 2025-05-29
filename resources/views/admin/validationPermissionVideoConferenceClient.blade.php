@@ -4,7 +4,7 @@
 
 <h1>Liste de validation des video avec les clients</h1>
 
-<div class="col-12">
+<div class="col-12" style="overflow-x: auto;">
 
     @if (session('success'))
     <div class="alert alert-success" role="alert">
@@ -59,11 +59,12 @@
                         </form>
                     </td>
                     <td>
-                        <form action="#" method="POST">
-                            @csrf
-                                {{-- web socket refuser fa tsy mila manao an ny controler --}}
-                            <input type="submit" value="Refuser" class="btn btn-danger m-1">
-                        </form>
+                       <button
+                            class="btn btn-danger m-1 btn-refuser"
+                            data-id_permission="{{$list_permissionVideoConferenceClient->id_permission_video_conferece_client}}"
+                            data-id_directeur="{{$list_permissionVideoConferenceClient->id_directeur}}">
+                            Refuser
+                        </button>
 
                     </td>
 
@@ -73,5 +74,56 @@
     </table>
 </div>
 
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-refuser').forEach(button => {
+        button.addEventListener('click', async function () {
+
+            const id_permission = this.dataset.id_permission;
+            const id_directeur = this.dataset.id_directeur;
+            const csrfToken = '{{ csrf_token() }}';
+
+
+            try {
+                // Étape 1 : Appel vers /refusPhoto
+                let response1 = await fetch("{{ route('refusDeConferenceClient') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                    },
+                    body: JSON.stringify({
+                        id_permission_galerie: id_permission
+                    })
+                });
+
+                if (!response1.ok) throw new Error("Échec de refusPhoto");
+
+                // Étape 2 : Appel vers /refusPermission
+                let response2 = await fetch("{{ route('refusPermission') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                    },
+                    body: JSON.stringify({
+                        id_directeur: id_directeur
+                    })
+                });
+
+                if (!response2.ok) throw new Error("Échec de refusPermission");
+
+                alert("Refus effectué avec succès.");
+                location.reload();
+
+            } catch (error) {
+                console.error(error);
+                alert("Une erreur est survenue.");
+            }
+        });
+    });
+});
+</script>
 
 @endsection

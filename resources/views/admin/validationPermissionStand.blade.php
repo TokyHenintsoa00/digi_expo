@@ -1,7 +1,7 @@
 @extends('parent.ParentAdmin')
 @section('validationPermissionStandSection')
 <h1>Liste de validation de permission</h1>
-<div class="col-12">
+<div class="col-12" style="overflow-x: auto;">
     <h1>de stand</h1>
     @if (session('success'))
     <div class="alert alert-success" role="alert">
@@ -59,7 +59,7 @@
 
                             <input type="submit" value="Valider" class="btn btn-success m-1">
                         </form>
-                        <form action="/refusePermissiontandByAdmin" method="post">
+                        <form action="{{route('refusePermissiontandByAdmin')}}" method="post">
                             @csrf
                             <input type="hidden" name="id_permission_stand" value="{{$list_permission->id_permission_stand}}">
                             <input type="hidden" name="prenom_emp" value="{{$list_permission->prenom_emp}}">

@@ -114,6 +114,9 @@ class DirecteurEmpController extends Controller
         $emp = new EmpModel();
         $getEmpId = $emp->getEmpById($session_id_emp);
 
+         $getSalonWhere = $getReceptionModel->getSalonWhere();
+        $id_max_id_salon = $getSalonWhere[0]->id_sallon;
+
         $nom_emp = $getEmpId[0]->nom_emp;
         $prenom_emp = $getEmpId[0]->prenom_emp;
         $date_naissance = $getEmpId[0]->date_naissance;
@@ -126,18 +129,124 @@ class DirecteurEmpController extends Controller
             return redirect()->back()->withErrors(['error' => 'Vous ne pouvez pas creer une exposition pour le moment'])->withInput();
         }
 
-        $stand = new StandModel();
-        $stand->insertPermissionStand($nom_stand,$id_categorie,$nom_categorie,$description_stand,
-        $nom_emp,$prenom_emp,$date_naissance,$email,$img_stand_name,$date_debut,$date_fin);
-
-        return redirect()->route('viewDemandeNouvelleStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
+        return redirect()->route('viewPlaceNewStand')->with([
+            'nom_stand' => $nom_stand,
+            'id_categorie' => $id_categorie,
+            'description_stand' => $description_stand,
+            'nom_categorie_stand' => $nom_categorie,
+            'date_debut' => $date_debut,
+            'date_fin' => $date_fin,
+            'img_stand_name' => $img_stand_name,
+            'id_max_id_salon' => $id_max_id_salon,
+            'nom_employe' => $nom_emp,
+            'prenom_employe' => $prenom_emp,
+            'date_naissance' => $date_naissance,
+            'email_employe' => $email,
+        ]);
     }
 
-    public function selectPlaceForNewStand()
+        // $stand = new StandModel();
+        // $stand->insertPermissionStand($nom_stand,$id_categorie,$nom_categorie,$description_stand,
+        // $nom_emp,$prenom_emp,$date_naissance,$email,$img_stand_name,$date_debut,$date_fin);
+
+        // return redirect()->route('viewDemandeNouvelleStand')->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail une fois que l\'administrateur aura validé votre demande.');
+
+
+    public function viewPlaceNewStand()
     {
 
+        $standData = [
+            'nom_stand' => session('nom_stand'),
+            'id_categorie' => session('id_categorie'),
+            'description_stand' => session('description_stand'),
+            'nom_categorie_stand' => session('nom_categorie_stand'),
+            'date_debut' => session('date_debut'),
+            'date_fin' => session('date_fin'),
+            'img_stand_name' => session('img_stand_name'),
+            'id_max_id_salon' => session('id_max_id_salon'),
+            'nom_employe' => session('nom_employe'),
+            'prenom_employe' => session('prenom_employe'),
+            'date_naissance' => session('date_naissance'),
+            'email_employe' => session('email_employe'),
+        ];
+
+
+
+        $getStandModel = new StandModel();
+        //----ligne vertical gauche premier plan
+        $placeTopLeftFistPlan = $getStandModel->getPlaceWherePlaceLeftToFirstPlan();
+        //-------------------------------------
+        //----Ligne horizontal bas premier plan
+        $placeDownFirstPlan = $getStandModel->getPlaceWherePlaceDownFirstPlan();
+        //------------------------------------
+        //----ligne verticall droite premier plan
+        $placeRightFirstPlan = $getStandModel->getPlaceWherePlaceRightFirstPlan();
+        //----------------------------------------
+        //------ligne horizontal haut di premier plan
+        $placeUpFirstPlan = $getStandModel->getPlaceWherePlaceUpFirstPlan();
+        //-------------------------------------------
+        //-------ligne vertical gahce 2eme plan
+        $placeGaucheVerticalSecondPlan = $getStandModel->getPlaceStandWherePlaceLeftSecondPlan();
+        //--------------------------------------
+        //-------ligne horizontal bas deuxieme plan
+        $placeStandWherePlaceDownSecondPlan = $getStandModel->getPlaceStandWherePlaceDownSecondPlan();
+        //------------------------------------------
+        //ligne vertical droite deuxieme plan
+        $placeStandWherePlaceRightSecondPlan = $getStandModel->getPlaceStandWherePlaceRightSecondPlan();
+        //-----------------------------------
+        //LIGNE HORIZONTAL HAUT DEUXIEME PLAN
+        $placeWherePlaceUpSecondPlan = $getStandModel->getPlaceWherePlaceUpSecondPlan();
+        //=----------------------------------
+        //LIGNE VERTICAL TROISIEME PLAN
+        $placeStandWherePlaceRightThirdPlan = $getStandModel->getPlaceStandWherePlaceRightThirdPlan();
+
+
+        return view('directeurEmp.PlaceDirecteurNewStand',compact('placeTopLeftFistPlan','placeDownFirstPlan','placeRightFirstPlan',
+        'placeUpFirstPlan','placeGaucheVerticalSecondPlan','placeStandWherePlaceDownSecondPlan',
+        'placeStandWherePlaceRightSecondPlan','placeWherePlaceUpSecondPlan','placeStandWherePlaceRightThirdPlan'),$standData);
+
     }
 
+    public function insertPemissionNewExposition(Request $request)
+    {
+
+        $getStandModel = new StandModel();
+
+        //---- INFORMATION DANS LE FORMULAIRE -------
+        $nom_stand = $request->nom_stand;
+        $id_categorie = $request->id_categorie;
+        $description_stand = $request->description_stand;
+        $nom_categorie_stand = $request->nom_categorie_stand;
+        $date_debut = $request->date_debut;
+        $date_fin = $request->date_fin;
+        $img_stand_name = $request->img_stand_name;
+        $id_max_id_salon = $request->id_max_id_salon;
+        $nom_employe = $request->nom_employe;
+        $prenom_employe = $request->prenom_employe;
+        $date_naissance = $request->date_naissance;
+        $email_employe = $request->email_employe;
+        //-----------------------------------------
+
+        //dd($nom_stand);
+
+        //------ id de place ----------
+        $place_id = $request->place_id;
+        // //-----------------------------
+
+        $getStandModel->insertPermissionStandV1($nom_stand,$id_categorie,
+        $nom_categorie_stand,$description_stand,$nom_employe,$prenom_employe,
+        $date_naissance,$email_employe,$img_stand_name,
+        $date_debut,$date_fin,$id_max_id_salon,$place_id);
+
+        //reservation de place
+        $getStandModel->updateEtatPlaceToReserver($place_id);
+
+        // dd($id_max_id_salon);
+
+        return redirect()->route('viewStandDirecteur')
+        ->with('success', 'Le formulaire a été soumis avec succès !<br>Vous recevrez un e-mail
+        une fois que l\'administrateur aura validé votre demande.');
+    }
 
     public function viewGestionPersonnel()
     {
@@ -919,6 +1028,8 @@ class DirecteurEmpController extends Controller
                 // Tu peux logger l'erreur ou la gérer
                 \Log::error('Erreur lors de l\'envoi de la notification : ' . $e->getMessage());
             }
+
+        return redirect()->route('viewVideoConference')->with('success', 'podcast en cours de validation');
 
     }
 

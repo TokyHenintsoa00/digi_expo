@@ -114,13 +114,14 @@ class StandModel extends Model
             }
         }
 
-        public function insertStand($id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand)
+        public function insertStand($id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand,$date_debut,$date_fin,$id_salon)
         {
             DB::beginTransaction();
             try
             {
-                DB::insert("INSERT INTO stand(id_categorie,nom_stand,description_stand,img_stand,id_etat,date_de_creation_stand,nom_categorie_stand)VALUES
-                (?,?,?,?,4,CURRENT_TIMESTAMP,?)",[$id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand]);
+                 DB::insert("INSERT INTO stand(id_categorie,nom_stand,description_stand,img_stand,id_etat,date_de_creation_stand,nom_categorie_stand,date_debut_stand,date_fin_stand,id_sallon)VALUES
+                (?,?,?,?,4,CURRENT_TIMESTAMP,?,?,?,?)",[$id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand,$date_debut,$date_fin,$id_salon]);
+
 
                 // Retrieve the last inserted id_stand
                 $lastInsertId = DB::getPdo()->lastInsertId();
@@ -132,31 +133,11 @@ class StandModel extends Model
             } catch (\Throwable $th) {
                 //throw $th;
                 DB::rollBack(); // Annuler si quelque chose échoue
-                throw $e; // Renvoyer l'erreur
+                throw $th; // Renvoyer l'erreur
             }
         }
 
-        public function insertStandV1($id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand,$id_salon)
-        {
-            DB::beginTransaction();
-            try
-            {
-                DB::insert("INSERT INTO stand(id_categorie,nom_stand,description_stand,img_stand,id_etat,date_de_creation_stand,nom_categorie_stand,id_salon)VALUES
-                (?,?,?,?,4,CURRENT_TIMESTAMP,?,?)",[$id_categorie,$nom_stand,$description_stand,$img_stand,$nom_categorie_stand,$id_salon]);
 
-                // Retrieve the last inserted id_stand
-                $lastInsertId = DB::getPdo()->lastInsertId();
-
-                DB::commit();
-
-                return $lastInsertId;
-
-            } catch (\Throwable $th) {
-                //throw $th;
-                DB::rollBack(); // Annuler si quelque chose échoue
-                throw $e; // Renvoyer l'erreur
-            }
-        }
 
         public function membreStand()
         {
@@ -1088,6 +1069,9 @@ class StandModel extends Model
         })
         ->update(['id_etat' => 14]);
     }
+
+
+
 }
 
 
