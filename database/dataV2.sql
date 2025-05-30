@@ -344,7 +344,8 @@ CREATE TABLE permission_temoignage
     titre text,
     id_sallon integer references salon(id_sallon),
     id_etat integer references etat(id_etat),
-    id_directeur integer references emp(id_emp)
+    id_directeur integer references emp(id_emp),
+    id_temoigange integer
 );
 
 

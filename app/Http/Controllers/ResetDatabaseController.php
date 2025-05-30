@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\StandModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -41,7 +41,7 @@ class ResetDatabaseController extends Controller
             $tableName = $table->tablename;
 
             // Exclure certaines tables
-            if (in_array($tableName, ['admin', 'etat', 'categorie', 'type_stand', 'mois', 'type_video', 'type_conference'])) {
+            if (in_array($tableName, ['admin', 'etat', 'categorie', 'type_stand', 'mois', 'type_video', 'type_conference','place'])) {
                 continue;
             }
 
@@ -56,6 +56,8 @@ class ResetDatabaseController extends Controller
 
             DB::statement("ALTER TABLE {$tableName} ENABLE TRIGGER ALL");
         }
+          // Appeler la méthode updateResetPlace() du modèle StandModel
+    (new StandModel())->updateResetPlace();
 
         return redirect()->back()->with('success', 'La base de données a été réinitialisée avec succès.');
     }

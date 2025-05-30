@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'DigiExpo'),
+    'name' => env('APP_NAME', 'VirtualSalon'),
 
     /*
     |--------------------------------------------------------------------------

@@ -52,7 +52,7 @@
 
                     </div>
 
-                    <input type="submit" class="btn btn-primary" value="Publier">
+                    <input type="submit" class="btn btn-primary" value="Envoyer">
                 </form>
             </div> <!-- /. card-body -->
         </div> <!-- /. card -->

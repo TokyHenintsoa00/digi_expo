@@ -1,7 +1,7 @@
 @extends('parent.ParentAdmin')
 @section('galerieVideoSection')
 
-<h1>Liste de validation des galerie photos</h1>
+<h1>Liste de validation des galerie video</h1>
 
 <div class="col-12" style="overflow-x: auto;">
 

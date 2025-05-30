@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Bonjour{{$prenom_emp}}</h1>
+    <h1>Bonjour {{$prenom_emp}}</h1>
     <p>Votre demande de permission de stande a ete reuse par l'administrateur</p>
 </body>
 </html>
