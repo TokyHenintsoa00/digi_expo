@@ -197,31 +197,41 @@
                 var startDateTimeFormatted = startDateTime.toISOString().slice(0, 16);
 
                 var modalContent = `
-                    <div>
-                        <label for="eventTitle">Titre de l'événement :</label>
-                        <input type="text" class="form-control" id="eventTitle" placeholder="Titre de l'événement" required>
+                    <div class="container p-4 rounded shadow-sm bg-light" style="max-width: 600px;">
+    <div class="mb-3">
+        <label for="eventTitle" class="form-label fw-bold">Titre de l'événement :</label>
+        <input type="text" class="form-control" id="eventTitle" placeholder="Titre de l'événement" required>
+    </div>
 
-                    </div>
-                    <div>
-                        <label for="endDate">Date de fin :</label>
-                        <input type="datetime-local" class="form-control" id="endDate" value="${arg.startStr}" min="${arg.startStr}" required>
-                    </div>
-                    <div>
-                        <label for="importance">Choisissez l'importance :</label><br>
-                        <input type="radio" id="importance_bleu" name="importance" value="bleu">
-                        <label for="importance_bleu">Moins important</label><br>
-                        <input type="radio" id="importance_jaune" name="importance" value="jaune">
-                        <label for="importance_jaune">Important</label><br>
-                        <input type="radio" id="importance_rouge" name="importance" value="rouge">
-                        <label for="importance_rouge">Très important</label>
-                    </div>
-                    <div>
-                        <button id="saveEvent" class="btn btn-primary">Enregistrer l'événement</button>
+    <div class="mb-3">
+        <label for="endDate" class="form-label fw-bold">Date de fin :</label>
+        <input type="datetime-local" class="form-control" id="endDate" value="${arg.startStr}" min="${arg.startStr}" required>
+    </div>
 
-                        <form action="{{route('viewCalendrierSuivi')}}">
-                            <button id="cancelEvent" class="btn btn-secondary">Annuler</button>
-                        </form>
-                    </div>
+    <div class="mb-3">
+        <label class="form-label fw-bold">Choisissez l'importance :</label><br>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="importance_bleu" name="importance" value="bleu">
+            <label class="form-check-label text-primary" for="importance_bleu">Moins important</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="importance_jaune" name="importance" value="jaune">
+            <label class="form-check-label text-warning" for="importance_jaune">Important</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="importance_rouge" name="importance" value="rouge">
+            <label class="form-check-label text-danger" for="importance_rouge">Très important</label>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <button id="saveEvent" class="btn btn-success">Enregistrer l'événement</button>
+
+        <form action="{{ route('viewCalendrierSuivi') }}">
+            <button id="cancelEvent" class="btn btn-outline-secondary">Annuler</button>
+        </form>
+    </div>
+</div>
                 `;
 
                 var modal = document.createElement('div');

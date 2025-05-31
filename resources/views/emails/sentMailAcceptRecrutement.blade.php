@@ -9,7 +9,7 @@
 <body>
     <h1>Recutement d'employer</h1>
     <p>Bonjour {{$prenom_emp}}</p>
-    <p>Felicitaion, vous avez été par le directeur du stand de {{$nom_stand}}</p>
+    <p>Felicitation, vous avez été par recruter par le responsable du stand de {{$nom_stand}}</p>
     <p>Votre matricule est le {{$matricule_emp}}</p>
     <a href="{{ url('/viewauthentificationEmp/') }}">Espace employe</a>
 </body>
