@@ -84,5 +84,17 @@
             document.getElementById('permissionForm').submit();
         });
     }
+
+    // function sendNotificationRecrutement() {
+    //     const message = {
+    //         sender: 7,
+    //         receiver: 6,
+    //         content: "Vous avez recu une nouvelle permission de recrutement",
+    //         dateNotification: new Date().toISOString(),
+    //         url: "http://127.0.0.1:8000/admin/viewValidationRecrutementEmp"
+    //     };
+    //     // Envoi via le préfixe /app (config Spring)
+    //     stompClient.send("/app/notification", {}, JSON.stringify(message));
+    // }
 </script>
 @endsection

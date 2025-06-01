@@ -62,7 +62,7 @@
 
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <h5 class="text-center">Nombre de contenue d'exposition</h5>
+                    <h5 class="text-center">Graphique de stand</h5>
                     <div id="barChart" style="height: 350px;"></div>
                 </div>
                 <div class="col-md-6 mb-4">
@@ -77,11 +77,11 @@
                 </div>
 
                 <div class="col-md-6 mb-4">
-                    <h5 class="text-center">Nombre de contenus photos</h5>
+                    <h5 class="text-center">graphique de galerie photos</h5>
                     <div id="donutChart" style="height: 350px;"></div>
                 </div>
                 <div class="col-md-6 mb-4">
-                    <h5 class="text-center">Nombre de contenus vidéos</h5>
+                    <h5 class="text-center">graphique de galerie vidéos</h5>
                     <div id="donutChart1" style="height: 350px;"></div>
                 </div>
             </div>
@@ -270,26 +270,26 @@
         function initializeDonutChart1() {
             // Initialisation du Donut Chart 1
             donutChart1 = new ApexCharts(document.querySelector("#donutChart1"), {
-                 series: [{ name: 'Utilisateurs', data: [] }],
+                 series: [{ name: 'Nombre de video', data: [] }],
                 chart: { type: 'area', height: 350 },
                 xaxis: {
                     categories: [],
                     labels: { rotate: 0 },
                 },
-                colors: ['#ffca28'],
+                colors: ['#8B5CF6'],
                 stroke: { curve: 'smooth', width: 2 },
                 tooltip: { shared: true, intersect: false },
                 legend: { position: 'top' },
             });
 
             areaChart2 = new ApexCharts(document.querySelector("#donutChart"), {
-                 series: [{ name: 'Utilisateurs', data: [] }],
+                 series: [{ name: 'Nombre de photo', data: [] }],
                 chart: { type: 'area', height: 350 },
                 xaxis: {
                     categories: [],
                     labels: { rotate: 0 },
                 },
-                colors: ['#26367c'],
+                colors: ['#EC4899'],
                 stroke: { curve: 'smooth', width: 2 },
                 tooltip: { shared: true, intersect: false },
                 legend: { position: 'top' },
@@ -337,13 +337,27 @@
 
 
 
-        function initializeCharts() {
+        function initializeCharts()
+        {
             // Initialisation du barChart sans données
             barChart = new ApexCharts(document.querySelector("#barChart"), {
                 series: [{ name: 'Nombre de Stands', data: [] }],
-                chart: { type: 'bar', height: 350 },
-                xaxis: { categories: [] },
+                chart: { type: 'area', height: 350 },
+                xaxis:
+                { categories: [],
+                    labels: {
+                        style: {
+                            fontSize: '12px'
+                        },
+                        rotate: 0,
+                        hideOverlappingLabels: false,
+                    }
+                },
                 colors: ['#001365'],
+                stroke: { curve: 'smooth', width: 2 },
+                tooltip: { shared: true, intersect: false },
+                legend: { position: 'top' },
+
             });
 
             // Initialisation de l'areaChart
@@ -352,7 +366,13 @@
                 chart: { type: 'area', height: 350 },
                 xaxis: {
                     categories: [],
-                    labels: { rotate: 0 },
+                    labels: {
+                        style: {
+                            fontSize: '12px'
+                        },
+                        rotate: 0,
+                        hideOverlappingLabels: false,
+                    }
                 },
                 colors: ['#40BB58'],
                 stroke: { curve: 'smooth', width: 2 },
